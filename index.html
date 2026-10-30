@@ -36,21 +36,22 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- STATUS INTEGRASI GOOGLE SHEET -->
+  <!-- BAR STATUS INTEGRASI & AUTO-SAVE KE GOOGLE SHEET -->
   <header class="bg-slate-900 text-white border-b border-slate-800 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between text-xs gap-2">
-      <div class="flex items-center gap-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-xs gap-2">
+      <div class="flex items-center gap-2.5">
         <span class="relative flex h-2.5 w-2.5">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          <span id="syncPulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span id="syncDot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span class="font-medium text-slate-200">Tersambung ke Google Sheet SEMEKAR</span>
-        <span class="text-slate-400 hidden md:inline">| ID: <span class="font-mono text-slate-300">13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI</span></span>
+        <span class="font-bold text-slate-100" id="syncStatusTitle">Simpan Automatik Aktif</span>
+        <span class="text-slate-400 hidden sm:inline">•</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Semua perubahan disimpan terus ke Google Sheet</span>
       </div>
       <div class="flex items-center gap-3">
-        <span id="lastSyncLabel" class="text-slate-400">Penyegerakan: Belum disegerak</span>
-        <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-medium">
-          <span>Buka Google Sheet</span>
+        <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700">Tersimpan: Baru sahaja</span>
+        <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-300 hover:text-white font-medium transition">
+          <span>Buka Sheet</span>
           <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
         </a>
       </div>
@@ -69,7 +70,7 @@
             <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa</h1>
             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">SEMEKAR 2026</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Slot 30 Minit (Maksimum 2:30 PTG)</p>
+          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Auto-Simpan Google Sheet Aktif</p>
         </div>
       </div>
 
@@ -79,14 +80,9 @@
           <span>Tetapkan Bidang Blok</span>
         </button>
 
-        <button onclick="syncFromGoogleSheet()" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition">
-          <i data-lucide="refresh-cw" class="w-4 h-4" id="syncIcon"></i>
+        <button onclick="syncFromGoogleSheet()" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition" title="Muat turun data terkini sekiranya guru lain mengemas kini helaian">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="syncIcon"></i>
           <span>Muat Semula</span>
-        </button>
-
-        <button onclick="saveToGoogleSheet()" id="btnSave" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition">
-          <i data-lucide="cloud-upload" class="w-4 h-4" id="saveIcon"></i>
-          <span>Simpan ke Sheet</span>
         </button>
 
         <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded-lg transition">
@@ -107,7 +103,7 @@
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
             Rumusan Pengisian Program (273 Slot Aktif • Tepat 25% Setiap Bidang)
           </h2>
-          <p class="text-[11px] text-slate-500">Pilih julat waktu semasa mengisi aktiviti untuk mengisi beberapa slot sekaligus tanpa pengulangan.</p>
+          <p class="text-[11px] text-slate-500">Sebarang pengisian slot atau cuti tingkatan akan terus disimpan ke Google Sheet secara automatik.</p>
         </div>
 
         <div class="flex items-center gap-2 text-xs font-semibold">
@@ -117,7 +113,7 @@
         </div>
       </div>
 
-      <!-- BAR KEMAJUAN PENGISIAN -->
+      <!-- BAR KEMAJUAN PENGISIAN KESELURUHAN -->
       <div class="space-y-1">
         <div class="flex justify-between text-[11px] font-bold text-slate-600">
           <span>Kemajuan Pengisian Keseluruhan:</span>
@@ -131,7 +127,7 @@
         </div>
       </div>
 
-      <!-- KAD 4 BLOK -->
+      <!-- KAD 4 BLOK BIDANG -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
         <div class="p-2.5 bg-blue-50/70 border-t-4 border-blue-600 rounded-xl space-y-0.5">
           <div class="flex items-center justify-between">
@@ -213,12 +209,12 @@
         <span><strong>Kalendar Berkotak (Isnin – Jumaat):</strong> Rehat 10:00 – 10:30 PG Kekal • 13 Slot 30 Minit Setiap Hari</span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-indigo-700 font-bold">💡 Isi Ikut Julat Waktu:</span>
-        <span class="text-slate-500">Pilih waktu mula & tamat untuk isi serentak tanpa perlu isi kotak berulang-ulang.</span>
+        <span class="text-indigo-700 font-bold">⚡ Simpan Terus:</span>
+        <span class="text-slate-500">Data dihantar secara automatik ke Google Sheet sebaik sahaja anda klik Simpan.</span>
       </div>
     </div>
 
-    <!-- WADAH KALENDAR BULANAN (NOVEMBER & DISEMBER DIASINGKAN) -->
+    <!-- WADAH KALENDAR BULANAN -->
     <div id="calendarMonthContainer" class="space-y-8">
       <!-- Dijana oleh JavaScript -->
     </div>
@@ -315,7 +311,10 @@
 
         <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
           <button type="button" onclick="closeDayAttendanceModal()" class="px-3.5 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
-          <button type="button" onclick="saveDayAttendance()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md">Simpan Ketetapan Hari</button>
+          <button type="button" onclick="saveDayAttendance()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <span>Simpan Ketetapan Hari</span>
+          </button>
         </div>
       </div>
     </div>
@@ -378,7 +377,7 @@
     </div>
   </div>
 
-  <!-- MODAL PENYUNTINGAN AKTIVITI DENGAN PEMILIHAN JULAT WAKTU (MULA & TAMAT) -->
+  <!-- MODAL PENYUNTINGAN AKTIVITI (DENGAN PEMILIHAN JULAT WAKTU) -->
   <div id="activityModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
@@ -386,7 +385,7 @@
           <i data-lucide="clock" class="w-5 h-5 text-indigo-400"></i>
           <div>
             <h3 class="text-sm sm:text-base font-bold" id="modalTitle">Pengisian Aktiviti Mengikut Waktu</h3>
-            <p class="text-[11px] text-slate-400">Tetapkan julat waktu untuk mengisi beberapa kotak slot sekaligus</p>
+            <p class="text-[11px] text-slate-400">Aktiviti disimpan terus ke Google Sheet secara automatik</p>
           </div>
         </div>
         <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
@@ -417,7 +416,7 @@
           </div>
         </div>
 
-        <!-- BAHAGIAN PEMILIHAN WAKTU MULA DAN WAKTU TAMAT (PENYELESAIAN MASALAH REPETISI) -->
+        <!-- JULAT WAKTU (MULA & TAMAT) -->
         <div class="bg-indigo-50/70 p-3 rounded-xl border border-indigo-200 space-y-2">
           <div class="flex items-center justify-between">
             <span class="font-bold text-slate-800 text-[11px] uppercase flex items-center gap-1.5">
@@ -427,7 +426,7 @@
             <span class="text-[10px] text-slate-500 italic">*Semua kotak dalam julat ini diisi serentak</span>
           </div>
 
-          <!-- PILIHAN PANTAS JULAT WAKTU -->
+          <!-- PRATETAP PANTAS JULAT -->
           <div class="flex flex-wrap gap-1.5 pt-0.5">
             <button type="button" onclick="setQuickTimeRange('0730', '1000')" class="px-2 py-1 bg-white hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-200 font-medium text-[11px]">
               Sebelum Rehat (07:30 – 10:00 PG)
@@ -484,7 +483,7 @@
             </div>
           </div>
           <div id="rangeCountInfo" class="text-[11px] font-bold text-indigo-800">
-            Aktiviti ini akan dimasukkan ke dalam slot berkaitan secara automatik.
+            Aktiviti akan dimasukkan serentak ke dalam slot berkaitan.
           </div>
         </div>
 
@@ -526,7 +525,10 @@
 
           <div class="flex items-center gap-2">
             <button type="button" onclick="closeModal()" class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
-            <button type="submit" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md">Simpan Julat Waktu</button>
+            <button type="submit" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
+              <i data-lucide="cloud-check" class="w-3.5 h-3.5"></i>
+              <span>Simpan & Segerak ke Sheet</span>
+            </button>
           </div>
         </div>
       </form>
@@ -605,12 +607,11 @@
     const CONFIG = {
       SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec',
       SHEET_ID: '13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI',
-      STORAGE_KEY: 'PUASA_MONTH_GRID_V7_SPLIT_MONTHS'
+      STORAGE_KEY: 'PUASA_MONTH_GRID_V8_AUTOSYNC'
     };
 
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
 
-    // 13 SLOT 30 MINIT SETIAP HARI (07:30 - 14:30)
     const TIME_SLOTS = [
       { id: '0730', label: '07:30 – 08:00 PG', startMin: 450, endMin: 480 },
       { id: '0800', label: '08:00 – 08:30 PG', startMin: 480, endMin: 510 },
@@ -637,7 +638,7 @@
 
     let activeMonthFilter = 'ALL';
 
-    // STRUKTUR KALENDAR: NOVEMBER 2026 (02–30 NOV) & DISEMBER 2026 (01–04 DIS) DIASINGKAN DENGAN TEPAT
+    // STRUKTUR KALENDAR: NOVEMBER (02–30 NOV) & DISEMBER (01–04 DIS) DIASINGKAN DENGAN TEPAT
     const NOVEMBER_WEEKS = [
       {
         minggu: 1,
@@ -683,7 +684,6 @@
         minggu: 5,
         hariList: [
           { tarikh: '2026-11-30', dayNum: 30, hari: 'Isnin', cuti: false, catatanCuti: '', active: true },
-          // 4 HARI INI DIKOSONGKAN / DINYATAKAN BUKAN BULAN NOVEMBER
           { tarikh: 'dummy_1', dayNum: '', hari: 'Selasa', active: false, labelText: 'Masuk Bulan Disember' },
           { tarikh: 'dummy_2', dayNum: '', hari: 'Rabu', active: false, labelText: 'Masuk Bulan Disember' },
           { tarikh: 'dummy_3', dayNum: '', hari: 'Khamis', active: false, labelText: 'Masuk Bulan Disember' },
@@ -696,7 +696,6 @@
       {
         minggu: 5,
         hariList: [
-          // ISNIN DIKOSONGKAN KERANA JATUH PADA 30 NOVEMBER
           { tarikh: 'dummy_nov', dayNum: '', hari: 'Isnin', active: false, labelText: '30 Nov (Bulan November)' },
           { tarikh: '2026-12-01', dayNum: 1, hari: 'Selasa', cuti: false, catatanCuti: '', active: true },
           { tarikh: '2026-12-02', dayNum: 2, hari: 'Rabu', cuti: false, catatanCuti: '', active: true },
@@ -708,6 +707,7 @@
 
     let activitiesMap = {};
     let dayAttendanceMap = {};
+    let autoSaveTimeout = null;
 
     function initEmptyStructure() {
       const initial = {};
@@ -801,6 +801,97 @@
       localStorage.setItem(CONFIG.STORAGE_KEY + '_BLOCKS', JSON.stringify(blockFieldConfig));
       localStorage.setItem(CONFIG.STORAGE_KEY + '_DAY_ATT', JSON.stringify(dayAttendanceMap));
       updateStatistics();
+      // PENCETUS SIMPAN AUTOMATIK TERUS KE SHEET (TANPA BUTANG MANUAL)
+      triggerAutoSave();
+    }
+
+    // ==========================================
+    // SISTEM AUTO-SAVE LATAR BELAKANG KE GOOGLE SHEET
+    // ==========================================
+    function triggerAutoSave() {
+      updateSyncStatusUI('saving');
+      if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
+      autoSaveTimeout = setTimeout(() => {
+        executeBackgroundSaveToSheet();
+      }, 500); // Debounce 500ms
+    }
+
+    async function executeBackgroundSaveToSheet() {
+      try {
+        const payload = Object.values(activitiesMap).map(s => {
+          const dayAtt = dayAttendanceMap[s.tarikh] || { cutiForms: [], adaForms: ALL_FORMS };
+          return {
+            id: s.id,
+            tarikh: s.tarikh,
+            hari: s.hari,
+            masa: s.masa,
+            bidang: s.bidang,
+            aktiviti: s.aktiviti,
+            deskripsi: s.deskripsi,
+            guru: s.guru,
+            lokasi: s.lokasi,
+            tingkatanCuti: (dayAtt.cutiForms || []).join(', '),
+            tingkatanAda: (dayAtt.adaForms || []).join(', ')
+          };
+        });
+
+        const res = await fetch(CONFIG.SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        if (result.status === 'success') {
+          updateSyncStatusUI('saved');
+        } else {
+          updateSyncStatusUI('error', result.message);
+        }
+      } catch (err) {
+        console.warn('Auto-save network error:', err);
+        updateSyncStatusUI('offline');
+      }
+    }
+
+    function updateSyncStatusUI(status, message) {
+      const dot = document.getElementById('syncDot');
+      const pulse = document.getElementById('syncPulse');
+      const title = document.getElementById('syncStatusTitle');
+      const subtitle = document.getElementById('syncStatusSubtitle');
+      const label = document.getElementById('lastSyncLabel');
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      if (status === 'saving') {
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400';
+        pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75';
+        title.textContent = 'Menyimpan...';
+        subtitle.textContent = 'Menghantar kemas kini terkini ke Google Sheet';
+        label.textContent = 'Menyimpan...';
+        label.className = 'text-amber-300 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700';
+      } else if (status === 'saved') {
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
+        pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
+        title.textContent = 'Tersimpan ke Sheet';
+        subtitle.textContent = 'Semua perubahan terkini telah disegerakkan';
+        label.textContent = `Tersimpan: ${timeStr}`;
+        label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700';
+      } else if (status === 'offline') {
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-400';
+        pulse.className = 'hidden';
+        title.textContent = 'Disimpan Tempatan';
+        subtitle.textContent = 'Tiada internet. Data selamat di peranti & akan segerak semula';
+        label.textContent = 'Luar Talian';
+        label.className = 'text-blue-300 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700';
+      } else {
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500';
+        pulse.className = 'hidden';
+        title.textContent = 'Ralat Sambungan';
+        subtitle.textContent = message || 'Gagal menyimpan ke Sheet';
+        label.textContent = 'Ralat Sheet';
+        label.className = 'text-rose-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700';
+      }
     }
 
     function setMonthFilter(month) {
@@ -811,7 +902,7 @@
       renderMonthCalendar();
     }
 
-    // JANA PAPARAN KALENDAR (PENGASINGAN BULAN NOVEMBER & DISEMBER SECARA BERSIH)
+    // JANA PAPARAN KALENDAR (BULAN NOVEMBER & DISEMBER DIASINGKAN)
     function renderMonthCalendar() {
       const container = document.getElementById('calendarMonthContainer');
       container.innerHTML = '';
@@ -819,7 +910,7 @@
       const selBidang = document.getElementById('filterBidang').value;
       const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
 
-      // 1. PAPARKAN NOVEMBER JIKA DIPILIH
+      // 1. PAPARKAN NOVEMBER (02 - 30 NOV)
       if (activeMonthFilter === 'ALL' || activeMonthFilter === '11') {
         const novCard = document.createElement('div');
         novCard.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden';
@@ -848,7 +939,7 @@
         container.appendChild(novCard);
       }
 
-      // 2. PAPARKAN DISEMBER JIKA DIPILIH (ASINGKAN SEPENUHNYA - 4 HARI SAHAJA)
+      // 2. PAPARKAN DISEMBER (01 - 04 DIS)
       if (activeMonthFilter === 'ALL' || activeMonthFilter === '12') {
         const decCard = document.createElement('div');
         decCard.className = 'bg-white rounded-2xl border-2 border-indigo-500/40 shadow-md overflow-hidden';
@@ -883,9 +974,7 @@
       updateStatistics();
     }
 
-    // KOTAK KALENDAR
     function renderCalendarDateBox(day, selBidang, searchQuery, currentMonthId) {
-      // JIKA KOTAK BUKAN DALAM BULAN TERSEBUT (INACTIVE PLACEHOLDER)
       if (!day.active) {
         return `
           <div class="bg-slate-100/60 p-3 min-h-[160px] flex flex-col items-center justify-center text-center border border-dashed border-slate-200/80">
@@ -1121,7 +1210,7 @@
       }
 
       renderMonthCalendar();
-      showToast('Ketetapan cuti tingkatan sehari penuh berjaya disimpan.');
+      showToast('Ketetapan cuti tingkatan disimpan & disegerakkan ke Sheet.');
     }
 
     // BUKA DRAWER PECAHAN 13 SLOT
@@ -1210,7 +1299,7 @@
       document.getElementById('dayDrawerModal').classList.add('hidden');
     }
 
-    // BUKA MODAL JULAT WAKTU (PILIH MULA & TAMAT)
+    // BUKA MODAL JULAT WAKTU
     function openRangeActivityModal(initialSlotId) {
       const tarikh = document.getElementById('drawerSlotList').getAttribute('data-tarikh');
       if (!tarikh) return;
@@ -1221,11 +1310,9 @@
       document.getElementById('modalTarikhHidden').value = tarikh;
       document.getElementById('modalTarikhHari').value = formattedDate;
 
-      // Tetapkan waktu mula lalai
       let startId = initialSlotId || '0730';
       document.getElementById('modalWaktuMula').value = startId;
 
-      // Cari slot sedia ada jika telah diisi untuk bawa maklumatnya
       const currentSlotData = activitiesMap[`${tarikh}_slot_${startId}`] || {};
       document.getElementById('modalBidang').value = currentSlotData.bidang || 'Belum Ditentukan';
       document.getElementById('modalAktiviti').value = currentSlotData.aktiviti || '';
@@ -1233,10 +1320,9 @@
       document.getElementById('modalGuru').value = currentSlotData.guru || '';
       document.getElementById('modalLokasi').value = currentSlotData.lokasi || '';
 
-      // Tentukan waktu tamat lalai
       let matchingSlots = TIME_SLOTS.filter(s => s.id >= startId);
       if (matchingSlots.length > 0) {
-        document.getElementById('modalWaktuTamat').value = '1430'; // Lalai hingga tamat persekolahan
+        document.getElementById('modalWaktuTamat').value = '1430';
       }
 
       validateTimeRange();
@@ -1270,7 +1356,6 @@
         endMin = endSlot ? endSlot.startMin : 870;
       }
 
-      // Kira bilangan slot terlibat
       const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
       const count = affectedSlots.length;
 
@@ -1282,7 +1367,7 @@
       }
     }
 
-    // SIMPAN FORM KE SEMUA KOTAK SLOT DALAM JULAT WAKTU (AUTO RANGE FILL)
+    // SIMPAN FORM KE SEMUA KOTAK SLOT DALAM JULAT WAKTU (AUTO SAVE TRIGGERED)
     function handleFormSubmit(e) {
       e.preventDefault();
       const tarikh = document.getElementById('modalTarikhHidden').value;
@@ -1313,7 +1398,6 @@
       const guru = document.getElementById('modalGuru').value.trim();
       const lokasi = document.getElementById('modalLokasi').value.trim();
 
-      // Cari semua slot dalam julat dan kemas kini serentak
       const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
 
       affectedSlots.forEach(s => {
@@ -1331,7 +1415,7 @@
       closeModal();
       openDayDrawer(tarikh);
       renderMonthCalendar();
-      showToast(`Berjaya disimpan serentak ke ${affectedSlots.length} kotak slot!`);
+      showToast(`Tersimpan & dihantar ke Sheet (${affectedSlots.length} slot terlibat)!`);
     }
 
     function clearRangeSlot() {
@@ -1463,56 +1547,10 @@
       saveToLocalStorage();
       closeBlockConfigModal();
       renderMonthCalendar();
-      showToast('Tetapan 4 Blok kalendar berjaya dikemas kini!');
+      showToast('Tetapan 4 Blok berjaya dikemas kini & disegerakkan!');
     }
 
-    // PENYEGERAKAN GOOGLE SHEET
-    async function saveToGoogleSheet() {
-      const btnSave = document.getElementById('btnSave');
-      const saveIcon = document.getElementById('saveIcon');
-      btnSave.disabled = true;
-      saveIcon.classList.add('animate-spin');
-
-      try {
-        const payload = Object.values(activitiesMap).map(s => {
-          const dayAtt = dayAttendanceMap[s.tarikh] || { cutiForms: [], adaForms: ALL_FORMS };
-          return {
-            id: s.id,
-            tarikh: s.tarikh,
-            hari: s.hari,
-            masa: s.masa,
-            bidang: s.bidang,
-            aktiviti: s.aktiviti,
-            deskripsi: s.deskripsi,
-            guru: s.guru,
-            lokasi: s.lokasi,
-            tingkatanCuti: (dayAtt.cutiForms || []).join(', '),
-            tingkatanAda: (dayAtt.adaForms || []).join(', ')
-          };
-        });
-
-        const res = await fetch(CONFIG.SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-
-        const result = await res.json();
-        if (result.status === 'success') {
-          updateLastSyncTime();
-          showToast('Data kalendar berjaya disegerakkan ke Google Sheet!');
-        } else {
-          showToast('Ralat simpan ke Sheet: ' + (result.message || ''));
-        }
-      } catch (err) {
-        console.error(err);
-        showToast('Penyegerakan awan gagal. Data disimpan dalam storan peranti.');
-      } finally {
-        btnSave.disabled = false;
-        saveIcon.classList.remove('animate-spin');
-      }
-    }
-
+    // FUNGSI MUAT SEMULA DARI GOOGLE SHEET (SEKIRANYA ADA KEMASKINI GURU LAIN)
     async function syncFromGoogleSheet() {
       const btnSync = document.getElementById('btnSync');
       const syncIcon = document.getElementById('syncIcon');
@@ -1540,10 +1578,11 @@
               };
             }
           });
-          saveToLocalStorage();
+          localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(activitiesMap));
+          localStorage.setItem(CONFIG.STORAGE_KEY + '_DAY_ATT', JSON.stringify(dayAttendanceMap));
           renderMonthCalendar();
-          updateLastSyncTime();
-          showToast('Data kalendar dimuat turun dari Google Sheet.');
+          updateSyncStatusUI('saved');
+          showToast('Data terkini berjaya dimuat turun dari Google Sheet.');
         }
       } catch (err) {
         console.warn('Gagal memuat turun data:', err);
@@ -1551,12 +1590,6 @@
         btnSync.disabled = false;
         syncIcon.classList.remove('animate-spin');
       }
-    }
-
-    function updateLastSyncTime() {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
-      document.getElementById('lastSyncLabel').textContent = `Penyegerakan: Hari ini ${timeStr}`;
     }
 
     function showToast(msg) {
