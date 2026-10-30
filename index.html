@@ -52,7 +52,7 @@
         </span>
         <span class="font-bold text-slate-100" id="syncStatusTitle">Tersambung ke Google Sheet</span>
         <span class="text-slate-400 hidden sm:inline">•</span>
-        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti murid & aktiviti tersimpan selamat</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti murid, catatan SPM & aktiviti tersimpan selamat</span>
       </div>
       <div class="flex items-center gap-2">
         <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Terselaras</span>
@@ -186,8 +186,8 @@
         <span><strong>Waktu Persekolahan:</strong> 07:30 PG – 02:30 PTG | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong></span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-indigo-700 font-bold">💡 Tip Pantas:</span>
-        <span class="text-slate-500">Tekan "+ Isi" di kalendar bulan akan terus membawa anda ke paparan minggu untuk pengisian lebih mudah!</span>
+        <span class="text-indigo-700 font-bold">💡 Navigasi Pantas:</span>
+        <span class="text-slate-500">Klik ruang aktiviti di kalendar bulan akan terus membuka jadual minggu berkenaan.</span>
       </div>
     </div>
 
@@ -301,7 +301,81 @@
 
   </main>
 
-  <!-- MODAL KHAS 1: TETAPAN CUTI TINGKATAN SEHARI PENUH -->
+  <!-- MODAL KHAS: CATATAN & PERINGATAN HARIAN -->
+  <div id="dayNoteModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
+      <div class="px-5 py-3.5 bg-amber-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="p-1.5 bg-amber-700/60 rounded-lg">
+            <i data-lucide="pin" class="w-5 h-5 text-amber-100"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold">Catatan & Peringatan Hari</h3>
+            <p class="text-[11px] text-amber-100" id="noteModalSubtitle">Tarikh Terpilih</p>
+          </div>
+        </div>
+        <button onclick="closeDayNoteModal()" class="text-amber-200 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-3.5 text-xs">
+        <input type="hidden" id="noteModalTarikh">
+
+        <!-- PRATETAP PANTAS PEPERIKSAAN SPM -->
+        <div class="space-y-1">
+          <span class="font-bold text-slate-700 block">Pilihan Pantas (Klik untuk Masukkan):</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" onclick="appendNotePreset('SPM: Kertas Bahasa Melayu (Zon Senyap Dewan Semekar)')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
+              SPM: Bahasa Melayu
+            </button>
+            <button type="button" onclick="appendNotePreset('SPM: Kertas Bahasa Inggeris (Zon Senyap Dewan)')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
+              SPM: Bahasa Inggeris
+            </button>
+            <button type="button" onclick="appendNotePreset('SPM: Kertas Sejarah (Jangan Ganggu Calon Tingkatan 5)')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
+              SPM: Sejarah (Jangan Ganggu T5)
+            </button>
+            <button type="button" onclick="appendNotePreset('SPM: Kertas Matematik (Dewan Peperiksaan)')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
+              SPM: Matematik
+            </button>
+            <button type="button" onclick="appendNotePreset('SPM: Pendidikan Islam / Moral')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
+              SPM: Pendidikan Islam/Moral
+            </button>
+            <button type="button" onclick="appendNotePreset('SPM: Sains / Fizik / Kimia / Biologi')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
+              SPM: Sains / Tulen
+            </button>
+            <button type="button" onclick="appendNotePreset('Peringatan: Zon Larangan Bising Dewan Semekar')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-lg border border-rose-300 font-semibold text-[10px]">
+              Zon Larangan Bising
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1 flex items-center justify-between">
+            <span>Teks Catatan / Peringatan Harian:</span>
+            <span class="text-[10px] text-slate-400 font-normal">Boleh tekan Enter untuk baris baru</span>
+          </label>
+          <textarea id="noteModalTextarea" rows="3" placeholder="Contoh:&#10;SPM Kertas Bahasa Melayu 1 & 2 di Dewan Semekar.&#10;Mohon aktiviti murid T1-T4 diadakan di bilik darjah blok jauh & elak bunyi bising." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:ring-2 focus:ring-amber-500 focus:outline-none custom-scroll text-xs font-medium"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+          <button type="button" onclick="clearDayNote()" class="px-3 py-1.5 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-medium border border-rose-200 transition">
+            Padam Catatan
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeDayNoteModal()" class="px-3.5 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
+            <button type="button" onclick="saveDayNote()" class="px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              <span>Simpan Catatan</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH -->
   <div id="dayAttendanceModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
       <div class="px-5 py-3.5 bg-indigo-900 text-white flex items-center justify-between">
@@ -384,16 +458,11 @@
           </div>
         </div>
 
-        <div>
-          <label class="block font-semibold text-slate-700 mb-0.5">Catatan / Alasan Pelepasan (Pilihan)</label>
-          <input type="text" id="dayAttendanceNote" placeholder="Contoh: Pelepasan Persediaan SPM / Amali RBT" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-        </div>
-
         <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
           <button type="button" onclick="closeDayAttendanceModal()" class="px-3.5 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
           <button type="button" onclick="saveDayAttendance()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
             <i data-lucide="check" class="w-3.5 h-3.5"></i>
-            <span>Simpan & Kunci Ketetapan</span>
+            <span>Simpan Ketetapan Cuti</span>
           </button>
         </div>
       </div>
@@ -422,7 +491,6 @@
         <!-- BAR STATUS TINGKATAN (TAG BESAR HADIR & TAG KECIL CUTI) -->
         <div class="bg-indigo-50/80 p-3.5 rounded-xl border border-indigo-200 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div class="flex flex-wrap items-center gap-3">
-            <!-- TAG BESAR HADIR -->
             <div class="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg shadow-sm flex items-center gap-2">
               <i data-lucide="users" class="w-4 h-4 text-emerald-200"></i>
               <div>
@@ -431,7 +499,6 @@
               </div>
             </div>
 
-            <!-- TAG KECIL CUTI -->
             <div id="drawerFormsHolidayWrapper" class="px-2.5 py-1 bg-rose-50 border border-rose-200 text-rose-800 rounded-md font-bold text-[11px] flex items-center gap-1.5">
               <i data-lucide="user-minus" class="w-3.5 h-3.5 text-rose-500"></i>
               <span>Cuti: <span id="drawerFormsHoliday">Tiada</span></span>
@@ -439,13 +506,17 @@
           </div>
 
           <div class="flex items-center gap-2">
+            <button onclick="openDayNoteModal(currentDrawerDate)" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg font-bold border border-amber-300 shadow-xs transition">
+              <i data-lucide="pin" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>Catatan SPM / Hari</span>
+            </button>
             <button onclick="openDayAttendanceModalFromDrawer()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-100 text-indigo-700 rounded-lg font-bold border border-indigo-200 shadow-xs transition">
               <i data-lucide="users" class="w-3.5 h-3.5"></i>
               <span>Urus Cuti Tingkatan</span>
             </button>
             <button onclick="openRangeActivityModal(null, currentDrawerDate)" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-xs transition">
               <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-              <span>+ Isi Aktiviti Mengikut Waktu</span>
+              <span>+ Isi Aktiviti</span>
             </button>
           </div>
         </div>
@@ -735,7 +806,7 @@
       return map[tStr] || 480;
     }
 
-    // AGIHAN 23 HARI PERSEKOLAHAN
+    // AGIHAN HARI (23 HARI)
     let dayFieldConfig = {
       '2026-11-02': 'Bahasa',
       '2026-11-03': 'Bahasa',
@@ -762,7 +833,7 @@
       '2026-12-04': 'Teknik & Vokasional'
     };
 
-    // DATA ASAS CUTI TINGKATAN (DIPULIHKAN PENUH)
+    // DATA ASAS CUTI TINGKATAN
     const RECOVERED_ATTENDANCE = {
       '2026-11-02': { tarikh: '2026-11-02', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
       '2026-11-03': { tarikh: '2026-11-03', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 3'], adaForms: ['Tingkatan 2', 'Tingkatan 4'], catatan: '' },
@@ -868,16 +939,8 @@
       if (!raw) return '';
       let s = raw.toString().trim();
       if (s.startsWith("'")) s = s.substring(1);
-      if (s.includes('T')) {
-        try {
-          const d = new Date(s);
-          const myTime = new Date(d.getTime() + (8 * 3600 * 1000));
-          return myTime.toISOString().split('T')[0];
-        } catch(e) {
-          return s.split('T')[0];
-        }
-      }
-      return s.split('T')[0];
+      if (s.includes('T')) return s.split('T')[0];
+      return s;
     }
 
     function getNextSlotEndTime(startId) {
@@ -901,7 +964,6 @@
       return 5;
     }
 
-    // HELPER: ESCAPE HTML SUPAYA AMAN UNTUK MULTI-LINE
     function escapeHtml(str) {
       if (!str) return '';
       return str.toString()
@@ -944,6 +1006,74 @@
         cutiText: cutiLabel,
         hasCuti: cutiArr.length > 0
       };
+    }
+
+    // ==========================================
+    // MODAL KHAS: CATATAN & PERINGATAN HARIAN
+    // ==========================================
+    function openDayNoteModal(tarikh) {
+      isUserEditing = true;
+      const cleanDt = cleanDate(tarikh);
+      const dObj = new Date(cleanDt);
+      const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+
+      document.getElementById('noteModalTarikh').value = cleanDt;
+      document.getElementById('noteModalSubtitle').textContent = formattedDate;
+
+      const dayAtt = dayAttendanceMap[cleanDt] || {};
+      document.getElementById('noteModalTextarea').value = dayAtt.catatan || '';
+
+      document.getElementById('dayNoteModal').classList.remove('hidden');
+    }
+
+    function closeDayNoteModal() {
+      isUserEditing = false;
+      document.getElementById('dayNoteModal').classList.add('hidden');
+    }
+
+    function appendNotePreset(presetText) {
+      const ta = document.getElementById('noteModalTextarea');
+      if (ta.value.trim() === '') {
+        ta.value = presetText;
+      } else {
+        ta.value += '\n' + presetText;
+      }
+    }
+
+    function clearDayNote() {
+      document.getElementById('noteModalTextarea').value = '';
+    }
+
+    function saveDayNote() {
+      const cleanDt = cleanDate(document.getElementById('noteModalTarikh').value);
+      if (!cleanDt) {
+        closeDayNoteModal();
+        return;
+      }
+
+      const noteText = document.getElementById('noteModalTextarea').value.trim();
+
+      if (!dayAttendanceMap[cleanDt]) {
+        dayAttendanceMap[cleanDt] = {
+          tarikh: cleanDt,
+          hari: '',
+          cutiForms: [],
+          adaForms: ALL_FORMS,
+          catatan: noteText
+        };
+      } else {
+        dayAttendanceMap[cleanDt].catatan = noteText;
+      }
+
+      closeDayNoteModal();
+
+      try {
+        saveToLocalStorage(true);
+        renderCurrentView();
+        showToast('Catatan harian berjaya disimpan.');
+      } catch(err) {
+        console.error(err);
+      }
     }
 
     function initEmptyStructure() {
@@ -1071,9 +1201,9 @@
     }
 
     // ========================================================
-    // TEKAN PENGISIAN DI BULAN -> KELUAR PAPARAN MINGGU TERUS
+    // TEKAN PENGISIAN DI BULAN -> TERUS ALIH KE PAPARAN MINGGUAN
     // ========================================================
-    function openWeekFillingFromMonth(tarikh, slotId = '0730') {
+    function openWeekFillingFromMonth(tarikh) {
       const cleanDt = cleanDate(tarikh);
       const weekNum = getMingguFromTarikh(cleanDt);
       const selectWeek = document.getElementById('selectWeekDropdown');
@@ -1081,11 +1211,9 @@
         selectWeek.value = weekNum;
       }
 
-      // 1. Tukar ke paparan minggu
+      // Alih terus ke paparan mingguan tanpa membuka modal
       switchView('week');
-
-      // 2. Buka modal pengisian bagi tarikh tersebut
-      openRangeActivityModal(slotId, cleanDt);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function triggerInstantPush() {
@@ -1188,7 +1316,7 @@
                   hari: item.hari || '',
                   cutiForms: cutiList,
                   adaForms: adaList,
-                  catatan: item.catatan || ''
+                  catatan: item.catatan || (dayAttendanceMap[dt] ? dayAttendanceMap[dt].catatan : '')
                 };
               }
             });
@@ -1276,692 +1404,6 @@
         label.textContent = 'Tersimpan Tempatan';
         label.className = 'text-blue-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       }
-    }
-
-    function updateStatistics() {
-      let daysBahasa = 0, daysSains = 0, daysKemas = 0, daysTvet = 0;
-
-      const allActiveDays = [
-        ...NOVEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active && !d.cuti)),
-        ...DECEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active && !d.cuti))
-      ];
-
-      allActiveDays.forEach(d => {
-        const dt = cleanDate(d.tarikh);
-        const b = dayFieldConfig[dt] || 'Belum Ditentukan';
-        if (b === 'Bahasa') daysBahasa++;
-        else if (b === 'Sains & Matematik') daysSains++;
-        else if (b === 'Sains Kemasyarakatan') daysKemas++;
-        else if (b === 'Teknik & Vokasional') daysTvet++;
-      });
-
-      setElemText('countDaysBahasa', `${daysBahasa} Hari`);
-      setElemText('countDaysSains', `${daysSains} Hari`);
-      setElemText('countDaysKemas', `${daysKemas} Hari`);
-      setElemText('countDaysTvet', `${daysTvet} Hari`);
-
-      setElemText('slotsDaysBahasa', `${daysBahasa * 13} Slot (30 Minit)`);
-      setElemText('slotsDaysSains', `${daysSains * 13} Slot (30 Minit)`);
-      setElemText('slotsDaysKemas', `${daysKemas * 13} Slot (30 Minit)`);
-      setElemText('slotsDaysTvet', `${daysTvet * 13} Slot (30 Minit)`);
-
-      if (allActiveDays.length > 0) {
-        setElemText('pctDaysBahasa', `${((daysBahasa / 23) * 100).toFixed(1)}%`);
-        setElemText('pctDaysSains', `${((daysSains / 23) * 100).toFixed(1)}%`);
-        setElemText('pctDaysKemas', `${((daysKemas / 23) * 100).toFixed(1)}%`);
-        setElemText('pctDaysTvet', `${((daysTvet / 23) * 100).toFixed(1)}%`);
-      }
-
-      let totalFilled = 0;
-      let countBahasaFilled = 0, countSainsFilled = 0, countKemasFilled = 0, countTvetFilled = 0;
-
-      Object.values(activitiesMap).forEach(slot => {
-        if (slot.isCuti || slot.bidang === 'Cuti') return;
-        if (slot.aktiviti && slot.aktiviti.trim() !== '') {
-          totalFilled++;
-          if (slot.bidang === 'Bahasa') countBahasaFilled++;
-          else if (slot.bidang === 'Sains & Matematik') countSainsFilled++;
-          else if (slot.bidang === 'Sains Kemasyarakatan') countKemasFilled++;
-          else if (slot.bidang === 'Teknik & Vokasional') countTvetFilled++;
-        }
-      });
-
-      setElemText('statFilledCount', `${totalFilled} Slot Diisi`);
-      setElemText('statEmptyCount', `${273 - totalFilled} Belum Diisi`);
-
-      const pct = ((totalFilled / 273) * 100).toFixed(1);
-      setElemText('overallProgressText', `${pct}% (${totalFilled} / 273 Slot)`);
-      setElemWidth('progBahasa', `${(countBahasaFilled / 273) * 100}%`);
-      setElemWidth('progSains', `${(countSainsFilled / 273) * 100}%`);
-      setElemWidth('progKemas', `${(countKemasFilled / 273) * 100}%`);
-      setElemWidth('progTvet', `${(countTvetFilled / 273) * 100}%`);
-    }
-
-    // ==========================================
-    // 1. PAPARAN BULANAN (MONTH VIEW)
-    // ==========================================
-    function setMonthFilter(month) {
-      activeMonthFilter = month;
-      document.getElementById('tabMonthALL').className = month === 'ALL' ? 'px-3 py-1.5 rounded-md bg-indigo-600 text-white shadow-xs' : 'px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900';
-      document.getElementById('tabMonth11').className = month === '11' ? 'px-3 py-1.5 rounded-md bg-indigo-600 text-white shadow-xs' : 'px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900';
-      document.getElementById('tabMonth12').className = month === '12' ? 'px-3 py-1.5 rounded-md bg-indigo-600 text-white shadow-xs' : 'px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900';
-      renderMonthCalendar();
-    }
-
-    function renderMonthCalendar() {
-      const container = document.getElementById('calendarMonthContainer');
-      container.innerHTML = '';
-
-      const selBidang = document.getElementById('filterBidang').value;
-      const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
-
-      if (activeMonthFilter === 'ALL' || activeMonthFilter === '11') {
-        const novCard = document.createElement('div');
-        novCard.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden';
-        novCard.innerHTML = `
-          <div class="px-5 py-3.5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5">
-              <span class="p-1.5 bg-indigo-600 rounded-lg"><i data-lucide="calendar" class="w-4 h-4 text-white"></i></span>
-              <h3 class="font-black text-base tracking-tight">Kalendar November 2026</h3>
-              <span class="text-xs bg-indigo-500/30 text-indigo-200 px-2.5 py-0.5 rounded-full font-semibold border border-indigo-400/30">02 Nov – 30 Nov 2026</span>
-            </div>
-            <span class="text-xs text-slate-300 font-medium">Hari Persekolahan: Isnin hingga Jumaat • Rehat 10:00 PG</span>
-          </div>
-
-          <div class="grid grid-cols-5 bg-slate-100 text-slate-700 text-xs font-black uppercase text-center border-b border-slate-200">
-            <div class="py-2.5 border-r border-slate-200">Isnin</div>
-            <div class="py-2.5 border-r border-slate-200">Selasa</div>
-            <div class="py-2.5 border-r border-slate-200">Rabu</div>
-            <div class="py-2.5 border-r border-slate-200">Khamis</div>
-            <div class="py-2.5">Jumaat</div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-5 divide-y sm:divide-y-0 sm:gap-px bg-slate-200">
-            ${NOVEMBER_WEEKS.flatMap(w => w.hariList.map(d => renderCalendarDateBox(d, selBidang, searchQuery))).join('')}
-          </div>
-        `;
-        container.appendChild(novCard);
-      }
-
-      if (activeMonthFilter === 'ALL' || activeMonthFilter === '12') {
-        const decCard = document.createElement('div');
-        decCard.className = 'bg-white rounded-2xl border-2 border-indigo-500/40 shadow-md overflow-hidden';
-        decCard.innerHTML = `
-          <div class="px-5 py-3.5 bg-gradient-to-r from-indigo-900 to-purple-950 text-white flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5">
-              <span class="p-1.5 bg-purple-600 rounded-lg"><i data-lucide="award" class="w-4 h-4 text-white"></i></span>
-              <h3 class="font-black text-base tracking-tight">Kalendar Disember 2026</h3>
-              <span class="text-xs bg-purple-500/30 text-purple-200 px-2.5 py-0.5 rounded-full font-semibold border border-purple-400/30">
-                01 Dis – 04 Dis 2026 (Hari Terakhir Persekolahan)
-              </span>
-            </div>
-            <span class="text-xs text-purple-200 font-bold bg-white/10 px-3 py-1 rounded-lg">4 Hari Persekolahan Terakhir</span>
-          </div>
-
-          <div class="grid grid-cols-5 bg-indigo-50/70 text-indigo-950 text-xs font-black uppercase text-center border-b border-indigo-200">
-            <div class="py-2.5 border-r border-indigo-100">Isnin</div>
-            <div class="py-2.5 border-r border-indigo-100">Selasa</div>
-            <div class="py-2.5 border-r border-indigo-100">Rabu</div>
-            <div class="py-2.5 border-r border-indigo-100">Khamis</div>
-            <div class="py-2.5">Jumaat</div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-5 divide-y sm:divide-y-0 sm:gap-px bg-slate-200">
-            ${DECEMBER_WEEKS.flatMap(w => w.hariList.map(d => renderCalendarDateBox(d, selBidang, searchQuery))).join('')}
-          </div>
-        `;
-        container.appendChild(decCard);
-      }
-
-      lucide.createIcons();
-      updateStatistics();
-    }
-
-    function renderCalendarDateBox(day, selBidang, searchQuery) {
-      if (!day.active) {
-        return `
-          <div class="bg-slate-100/60 p-3 min-h-[175px] flex flex-col items-center justify-center text-center border border-dashed border-slate-200/80">
-            <span class="text-[11px] font-bold text-slate-400 italic">${day.labelText}</span>
-            <span class="text-[10px] text-slate-400 mt-0.5">Tiada dalam jadual bulan ini</span>
-          </div>
-        `;
-      }
-
-      const dt = cleanDate(day.tarikh);
-      const isCuti = day.cuti;
-      const daySlots = TIME_SLOTS.map(s => activitiesMap[`${dt}_slot_${s.id}`] || {});
-      const dayBidang = day.cuti ? 'Cuti' : (dayFieldConfig[dt] || 'Belum Ditentukan');
-      const theme = getBidangColorTheme(dayBidang);
-
-      let filledCount = 0;
-      let activitiesList = [];
-
-      daySlots.forEach(slot => {
-        if (slot.aktiviti && slot.aktiviti.trim() !== '') {
-          filledCount++;
-          if (!activitiesList.some(a => a.title === slot.aktiviti)) {
-            activitiesList.push({
-              title: slot.aktiviti,
-              bidang: slot.bidang,
-              guru: slot.guru
-            });
-          }
-        }
-      });
-
-      const dayAtt = dayAttendanceMap[dt] || { cutiForms: [], adaForms: ALL_FORMS };
-      const attInfo = formatAttendanceTags(dayAtt);
-
-      if (selBidang !== 'ALL') {
-        const hasMatchingBidang = (dayBidang === selBidang) || daySlots.some(s => s.bidang === selBidang);
-        if (!hasMatchingBidang && !isCuti) {
-          return `
-            <div class="calendar-box bg-slate-50/50 p-2.5 min-h-[175px] opacity-40 border border-slate-200">
-              <span class="text-xs font-bold text-slate-400">${day.dayNum} (${day.hari})</span>
-            </div>
-          `;
-        }
-      }
-
-      if (isCuti) {
-        return `
-          <div onclick="openWeekFillingFromMonth('${dt}')" class="calendar-box group bg-rose-50/90 hover:bg-rose-100/90 transition cursor-pointer p-3 min-h-[185px] flex flex-col justify-between border-b sm:border-b-0 border-r border-rose-200">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-xl font-black text-rose-700 leading-none">${day.dayNum}</span>
-                <span class="text-[10px] font-bold text-rose-500 uppercase block">${day.hari}</span>
-              </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-rose-600 text-white shadow-xs">Cuti</span>
-            </div>
-
-            <div class="my-auto py-2 text-center space-y-1">
-              <i data-lucide="umbrella" class="w-6 h-6 text-rose-500 mx-auto"></i>
-              <div class="text-[11px] font-bold text-rose-900 leading-tight">${day.catatanCuti}</div>
-              <div class="text-[10px] text-rose-600">Tiada persekolahan</div>
-            </div>
-
-            <div class="text-[10px] text-rose-500 font-semibold text-center border-t border-rose-200/80 pt-1">
-              Klik untuk lihat jadual minggu
-            </div>
-          </div>
-        `;
-      }
-
-      return `
-        <div class="calendar-box group bg-white hover:bg-slate-50 transition p-2.5 min-h-[185px] flex flex-col justify-between border-b sm:border-b-0 border-r border-slate-200 shadow-xs hover:shadow-md">
-          <!-- KEPALA KOTAK -->
-          <div class="flex items-start justify-between border-b border-slate-100 pb-1.5">
-            <div>
-              <span class="text-lg font-black text-slate-900 leading-none">${day.dayNum}</span>
-              <span class="text-[10px] font-bold text-slate-500 uppercase ml-1">${day.hari}</span>
-              <span class="block text-[9px] font-extrabold px-1.5 py-0.2 mt-0.5 rounded ${theme.badgeBg} ${theme.badgeText} w-max">
-                ${dayBidang}
-              </span>
-            </div>
-
-            <div class="flex items-center gap-1">
-              <!-- BUTANG PANTAS: TERUS KE JADUAL MINGGU & ISI -->
-              <button onclick="event.stopPropagation(); openWeekFillingFromMonth('${dt}', '0730')" title="Buka paparan minggu untuk mengisi" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
-                <i data-lucide="plus-circle" class="w-3 h-3"></i>
-                <span>+ Isi</span>
-              </button>
-
-              <button onclick="event.stopPropagation(); openDayAttendanceModal('${dt}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${attInfo.hasCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'} border transition flex items-center gap-1 cursor-pointer">
-                <i data-lucide="users" class="w-3 h-3"></i>
-                <span>${attInfo.hasCuti ? 'Cuti: ' + attInfo.cutiText : 'Cuti'}</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- JALUR MINI 13 SLOT -->
-          <div onclick="openWeekFillingFromMonth('${dt}')" class="my-1.5 space-y-1 cursor-pointer">
-            <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
-              <span>07:30 PG</span>
-              <span class="text-amber-600 font-extrabold">Rehat</span>
-              <span>02:30 PTG</span>
-            </div>
-            <div class="grid grid-cols-13 gap-0.5 h-2 w-full bg-slate-100 rounded overflow-hidden">
-              ${daySlots.map(s => {
-                const hasAktiviti = s.aktiviti && s.aktiviti.trim() !== '';
-                const bgCol = hasAktiviti ? theme.badgeBg : 'bg-slate-200';
-                return `<div class="${bgCol} h-full" title="${s.masa}: ${s.aktiviti || 'Kosong'}"></div>`;
-              }).join('')}
-            </div>
-          </div>
-
-          <!-- SENARAI RINGKAS AKTIVITI HARIAN (KLIK BUKA PAPARAN MINGGU) -->
-          <div onclick="openWeekFillingFromMonth('${dt}')" class="flex-grow space-y-1 my-1 cursor-pointer">
-            ${activitiesList.length > 0 ? activitiesList.slice(0, 2).map(act => {
-              return `
-                <div class="p-1 rounded bg-slate-50 border ${theme.border} text-[10px] leading-tight">
-                  <div class="font-bold text-slate-900 whitespace-pre-line line-clamp-2">${escapeHtml(act.title)}</div>
-                  <div class="text-[9px] text-slate-500 mt-0.5 truncate">${escapeHtml(act.guru || 'Guru')}</div>
-                </div>
-              `;
-            }).join('') : `
-              <div class="h-9 flex items-center justify-center text-center text-[10px] text-slate-500 bg-indigo-50/40 border border-dashed border-indigo-200 rounded-lg group-hover:bg-indigo-50 transition">
-                <span class="font-bold text-indigo-700 flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> Buka Jadual Minggu</span>
-              </div>
-            `}
-            ${activitiesList.length > 2 ? `<div class="text-[9px] font-bold text-indigo-600 text-center">+ ${activitiesList.length - 2} lagi aktiviti</div>` : ''}
-          </div>
-
-          <!-- RUANG TAG BESAR (HADIR) & TAG KECIL (CUTI) -->
-          <div class="mt-auto pt-1.5 border-t border-slate-100 space-y-1">
-            <!-- TAG BESAR: MURID HADIR -->
-            <div class="px-2 py-1 bg-emerald-600 text-white rounded-lg shadow-xs flex items-center justify-between">
-              <div class="flex items-center gap-1 min-w-0">
-                <i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-200 flex-shrink-0"></i>
-                <div class="truncate">
-                  <span class="text-[8px] font-bold text-emerald-200 uppercase block leading-none">Hadir</span>
-                  <span class="text-[10px] font-black tracking-tight">${attInfo.hadirText}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- TAG KECIL: MURID CUTI -->
-            <div class="flex items-center justify-between px-0.5">
-              ${attInfo.hasCuti ? `
-                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-rose-50 border border-rose-200 text-rose-700 rounded text-[9px] font-bold">
-                  <i data-lucide="user-minus" class="w-2.5 h-2.5 text-rose-500"></i>
-                  <span>Cuti: ${attInfo.cutiText}</span>
-                </span>
-              ` : `
-                <span class="text-[9px] text-slate-400 font-medium italic flex items-center gap-1">
-                  <i data-lucide="check" class="w-2.5 h-2.5 text-emerald-500"></i>
-                  <span>Tiada giliran cuti</span>
-                </span>
-              `}
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // ==========================================
-    // 2. PAPARAN MINGGUAN (WEEKLY TIMETABLE)
-    // ==========================================
-    function renderWeeklyTimetable() {
-      const container = document.getElementById('weeklyTimetableContainer');
-      const selectedWeekNum = parseInt(document.getElementById('selectWeekDropdown').value, 10) || 1;
-
-      let weekObj = NOVEMBER_WEEKS.find(w => w.minggu === selectedWeekNum);
-      if (selectedWeekNum === 5) {
-        weekObj = {
-          minggu: 5,
-          hariList: [
-            NOVEMBER_WEEKS[4].hariList[0],
-            DECEMBER_WEEKS[0].hariList[1],
-            DECEMBER_WEEKS[0].hariList[2],
-            DECEMBER_WEEKS[0].hariList[3],
-            DECEMBER_WEEKS[0].hariList[4]
-          ]
-        };
-      }
-
-      if (!weekObj) return;
-
-      let html = `
-        <div class="p-4 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h3 class="font-black text-sm sm:text-base">Jadual Waktu Minggu ${weekObj.minggu} (SMK Kamarul Ariffin)</h3>
-            <p class="text-xs text-slate-400">Slot 30 Minit (07:30 PG – 02:30 PTG) • Rehat 10:00 – 10:30 PG</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold bg-indigo-600 px-3 py-1 rounded-lg">Isnin hingga Jumaat</span>
-          </div>
-        </div>
-
-        <div class="overflow-x-auto custom-scroll">
-          <table class="w-full text-left border-collapse min-w-[760px] text-xs">
-            <thead>
-              <tr class="bg-slate-100 text-slate-700 uppercase font-black border-b border-slate-200">
-                <th class="py-2.5 px-3 w-28 text-center border-r border-slate-200">Masa (30 Minit)</th>
-                ${weekObj.hariList.map(d => {
-                  const dt = cleanDate(d.tarikh);
-                  const b = d.cuti ? 'Cuti' : (dayFieldConfig[dt] || 'Belum Ditentukan');
-                  const theme = getBidangColorTheme(b);
-                  const dayAtt = dayAttendanceMap[dt] || { cutiForms: [], adaForms: ALL_FORMS };
-                  const attInfo = formatAttendanceTags(dayAtt);
-
-                  return `
-                    <th class="py-2.5 px-3 border-r border-slate-200 text-center ${d.cuti ? 'bg-rose-50 text-rose-900' : ''}">
-                      <div class="font-black text-sm">${d.hari}</div>
-                      <div class="text-[10px] text-slate-500">${dt}</div>
-                      <div class="mt-1"><span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold ${theme.badgeBg} ${theme.badgeText}">${b}</span></div>
-                      
-                      <!-- TAG BESAR HADIR (MINGGUAN) -->
-                      <div class="mt-1.5 px-2 py-1 bg-emerald-600 text-white rounded font-black text-[10px] shadow-xs truncate">
-                        HADIR: ${attInfo.hadirText}
-                      </div>
-
-                      <!-- TAG KECIL CUTI (MINGGUAN) -->
-                      <div class="mt-0.5">
-                        ${attInfo.hasCuti ? `
-                          <span class="inline-block px-1.5 py-0.2 bg-rose-50 border border-rose-200 text-rose-700 rounded text-[9px] font-bold">Cuti: ${attInfo.cutiText}</span>
-                        ` : `
-                          <span class="text-[9px] text-slate-400 italic">Tiada cuti</span>
-                        `}
-                      </div>
-                    </th>
-                  `;
-                }).join('')}
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200">
-      `;
-
-      TIME_SLOTS.slice(0, 5).forEach(slot => {
-        html += renderWeeklyRow(weekObj, slot);
-      });
-
-      html += `
-        <tr class="bg-amber-100/90 text-amber-950 font-black border-y-2 border-amber-300 text-center">
-          <td class="py-2 px-3 border-r border-amber-200 text-xs">10:00 – 10:30 PG</td>
-          <td colspan="5" class="py-2 px-3 tracking-widest uppercase text-xs">
-            <span class="inline-flex items-center gap-1.5"><i data-lucide="coffee" class="w-4 h-4 text-amber-800"></i> WAKTU REHAT (KEKAL JAM 10.00 PAGI)</span>
-          </td>
-        </tr>
-      `;
-
-      TIME_SLOTS.slice(5).forEach(slot => {
-        html += renderWeeklyRow(weekObj, slot);
-      });
-
-      html += `
-            </tbody>
-          </table>
-        </div>
-      `;
-
-      container.innerHTML = html;
-      lucide.createIcons();
-    }
-
-    function renderWeeklyRow(weekObj, slot) {
-      let row = `
-        <tr class="hover:bg-slate-50/50 transition">
-          <td class="py-1.5 px-2.5 text-center font-bold text-slate-600 bg-slate-50 border-r border-slate-200 text-[11px] whitespace-nowrap">
-            ${slot.label}
-          </td>
-      `;
-
-      weekObj.hariList.forEach(day => {
-        const dt = cleanDate(day.tarikh);
-        const slotKey = `${dt}_slot_${slot.id}`;
-        const slotData = activitiesMap[slotKey] || {};
-
-        if (day.cuti) {
-          row += `
-            <td class="py-1.5 px-2 border-r border-slate-200 bg-rose-50/50 text-center align-middle">
-              <span class="text-[10px] font-bold text-rose-700 uppercase">${day.catatanCuti}</span>
-            </td>
-          `;
-          return;
-        }
-
-        const hasContent = slotData.aktiviti && slotData.aktiviti.trim() !== '';
-        const dayBidang = dayFieldConfig[dt] || 'Belum Ditentukan';
-        const theme = getBidangColorTheme(slotData.bidang || dayBidang);
-
-        if (!hasContent) {
-          row += `
-            <td onclick="openRangeActivityModal('${slot.id}', '${dt}')" class="py-1.5 px-2 border-r border-slate-200 cursor-pointer hover:bg-indigo-50/30 group align-top">
-              <div class="min-h-[46px] rounded-lg border border-dashed border-slate-300 p-1 flex items-center justify-center text-[10px] text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-400 transition">
-                + Isi Aktiviti
-              </div>
-            </td>
-          `;
-        } else {
-          row += `
-            <td onclick="openRangeActivityModal('${slot.id}', '${dt}')" class="py-1 px-1.5 border-r border-slate-200 cursor-pointer hover:bg-slate-100 transition align-top">
-              <div class="min-h-[46px] rounded-lg border ${theme.border} bg-white p-1.5 shadow-xs space-y-0.5">
-                <div class="font-bold text-slate-900 leading-snug whitespace-pre-line text-[11px]">${escapeHtml(slotData.aktiviti)}</div>
-                <div class="text-[10px] text-indigo-700 font-semibold truncate">${escapeHtml(slotData.guru || 'Guru')}</div>
-                ${slotData.lokasi ? `<div class="text-[9px] text-slate-400 truncate">${escapeHtml(slotData.lokasi)}</div>` : ''}
-              </div>
-            </td>
-          `;
-        }
-      });
-
-      row += `</tr>`;
-      return row;
-    }
-
-    // ==========================================
-    // 3. PAPARAN HARIAN (DAILY AGENDA)
-    // ==========================================
-    function populateDateDropdown() {
-      const select = document.getElementById('selectDateDropdown');
-      select.innerHTML = '';
-
-      const allActiveDays = [
-        ...NOVEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active)),
-        ...DECEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active))
-      ];
-
-      allActiveDays.forEach(d => {
-        const dt = cleanDate(d.tarikh);
-        const opt = document.createElement('option');
-        opt.value = dt;
-        opt.textContent = `${dt} (${d.hari})${d.cuti ? ' - CUTI' : ''}`;
-        select.appendChild(opt);
-      });
-    }
-
-    function renderDailyAgenda() {
-      const container = document.getElementById('dailyAgendaContainer');
-      const selectedDate = document.getElementById('selectDateDropdown').value || '2026-11-02';
-
-      const dObj = new Date(selectedDate);
-      const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-      const dayBidang = dayFieldConfig[selectedDate] || 'Belum Ditentukan';
-      const theme = getBidangColorTheme(dayBidang);
-
-      const dayAtt = dayAttendanceMap[selectedDate] || { cutiForms: [], adaForms: ALL_FORMS };
-      const attInfo = formatAttendanceTags(dayAtt);
-
-      let html = `
-        <div class="border-b border-slate-200 pb-3 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <span class="text-xs font-black uppercase text-indigo-600">Jadual Pengurusan Pasca UASA</span>
-            <h2 class="text-lg font-black text-slate-900">${formattedDate}</h2>
-            <div class="flex items-center gap-2 mt-1">
-              <span class="px-2 py-0.5 rounded text-xs font-bold ${theme.badgeBg} ${theme.badgeText}">Fokus: Bidang ${dayBidang}</span>
-              <span class="text-xs text-slate-500">• 13 Slot 30 Minit</span>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-2">
-            <!-- TAG BESAR HADIR (HARIAN) -->
-            <div class="px-3.5 py-2 bg-emerald-600 text-white rounded-xl shadow-xs flex items-center gap-2">
-              <i data-lucide="users" class="w-4 h-4 text-emerald-200"></i>
-              <div>
-                <span class="text-[9px] font-bold text-emerald-200 uppercase block leading-none">Murid Hadir Hari Ini</span>
-                <span class="text-xs font-black">${attInfo.hadirText}</span>
-              </div>
-            </div>
-
-            <!-- TAG KECIL CUTI (HARIAN) -->
-            ${attInfo.hasCuti ? `
-              <div class="px-2.5 py-1.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-lg text-xs font-bold flex items-center gap-1.5">
-                <i data-lucide="user-minus" class="w-3.5 h-3.5 text-rose-500"></i>
-                <span>Cuti: ${attInfo.cutiText}</span>
-              </div>
-            ` : `
-              <div class="px-2.5 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-xs italic">
-                Tiada giliran cuti
-              </div>
-            `}
-          </div>
-        </div>
-
-        <div class="space-y-2 pt-2">
-      `;
-
-      TIME_SLOTS.forEach((slot, idx) => {
-        if (idx === 5) {
-          html += `
-            <div class="p-2.5 bg-amber-100 text-amber-950 font-black rounded-xl border border-amber-300 flex items-center justify-center gap-2 text-xs">
-              <i data-lucide="coffee" class="w-4 h-4 text-amber-800"></i>
-              <span>10:00 – 10:30 PG: WAKTU REHAT (KEKAL)</span>
-            </div>
-          `;
-        }
-
-        const slotKey = `${selectedDate}_slot_${slot.id}`;
-        const s = activitiesMap[slotKey] || {};
-        const isFilled = s.aktiviti && s.aktiviti.trim() !== '';
-
-        if (s.isCuti) {
-          html += `
-            <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs">
-              <span class="font-bold text-rose-700 w-32">${s.masa}</span>
-              <span class="font-extrabold text-rose-900 uppercase">${s.catatanCuti}</span>
-            </div>
-          `;
-        } else if (!isFilled) {
-          html += `
-            <div onclick="openRangeActivityModal('${slot.id}', '${selectedDate}')" class="p-2.5 rounded-xl bg-slate-50 border border-dashed border-slate-300 hover:border-indigo-400 flex items-center justify-between text-xs cursor-pointer transition">
-              <div class="flex items-center gap-3">
-                <span class="font-bold text-slate-600 w-32">${s.masa}</span>
-                <span class="text-slate-400 italic">+ Slot Kosong (Klik untuk isi)</span>
-              </div>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${theme.badgeBg} ${theme.badgeText}">${s.bidang || dayBidang}</span>
-            </div>
-          `;
-        } else {
-          html += `
-            <div class="p-3 rounded-xl bg-white border ${theme.border} shadow-xs flex items-center justify-between text-xs">
-              <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                  <span class="font-bold text-slate-500 text-[11px]">${s.masa}</span>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded ${theme.badgeBg} ${theme.badgeText}">${s.bidang}</span>
-                </div>
-                <h4 class="font-bold text-slate-900 text-sm whitespace-pre-line">${escapeHtml(s.aktiviti)}</h4>
-                <div class="flex items-center gap-3 text-slate-600 text-[11px]">
-                  <span class="font-semibold text-indigo-700 flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i> ${escapeHtml(s.guru || 'Guru')}</span>
-                  ${s.lokasi ? `<span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${escapeHtml(s.lokasi)}</span>` : ''}
-                </div>
-              </div>
-              <button onclick="openRangeActivityModal('${slot.id}', '${selectedDate}')" class="p-2 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 transition">
-                <i data-lucide="edit-2" class="w-4 h-4"></i>
-              </button>
-            </div>
-          `;
-        }
-      });
-
-      html += `</div>`;
-      container.innerHTML = html;
-      lucide.createIcons();
-    }
-
-    // ==========================================
-    // 4. MOD CETAKAN RASMI (PRINT HUB)
-    // ==========================================
-    function renderPrintHub() {
-      const container = document.getElementById('printHubDocument');
-      const format = document.getElementById('printFormatSelect').value;
-
-      let html = `
-        <div class="flex items-center justify-center gap-4 border-b-2 border-slate-900 pb-3">
-          <img src="logo.png" alt="Logo SEMEKAR" class="w-16 h-16 object-contain" onerror="this.style.display='none'">
-          <div class="text-center space-y-0.5">
-            <h2 class="text-base font-black uppercase tracking-wider text-slate-900">SMK KAMARUL ARIFFIN (SEMEKAR), LABIS, JOHOR</h2>
-            <h3 class="text-sm font-extrabold text-indigo-900">JADUAL PROGRAM PENGISIAN PASCA UASA SESI 2026 (PUasa)</h3>
-            <p class="text-[11px] text-slate-600">Tempoh Pelaksanaan: 02 November 2026 Hingga 04 Disember 2026 (Waktu: 07:30 PG – 02:30 PTG)</p>
-          </div>
-        </div>
-      `;
-
-      if (format === 'FULL_MONTH') {
-        html += renderPrintFullProgram();
-      } else if (format === 'WEEKLY') {
-        html += `<p class="text-xs text-slate-600 italic">Sila pilih 'Minggu' pada menu atas dan gunakan butang Cetak untuk mencetak jadual mengikut minggu.</p>`;
-      } else {
-        html += `<p class="text-xs text-slate-600 italic">Sila pilih 'Hari' pada menu atas dan gunakan butang Cetak untuk mencetak agenda harian terperinci.</p>`;
-      }
-
-      html += `
-        <div class="grid grid-cols-2 pt-8 text-xs gap-12 text-center print-page">
-          <div class="space-y-12">
-            <p class="font-bold text-slate-700">Disediakan Oleh:</p>
-            <div>
-              <p class="font-extrabold text-slate-900 underline">PENYELARAS PROGRAM PASCA UASA</p>
-              <p class="text-slate-500">SMK Kamarul Ariffin</p>
-            </div>
-          </div>
-
-          <div class="space-y-12">
-            <p class="font-bold text-slate-700">Disahkan Oleh:</p>
-            <div>
-              <p class="font-extrabold text-slate-900 underline">PENGETUA / GPK PENTADBIRAN</p>
-              <p class="text-slate-500">SMK Kamarul Ariffin</p>
-            </div>
-          </div>
-        </div>
-      `;
-
-      container.innerHTML = html;
-      lucide.createIcons();
-    }
-
-    function renderPrintFullProgram() {
-      const allActiveDays = [
-        ...NOVEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active)),
-        ...DECEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active))
-      ];
-
-      let tableHtml = `
-        <div class="space-y-2">
-          <h4 class="font-black text-xs uppercase text-slate-800">Senarai Rumusan Hari & Pengisian Aktiviti:</h4>
-          <table class="w-full border-collapse border border-slate-400 text-[10px]">
-            <thead>
-              <tr class="bg-slate-200 text-slate-900 uppercase font-black">
-                <th class="border border-slate-400 p-1.5 w-16 text-center">Tarikh</th>
-                <th class="border border-slate-400 p-1.5 w-14 text-center">Hari</th>
-                <th class="border border-slate-400 p-1.5 w-24 text-center">Bidang</th>
-                <th class="border border-slate-400 p-1.5 text-left">Aktiviti Utama</th>
-                <th class="border border-slate-400 p-1.5 w-36 text-left">Guru In-Charge</th>
-                <th class="border border-slate-400 p-1.5 w-28 text-center bg-emerald-50">Tingkatan Hadir</th>
-                <th class="border border-slate-400 p-1.5 w-24 text-center">Tingkatan Cuti</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-
-      allActiveDays.forEach(d => {
-        const dt = cleanDate(d.tarikh);
-        const dayBidang = d.cuti ? 'Cuti Perayaan' : (dayFieldConfig[dt] || 'Belum Ditentukan');
-        const dayAtt = dayAttendanceMap[dt] || { cutiForms: [], adaForms: ALL_FORMS };
-        const attInfo = formatAttendanceTags(dayAtt);
-
-        const daySlots = TIME_SLOTS.map(s => activitiesMap[`${dt}_slot_${s.id}`] || {});
-        const acts = daySlots.filter(s => s.aktiviti && s.aktiviti.trim() !== '');
-        const actSummary = acts.length > 0 ? Array.from(new Set(acts.map(a => a.aktiviti))).join('\n') : (d.cuti ? d.catatanCuti : 'Belum diisi');
-        const teachersSummary = acts.length > 0 ? Array.from(new Set(acts.map(a => a.guru).filter(Boolean))).join(', ') : '-';
-
-        tableHtml += `
-          <tr class="${d.cuti ? 'bg-rose-50' : ''}">
-            <td class="border border-slate-400 p-1.5 text-center font-bold">${dt}</td>
-            <td class="border border-slate-400 p-1.5 text-center">${d.hari}</td>
-            <td class="border border-slate-400 p-1.5 text-center font-bold">${dayBidang}</td>
-            <td class="border border-slate-400 p-1.5 font-medium whitespace-pre-line">${escapeHtml(actSummary)}</td>
-            <td class="border border-slate-400 p-1.5">${escapeHtml(teachersSummary)}</td>
-            <td class="border border-slate-400 p-1.5 text-center font-black text-emerald-800 bg-emerald-50/50">${attInfo.hadirText}</td>
-            <td class="border border-slate-400 p-1.5 text-center font-bold text-rose-700">${attInfo.hasCuti ? attInfo.cutiText : '-'}</td>
-          </tr>
-        `;
-      });
-
-      tableHtml += `</tbody></table></div>`;
-      return tableHtml;
-    }
-
-    function printCurrentView() {
-      window.print();
     }
 
     // ==========================================
@@ -2151,14 +1593,13 @@
         const slotKey = `${cleanDt}_slot_${s.id}`;
         if (activitiesMap[slotKey] && !activitiesMap[slotKey].isCuti) {
           activitiesMap[slotKey].bidang = bidang;
-          activitiesMap[slotKey].aktiviti = aktiviti; // Menyokong multiline (\n)
+          activitiesMap[slotKey].aktiviti = aktiviti;
           activitiesMap[slotKey].deskripsi = deskripsi;
           activitiesMap[slotKey].guru = guru;
           activitiesMap[slotKey].lokasi = lokasi;
         }
       });
 
-      // Tutup modal serta-merta
       closeModal();
 
       try {
@@ -2225,7 +1666,6 @@
       document.getElementById('chkDayCutiT2').checked = cutiList.includes('Tingkatan 2');
       document.getElementById('chkDayCutiT3').checked = cutiList.includes('Tingkatan 3');
       document.getElementById('chkDayCutiT4').checked = cutiList.includes('Tingkatan 4');
-      document.getElementById('dayAttendanceNote').value = dayAtt.catatan || '';
 
       calcDayAttendancePreview();
       document.getElementById('dayAttendanceModal').classList.remove('hidden');
@@ -2292,13 +1732,13 @@
       if (document.getElementById('chkDayCutiT4').checked) cutiList.push('Tingkatan 4');
 
       const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
-      const catatan = document.getElementById('dayAttendanceNote').value.trim();
+      const existingCatatan = dayAttendanceMap[cleanDt] ? (dayAttendanceMap[cleanDt].catatan || '') : '';
 
       dayAttendanceMap[cleanDt] = {
         tarikh: cleanDt,
         cutiForms: cutiList,
         adaForms: adaList,
-        catatan: catatan
+        catatan: existingCatatan
       };
 
       closeDayAttendanceModal();
@@ -2426,7 +1866,7 @@
       loadSavedData();
       lucide.createIcons();
 
-      // Semakan berkala santai (30 saat)
+      // Semakan berkala santai
       setInterval(() => syncFromGoogleSheet(false), CONFIG.STREAM_INTERVAL);
 
       // Auto-sync semasa tab diaktifkan semula
