@@ -187,7 +187,7 @@
       </div>
       <div class="flex items-center gap-2">
         <span class="text-indigo-700 font-bold">💡 Navigasi Pantas:</span>
-        <span class="text-slate-500">Klik butang "Perincian Slot" atau klik pada kotak slot masa untuk mengisi aktiviti serta catatan.</span>
+        <span class="text-slate-500">Data terkini dari Google Sheet disegerakkan secara automatik sebaik sahaja aplikasi dibuka.</span>
       </div>
     </div>
 
@@ -1048,7 +1048,6 @@
       populateDateDropdown();
       renderCurrentView();
       updateStatistics();
-      updateSyncStatusUI('ready');
     }
 
     function saveToLocalStorage(triggerStreamingPush = true) {
@@ -2128,11 +2127,11 @@
 
       const btnSync = document.getElementById('btnSync');
       const syncIcon = document.getElementById('syncIcon');
-      if (isManual) {
-        btnSync.disabled = true;
-        syncIcon.classList.add('animate-spin');
-        updateSyncStatusUI('saving');
-      }
+      
+      // Paparkan status penyegerakan aktif
+      if (btnSync) btnSync.disabled = true;
+      if (syncIcon) syncIcon.classList.add('animate-spin');
+      updateSyncStatusUI('syncing');
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
@@ -2189,20 +2188,19 @@
 
           saveToLocalStorage(false);
           renderCurrentView();
+          updateStatistics();
           updateSyncStatusUI('live', json.timestamp);
           if (isManual) showToast('Data disegerakkan dari Google Sheet.');
         }
       } catch (err) {
         clearTimeout(timeoutId);
+        updateSyncStatusUI('offline');
         if (isManual) {
-          updateSyncStatusUI('offline');
           showToast('Data tempatan anda selamat.');
         }
       } finally {
-        if (isManual) {
-          btnSync.disabled = false;
-          syncIcon.classList.remove('animate-spin');
-        }
+        if (btnSync) btnSync.disabled = false;
+        if (syncIcon) syncIcon.classList.remove('animate-spin');
       }
     }
 
@@ -2224,6 +2222,13 @@
         subtitle.textContent = 'Sedang menghantar ke Google Sheet';
         label.textContent = 'Menyimpan...';
         label.className = 'text-amber-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
+      } else if (status === 'syncing') {
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-400';
+        pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75';
+        title.textContent = 'Menyegerakkan Data...';
+        subtitle.textContent = 'Memuat turun rekod terkini daripada Google Sheet';
+        label.textContent = 'Menyegerak...';
+        label.className = 'text-indigo-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       } else if (status === 'live') {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
@@ -2263,10 +2268,18 @@
       setTimeout(() => { toast.classList.add('translate-y-10', 'opacity-0'); }, 3500);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    // AUTOMATIK: Muat data cache dahulu, kemudian SERTA-MERTA segerak dari Google Sheet
+    window.addEventListener('DOMContentLoaded', async () => {
       loadSavedData();
       if (window.lucide) lucide.createIcons();
+
+      // Panggilan terus ke Google Sheet sebaik sahaja aplikasi dibuka
+      await syncFromGoogleSheet(false);
+
+      // Semakan berkala berterusan setiap 30 saat
       setInterval(() => syncFromGoogleSheet(false), CONFIG.STREAM_INTERVAL);
+
+      // Segerak automatik sekiranya pengguna beralih semula ke tab ini
       window.addEventListener('focus', () => {
         if (!isUserEditing) syncFromGoogleSheet(false);
       });
