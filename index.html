@@ -37,22 +37,23 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- BAR PENSTRIMAN LANGSUNG -->
+  <!-- BAR STATUS PENYEGERAKAN REAL-TIME -->
   <header class="bg-slate-900 text-white border-b border-slate-800 no-print sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between text-xs gap-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-xs gap-2">
       <div class="flex items-center gap-2.5">
         <span class="relative flex h-2.5 w-2.5">
           <span id="syncPulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span id="syncDot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span class="font-bold text-slate-100" id="syncStatusTitle">Penstriman Langsung Aktif</span>
+        <span class="font-bold text-slate-100" id="syncStatusTitle">Tersambung ke Google Sheet</span>
         <span class="text-slate-400 hidden sm:inline">•</span>
-        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti & aktiviti disegerakkan secara langsung</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti murid & aktiviti tersimpan selamat</span>
       </div>
       <div class="flex items-center gap-2">
-        <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Menyambung...</span>
-        <button onclick="forcePushToGoogleSheet()" id="btnForcePush" class="px-2.5 py-0.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded font-bold text-[11px] transition">
-          Hantar ke Sheet
+        <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Terselaras</span>
+        <button onclick="syncFromGoogleSheet(true)" id="btnSync" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-indigo-300 rounded border border-slate-700 font-semibold text-[11px] flex items-center gap-1 transition" title="Muat turun data terkini sekiranya guru lain mengisi">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="syncIcon"></i>
+          <span>Muat Semula</span>
         </button>
         <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white font-medium ml-1">
           <i data-lucide="external-link" class="w-3.5 h-3.5 inline"></i>
@@ -107,9 +108,9 @@
         <div>
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
-            Agihan Saksama Mengikut Hari (Jumlah: 23 Hari Persekolahan Aktif)
+            Agihan Saksama Mengikut Hari Persekolahan (Jumlah: 23 Hari Aktif)
           </h2>
-          <p class="text-[11px] text-slate-500">Pembahagian 4 bidang dihitung mengikut bilangan <strong>HARI persekolahan</strong> (bukan mengikut slot).</p>
+          <p class="text-[11px] text-slate-500">Pembahagian 4 bidang dihitung secara saksama mengikut bilangan <strong>HARI persekolahan</strong>.</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -180,7 +181,7 @@
       </div>
       <div class="flex items-center gap-2">
         <span class="text-emerald-700 font-bold">Default 30 Minit:</span>
-        <span class="text-slate-500">Pengisian bermula 07:30 PG – 08:00 PG secara lalai.</span>
+        <span class="text-slate-500">Pengisian aktiviti bermula 07:30 PG – 08:00 PG secara lalai.</span>
       </div>
     </div>
 
@@ -260,12 +261,12 @@
       <div id="dailyAgendaContainer" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 space-y-4"></div>
     </div>
 
-    <!-- 4. MOD CETAKAN RASMI SEKOLAH (PRINT HUB) -->
+    <!-- 4. MOD CETAKAN RASMI (PRINT HUB) -->
     <div id="viewSectionPrint" class="space-y-4 hidden">
       <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3 no-print">
         <div>
           <h3 class="text-sm font-bold text-slate-900">Pusat Cetakan Rasmi Jadual PUasa SEMEKAR 2026</h3>
-          <p class="text-xs text-slate-500">Pilih format dokumen rasmi untuk dicetak atau dieksport ke PDF.</p>
+          <p class="text-xs text-slate-500">Format dokumen rasmi untuk dicetak atau disimpan ke PDF.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -570,9 +571,7 @@
           Tentukan bidang bagi setiap hari persekolahan. Sistem akan mengira pecahan hari sama rata (~5-6 hari bagi setiap bidang).
         </p>
 
-        <div class="divide-y divide-slate-200 border border-slate-200 rounded-xl overflow-hidden" id="dayFieldAssignList">
-          <!-- Dijana oleh JS -->
-        </div>
+        <div class="divide-y divide-slate-200 border border-slate-200 rounded-xl overflow-hidden" id="dayFieldAssignList"></div>
       </div>
 
       <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
@@ -587,9 +586,8 @@
   <script>
     const CONFIG = {
       SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec',
-      SHEET_ID: '13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI',
-      STORAGE_KEY: 'PUASA_SEMEKAR_FINAL_DAY_BALANCED',
-      STREAM_INTERVAL: 4000
+      STORAGE_KEY: 'PUASA_SEMEKAR_2026_PERMANENT',
+      STREAM_INTERVAL: 30000 // Polling santai setiap 30 saat untuk keselamatan kuota Google
     };
 
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
@@ -646,36 +644,64 @@
       { id: '1400', label: '02:00 – 02:30 PTG', startMin: 840, endMin: 870 }
     ];
 
-    // PEMBAHAGIAN SAKSAMA MENGIKUT HARI (23 HARI PERSEKOLAHAN)
-    // 6 HARI BAHASA, 6 HARI SAINS & MAT, 6 HARI KEMASYARAKATAN, 5 HARI TVET
+    // PEMBAHAGIAN SAKSAMA MENGIKUT HARI (23 HARI)
     let dayFieldConfig = {
       '2026-11-02': 'Bahasa',
       '2026-11-03': 'Bahasa',
       '2026-11-04': 'Bahasa',
       '2026-11-05': 'Bahasa',
       '2026-11-06': 'Bahasa',
-      '2026-11-11': 'Bahasa', // 6 Hari Bahasa
+      '2026-11-11': 'Bahasa',
       '2026-11-12': 'Sains & Matematik',
       '2026-11-13': 'Sains & Matematik',
       '2026-11-16': 'Sains & Matematik',
       '2026-11-17': 'Sains & Matematik',
       '2026-11-18': 'Sains & Matematik',
-      '2026-11-19': 'Sains & Matematik', // 6 Hari Sains & Matematik
+      '2026-11-19': 'Sains & Matematik',
       '2026-11-20': 'Sains Kemasyarakatan',
       '2026-11-23': 'Sains Kemasyarakatan',
       '2026-11-24': 'Sains Kemasyarakatan',
       '2026-11-25': 'Sains Kemasyarakatan',
       '2026-11-26': 'Sains Kemasyarakatan',
-      '2026-11-27': 'Sains Kemasyarakatan', // 6 Hari Sains Kemasyarakatan
+      '2026-11-27': 'Sains Kemasyarakatan',
       '2026-11-30': 'Teknik & Vokasional',
       '2026-12-01': 'Teknik & Vokasional',
       '2026-12-02': 'Teknik & Vokasional',
       '2026-12-03': 'Teknik & Vokasional',
-      '2026-12-04': 'Teknik & Vokasional'  // 5 Hari TVET (Total: 23 Hari)
+      '2026-12-04': 'Teknik & Vokasional'
+    };
+
+    // DATA ASAS CUTI TINGKATAN (DISELAMATKAN DARI GOOGLE SHEET ANDA)
+    const RECOVERED_ATTENDANCE = {
+      '2026-11-02': { tarikh: '2026-11-02', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-03': { tarikh: '2026-11-03', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 3'], adaForms: ['Tingkatan 2', 'Tingkatan 4'], catatan: '' },
+      '2026-11-04': { tarikh: '2026-11-04', hari: 'Rabu', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-05': { tarikh: '2026-11-05', hari: 'Khamis', cutiForms: ['Tingkatan 2', 'Tingkatan 3'], adaForms: ['Tingkatan 1', 'Tingkatan 4'], catatan: '' },
+      '2026-11-06': { tarikh: '2026-11-06', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-09': { tarikh: '2026-11-09', hari: 'Isnin', cutiForms: [], adaForms: ALL_FORMS, catatan: 'Cuti Deepavali' },
+      '2026-11-10': { tarikh: '2026-11-10', hari: 'Selasa', cutiForms: [], adaForms: ALL_FORMS, catatan: 'Cuti Deepavali KPM' },
+      '2026-11-11': { tarikh: '2026-11-11', hari: 'Rabu', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-12': { tarikh: '2026-11-12', hari: 'Khamis', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-13': { tarikh: '2026-11-13', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-16': { tarikh: '2026-11-16', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-17': { tarikh: '2026-11-17', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-18': { tarikh: '2026-11-18', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: '' },
+      '2026-11-19': { tarikh: '2026-11-19', hari: 'Khamis', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-20': { tarikh: '2026-11-20', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-23': { tarikh: '2026-11-23', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-24': { tarikh: '2026-11-24', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-25': { tarikh: '2026-11-25', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: '' },
+      '2026-11-26': { tarikh: '2026-11-26', hari: 'Khamis', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-11-27': { tarikh: '2026-11-27', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
+      '2026-11-30': { tarikh: '2026-11-30', hari: 'Isnin', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: '' },
+      '2026-12-01': { tarikh: '2026-12-01', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-12-02': { tarikh: '2026-12-02', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: '' },
+      '2026-12-03': { tarikh: '2026-12-03', hari: 'Khamis', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
+      '2026-12-04': { tarikh: '2026-12-04', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: 'Hari Terakhir Persekolahan' }
     };
 
     let activeMonthFilter = 'ALL';
-    let currentView = 'month'; // 'month', 'week', 'day', 'print'
+    let currentView = 'month';
 
     const NOVEMBER_WEEKS = [
       {
@@ -749,17 +775,12 @@
     let autoSaveTimer = null;
     let currentSelectedTeachers = [];
 
-    function normalizeDateStr(raw) {
+    function cleanDate(raw) {
       if (!raw) return '';
-      const s = raw.toString().trim();
-      if (s.includes('T')) {
-        try {
-          const d = new Date(s);
-          const myTime = new Date(d.getTime() + (8 * 3600 * 1000));
-          return myTime.toISOString().split('T')[0];
-        } catch(e) {}
-      }
-      return s.split('T')[0];
+      let s = raw.toString().trim();
+      if (s.startsWith("'")) s = s.substring(1);
+      if (s.includes('T')) return s.split('T')[0];
+      return s;
     }
 
     function getNextSlotEndTime(startId) {
@@ -783,7 +804,7 @@
 
     function getMingguFromTarikh(tarikh) {
       if (!tarikh) return 1;
-      const t = normalizeDateStr(tarikh);
+      const t = cleanDate(tarikh);
       const parts = t.split('-');
       if (parts.length < 3) return 1;
       const d = parseInt(parts[2], 10);
@@ -801,16 +822,23 @@
     function initEmptyStructure() {
       const initial = {};
 
+      // Masukkan pemulihan data cuti ke dayAttendanceMap jika masih kosong
+      Object.keys(RECOVERED_ATTENDANCE).forEach(d => {
+        if (!dayAttendanceMap[d]) {
+          dayAttendanceMap[d] = { ...RECOVERED_ATTENDANCE[d] };
+        }
+      });
+
       const allActiveDays = [
         ...NOVEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active)),
         ...DECEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active))
       ];
 
       allActiveDays.forEach(d => {
-        const cleanDate = normalizeDateStr(d.tarikh);
-        if (!dayAttendanceMap[cleanDate]) {
-          dayAttendanceMap[cleanDate] = {
-            tarikh: cleanDate,
+        const dt = cleanDate(d.tarikh);
+        if (!dayAttendanceMap[dt]) {
+          dayAttendanceMap[dt] = {
+            tarikh: dt,
             hari: d.hari,
             cutiForms: [],
             adaForms: [...ALL_FORMS],
@@ -818,15 +846,14 @@
           };
         }
 
-        const assignedBidang = d.cuti ? 'Cuti' : (dayFieldConfig[cleanDate] || 'Belum Ditentukan');
+        const assignedBidang = d.cuti ? 'Cuti' : (dayFieldConfig[dt] || 'Belum Ditentukan');
 
         TIME_SLOTS.forEach((slot, sIdx) => {
-          const slotKey = `${cleanDate}_slot_${slot.id}`;
-
+          const slotKey = `${dt}_slot_${slot.id}`;
           initial[slotKey] = {
             id: slotKey,
-            minggu: getMingguFromTarikh(cleanDate),
-            tarikh: cleanDate,
+            minggu: getMingguFromTarikh(dt),
+            tarikh: dt,
             hari: d.hari,
             slotId: slot.id,
             slotIndex: sIdx,
@@ -846,36 +873,41 @@
     }
 
     function loadSavedData() {
-      const cached = localStorage.getItem(CONFIG.STORAGE_KEY);
-      const cachedDays = localStorage.getItem(CONFIG.STORAGE_KEY + '_DAYS');
-      const cachedDayAtt = localStorage.getItem(CONFIG.STORAGE_KEY + '_DAY_ATT');
+      // 1. Muatkan data tempatan
+      dayAttendanceMap = { ...RECOVERED_ATTENDANCE };
 
+      const cachedDayAtt = localStorage.getItem(CONFIG.STORAGE_KEY + '_DAY_ATT');
+      if (cachedDayAtt) {
+        try {
+          const parsed = JSON.parse(cachedDayAtt);
+          dayAttendanceMap = { ...dayAttendanceMap, ...parsed };
+        } catch(e){}
+      }
+
+      const cachedDays = localStorage.getItem(CONFIG.STORAGE_KEY + '_DAYS');
       if (cachedDays) {
         try { dayFieldConfig = { ...dayFieldConfig, ...JSON.parse(cachedDays) }; } catch(e){}
       }
-      if (cachedDayAtt) {
-        try { dayAttendanceMap = JSON.parse(cachedDayAtt); } catch(e){}
-      }
 
-      if (cached) {
+      activitiesMap = initEmptyStructure();
+
+      const cachedSlots = localStorage.getItem(CONFIG.STORAGE_KEY);
+      if (cachedSlots) {
         try {
-          activitiesMap = JSON.parse(cached);
-        } catch (e) {
-          activitiesMap = initEmptyStructure();
-        }
-      } else {
-        activitiesMap = initEmptyStructure();
+          const parsed = JSON.parse(cachedSlots);
+          Object.keys(parsed).forEach(k => {
+            if (activitiesMap[k]) activitiesMap[k] = { ...activitiesMap[k], ...parsed[k] };
+          });
+        } catch(e){}
       }
-
-      const blank = initEmptyStructure();
-      Object.keys(blank).forEach(k => {
-        if (!activitiesMap[k]) activitiesMap[k] = blank[k];
-      });
 
       populateTeacherDropdown();
       populateDateDropdown();
       renderCurrentView();
       updateStatistics();
+
+      // Mulakan status bersedia
+      updateSyncStatusUI('ready');
     }
 
     function saveToLocalStorage(triggerStreamingPush = true) {
@@ -889,7 +921,6 @@
       }
     }
 
-    // TOGOL MOD PAPARAN
     function switchView(view) {
       currentView = view;
       ['Month', 'Week', 'Day', 'Print'].forEach(v => {
@@ -905,7 +936,6 @@
           }
         }
       });
-
       renderCurrentView();
     }
 
@@ -918,14 +948,14 @@
     }
 
     // ==========================================
-    // SISTEM AUTO-PUSH KE GOOGLE SHEET
+    // AUTO-SAVE KE GOOGLE SHEET
     // ==========================================
     function triggerInstantPush() {
       updateSyncStatusUI('saving');
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
         streamPushToSheet();
-      }, 500);
+      }, 600);
     }
 
     async function streamPushToSheet() {
@@ -935,7 +965,7 @@
           slotsPayload.push({
             id: s.id,
             minggu: s.minggu || getMingguFromTarikh(s.tarikh),
-            tarikh: normalizeDateStr(s.tarikh),
+            tarikh: cleanDate(s.tarikh),
             hari: s.hari,
             slotId: s.slotId || '',
             masa: s.masa || '',
@@ -949,7 +979,7 @@
       });
 
       const attendancePayload = Object.values(dayAttendanceMap).map(a => ({
-        tarikh: normalizeDateStr(a.tarikh),
+        tarikh: cleanDate(a.tarikh),
         hari: a.hari,
         cutiForms: a.cutiForms || [],
         adaForms: a.adaForms || [],
@@ -962,107 +992,122 @@
         dayFields: dayFieldConfig
       };
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 saat timeout
+
       try {
         const response = await fetch(CONFIG.SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
 
         const raw = await response.text();
         const res = JSON.parse(raw);
         if (res.status === 'success') {
           updateSyncStatusUI('live', res.timestamp);
         } else {
-          updateSyncStatusUI('error', res.message);
+          updateSyncStatusUI('offline');
         }
       } catch (err) {
-        console.warn('Auto-save network warning:', err);
+        clearTimeout(timeoutId);
         updateSyncStatusUI('offline');
       }
     }
 
-    async function forcePushToGoogleSheet() {
-      const btn = document.getElementById('btnForcePush');
-      btn.disabled = true;
-      btn.textContent = 'Menghantar...';
-      await streamPushToSheet();
-      btn.disabled = false;
-      btn.textContent = 'Hantar ke Sheet';
-      showToast('Ketetapan hari & aktiviti berjaya dihantar ke Google Sheet!');
-    }
-
     // ==========================================
-    // PENSTRIMAN LATAR BELAKANG (POLL SETIAP 4 SAAT)
+    // MUAT TURUN / PENYEMAKAN DATA DARI SHEET
     // ==========================================
-    async function streamPollFromSheet() {
+    async function syncFromGoogleSheet(isManual = false) {
       if (isUserEditing) return;
 
+      const btnSync = document.getElementById('btnSync');
+      const syncIcon = document.getElementById('syncIcon');
+      if (isManual) {
+        btnSync.disabled = true;
+        syncIcon.classList.add('animate-spin');
+        updateSyncStatusUI('saving');
+      }
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
       try {
-        const res = await fetch(CONFIG.SCRIPT_URL + '?action=stream&t=' + Date.now());
+        const res = await fetch(CONFIG.SCRIPT_URL + '?action=read&t=' + Date.now(), { signal: controller.signal });
+        clearTimeout(timeoutId);
         const raw = await res.text();
         const json = JSON.parse(raw);
 
         if (json.status === 'success') {
           let hasChange = false;
 
-          // Cuti Harian
-          if (json.attendance && Array.isArray(json.attendance)) {
+          // 1. Terima Cuti Harian
+          if (json.attendance && Array.isArray(json.attendance) && json.attendance.length > 0) {
             json.attendance.forEach(item => {
-              const cleanDate = normalizeDateStr(item.tarikh);
-              if (cleanDate) {
+              const dt = cleanDate(item.tarikh);
+              if (dt) {
                 const cutiRaw = item.cutiForms;
                 const cutiList = Array.isArray(cutiRaw) ? cutiRaw : (cutiRaw ? cutiRaw.toString().split(',').map(s => s.trim()).filter(Boolean) : []);
                 const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
-
-                const existing = dayAttendanceMap[cleanDate];
-                const existingCuti = existing ? (existing.cutiForms || []).join(',') : '';
-                const newCuti = cutiList.join(',');
-
-                if (existingCuti !== newCuti) {
-                  dayAttendanceMap[cleanDate] = {
-                    tarikh: cleanDate,
-                    hari: item.hari || '',
-                    cutiForms: cutiList,
-                    adaForms: adaList,
-                    catatan: item.catatan || ''
-                  };
-                  hasChange = true;
-                }
+                dayAttendanceMap[dt] = {
+                  tarikh: dt,
+                  hari: item.hari || '',
+                  cutiForms: cutiList,
+                  adaForms: adaList,
+                  catatan: item.catatan || ''
+                };
+                hasChange = true;
               }
             });
           }
 
-          // Slots Aktiviti
+          // 2. Terima Slot Aktiviti
           if (json.slots && Array.isArray(json.slots)) {
             json.slots.forEach(item => {
-              const cleanDate = normalizeDateStr(item.tarikh);
-              const slotKey = `${cleanDate}_slot_${item.slotId}`;
+              const dt = cleanDate(item.tarikh);
+              const slotKey = `${dt}_slot_${item.slotId}`;
               if (activitiesMap[slotKey]) {
-                const cur = activitiesMap[slotKey];
-                if (cur.aktiviti !== item.aktiviti || cur.guru !== item.guru || cur.bidang !== item.bidang) {
-                  activitiesMap[slotKey] = {
-                    ...cur,
-                    aktiviti: item.aktiviti || '',
-                    guru: item.guru || '',
-                    lokasi: item.lokasi || '',
-                    bidang: item.bidang || cur.bidang,
-                    deskripsi: item.deskripsi || ''
-                  };
-                  hasChange = true;
-                }
+                activitiesMap[slotKey] = {
+                  ...activitiesMap[slotKey],
+                  aktiviti: item.aktiviti || '',
+                  guru: item.guru || '',
+                  lokasi: item.lokasi || '',
+                  bidang: item.bidang || activitiesMap[slotKey].bidang,
+                  deskripsi: item.deskripsi || ''
+                };
+                hasChange = true;
               }
             });
           }
 
-          if (hasChange) {
-            saveToLocalStorage(false);
-            renderCurrentView();
+          // 3. Terima Tetapan Bidang Harian
+          if (json.dayFields && typeof json.dayFields === 'object') {
+            Object.keys(json.dayFields).forEach(k => {
+              const dt = cleanDate(k);
+              if (json.dayFields[k]) dayFieldConfig[dt] = json.dayFields[k];
+            });
+            hasChange = true;
           }
 
-          updateSyncStatusUI('live');
+          saveToLocalStorage(false);
+          renderCurrentView();
+          updateSyncStatusUI('live', json.timestamp);
+          if (isManual) showToast('Data disegerakkan dari Google Sheet.');
         }
-      } catch (err) {}
+      } catch (err) {
+        clearTimeout(timeoutId);
+        if (isManual) {
+          updateSyncStatusUI('offline');
+          showToast('Data tempatan anda selamat.');
+        }
+      } finally {
+        if (isManual) {
+          btnSync.disabled = false;
+          syncIcon.classList.remove('animate-spin');
+        }
+      }
     }
 
     function updateSyncStatusUI(status, info) {
@@ -1073,34 +1118,41 @@
       const label = document.getElementById('lastSyncLabel');
 
       const now = new Date();
-      const timeStr = info || now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const timeStr = info || now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
 
       if (status === 'saving') {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75';
-        title.textContent = 'Menyimpan ke Cloud...';
+        title.textContent = 'Menyimpan...';
         subtitle.textContent = 'Sedang menghantar ke Google Sheet';
         label.textContent = 'Menyimpan...';
-        label.className = 'text-amber-300 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700';
+        label.className = 'text-amber-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       } else if (status === 'live') {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
-        title.textContent = 'Bersiaran Langsung (Live Sync)';
-        subtitle.textContent = 'Semua peranti melihat data terkini';
-        label.textContent = `Langsung: ${timeStr}`;
-        label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700';
+        title.textContent = 'Tersambung ke Google Sheet';
+        subtitle.textContent = 'Semua peranti melihat data yang sama';
+        label.textContent = `Terselaras: ${timeStr}`;
+        label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
+      } else if (status === 'ready') {
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
+        pulse.className = 'hidden';
+        title.textContent = 'Data Sedia Digunakan';
+        subtitle.textContent = 'Data cuti murid dipulihkan sepenuhnya';
+        label.textContent = 'Sedia';
+        label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       } else {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-400';
         pulse.className = 'hidden';
-        title.textContent = 'Luar Talian';
-        subtitle.textContent = 'Data kekal selamat di peranti ini';
-        label.textContent = 'Storan Tempatan';
-        label.className = 'text-blue-300 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700';
+        title.textContent = 'Storan Tempatan (Offline)';
+        subtitle.textContent = 'Data selamat di peranti & akan segerak semula';
+        label.textContent = 'Tersimpan Tempatan';
+        label.className = 'text-blue-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       }
     }
 
     // ==========================================
-    // STATISTIK KIRAAN MENGIKUT HARI
+    // STATISTIK KIRAAN MENGIKUT HARI (23 HARI)
     // ==========================================
     function updateStatistics() {
       let daysBahasa = 0;
@@ -1113,11 +1165,9 @@
         ...DECEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active && !d.cuti))
       ];
 
-      const totalSchoolDays = allActiveDays.length; // 23 Hari
-
       allActiveDays.forEach(d => {
-        const cleanDate = normalizeDateStr(d.tarikh);
-        const b = dayFieldConfig[cleanDate] || 'Belum Ditentukan';
+        const dt = cleanDate(d.tarikh);
+        const b = dayFieldConfig[dt] || 'Belum Ditentukan';
         if (b === 'Bahasa') daysBahasa++;
         else if (b === 'Sains & Matematik') daysSains++;
         else if (b === 'Sains Kemasyarakatan') daysKemas++;
@@ -1134,16 +1184,14 @@
       document.getElementById('slotsDaysKemas').textContent = `${daysKemas * 13} Slot (30 Minit)`;
       document.getElementById('slotsDaysTvet').textContent = `${daysTvet * 13} Slot (30 Minit)`;
 
-      if (totalSchoolDays > 0) {
-        document.getElementById('pctDaysBahasa').textContent = `${((daysBahasa / totalSchoolDays) * 100).toFixed(1)}%`;
-        document.getElementById('pctDaysSains').textContent = `${((daysSains / totalSchoolDays) * 100).toFixed(1)}%`;
-        document.getElementById('pctDaysKemas').textContent = `${((daysKemas / totalSchoolDays) * 100).toFixed(1)}%`;
-        document.getElementById('pctDaysTvet').textContent = `${((daysTvet / totalSchoolDays) * 100).toFixed(1)}%`;
+      if (allActiveDays.length > 0) {
+        document.getElementById('pctDaysBahasa').textContent = `${((daysBahasa / 23) * 100).toFixed(1)}%`;
+        document.getElementById('pctDaysSains').textContent = `${((daysSains / 23) * 100).toFixed(1)}%`;
+        document.getElementById('pctDaysKemas').textContent = `${((daysKemas / 23) * 100).toFixed(1)}%`;
+        document.getElementById('pctDaysTvet').textContent = `${((daysTvet / 23) * 100).toFixed(1)}%`;
       }
 
-      // Kiraan slot diisi
       let totalFilled = 0;
-      let totalEmpty = 0;
       let countBahasaFilled = 0;
       let countSainsFilled = 0;
       let countKemasFilled = 0;
@@ -1151,24 +1199,25 @@
 
       Object.values(activitiesMap).forEach(slot => {
         if (slot.isCuti || slot.bidang === 'Cuti') return;
-        const isFilled = slot.aktiviti && slot.aktiviti.trim() !== '';
-        if (isFilled) {
+        if (slot.aktiviti && slot.aktiviti.trim() !== '') {
           totalFilled++;
           if (slot.bidang === 'Bahasa') countBahasaFilled++;
           else if (slot.bidang === 'Sains & Matematik') countSainsFilled++;
           else if (slot.bidang === 'Sains Kemasyarakatan') countKemasFilled++;
           else if (slot.bidang === 'Teknik & Vokasional') countTvetFilled++;
-        } else {
-          totalEmpty++;
         }
       });
 
       document.getElementById('statFilledCount').textContent = `${totalFilled} Slot Diisi`;
-      document.getElementById('statEmptyCount').textContent = `${totalEmpty} Belum Diisi`;
+      document.getElementById('statEmptyCount').textContent = `${273 - totalFilled} Belum Diisi`;
+
+      document.getElementById('countBahasa').textContent = `${countBahasaFilled} / ${daysBahasa * 13} Diisi`;
+      document.getElementById('countSains').textContent = `${countSainsFilled} / ${daysSains * 13} Diisi`;
+      document.getElementById('countKemas').textContent = `${countKemasFilled} / ${daysKemas * 13} Diisi`;
+      document.getElementById('countTvet').textContent = `${countTvetFilled} / ${daysTvet * 13} Diisi`;
 
       const pct = ((totalFilled / 273) * 100).toFixed(1);
       document.getElementById('overallProgressText').textContent = `${pct}% (${totalFilled} / 273 Slot)`;
-
       document.getElementById('progBahasa').style.width = `${(countBahasaFilled / 273) * 100}%`;
       document.getElementById('progSains').style.width = `${(countSainsFilled / 273) * 100}%`;
       document.getElementById('progKemas').style.width = `${(countKemasFilled / 273) * 100}%`;
@@ -1176,7 +1225,7 @@
     }
 
     // ==========================================
-    // 1. PAPARAN BULANAN (MONTH VIEW)
+    // 1. PAPARAN BULANAN
     // ==========================================
     function setMonthFilter(month) {
       activeMonthFilter = month;
@@ -1193,7 +1242,6 @@
       const selBidang = document.getElementById('filterBidang').value;
       const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
 
-      // NOVEMBER (02 - 30 NOV)
       if (activeMonthFilter === 'ALL' || activeMonthFilter === '11') {
         const novCard = document.createElement('div');
         novCard.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden';
@@ -1222,7 +1270,6 @@
         container.appendChild(novCard);
       }
 
-      // DISEMBER (01 - 04 DIS)
       if (activeMonthFilter === 'ALL' || activeMonthFilter === '12') {
         const decCard = document.createElement('div');
         decCard.className = 'bg-white rounded-2xl border-2 border-indigo-500/40 shadow-md overflow-hidden';
@@ -1267,10 +1314,10 @@
         `;
       }
 
-      const cleanDate = normalizeDateStr(day.tarikh);
+      const dt = cleanDate(day.tarikh);
       const isCuti = day.cuti;
-      const daySlots = TIME_SLOTS.map(s => activitiesMap[`${cleanDate}_slot_${s.id}`] || {});
-      const dayBidang = day.cuti ? 'Cuti' : (dayFieldConfig[cleanDate] || 'Belum Ditentukan');
+      const daySlots = TIME_SLOTS.map(s => activitiesMap[`${dt}_slot_${s.id}`] || {});
+      const dayBidang = day.cuti ? 'Cuti' : (dayFieldConfig[dt] || 'Belum Ditentukan');
       const theme = getBidangColorTheme(dayBidang);
 
       let filledCount = 0;
@@ -1289,7 +1336,7 @@
         }
       });
 
-      const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], adaForms: [...ALL_FORMS] };
+      const dayAtt = dayAttendanceMap[dt] || { cutiForms: [], adaForms: ALL_FORMS };
       const textAda = formatTingkatanList(dayAtt.adaForms || ALL_FORMS);
       const textCuti = (dayAtt.cutiForms && dayAtt.cutiForms.length > 0)
         ? dayAtt.cutiForms.map(f => f.replace('Tingkatan ', 'T')).join(',')
@@ -1308,7 +1355,7 @@
 
       if (isCuti) {
         return `
-          <div onclick="openDayDrawer('${cleanDate}')" class="calendar-box group bg-rose-50/90 hover:bg-rose-100/90 transition cursor-pointer p-3 min-h-[175px] flex flex-col justify-between border-b sm:border-b-0 border-r border-rose-200">
+          <div onclick="openDayDrawer('${dt}')" class="calendar-box group bg-rose-50/90 hover:bg-rose-100/90 transition cursor-pointer p-3 min-h-[175px] flex flex-col justify-between border-b sm:border-b-0 border-r border-rose-200">
             <div class="flex items-start justify-between">
               <div>
                 <span class="text-xl font-black text-rose-700 leading-none">${day.dayNum}</span>
@@ -1341,13 +1388,13 @@
               </span>
             </div>
 
-            <button onclick="event.stopPropagation(); openDayAttendanceModal('${cleanDate}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${textCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200'} border transition flex items-center gap-1">
+            <button onclick="event.stopPropagation(); openDayAttendanceModal('${dt}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${textCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200'} border transition flex items-center gap-1">
               <i data-lucide="users" class="w-3 h-3"></i>
               <span>${textCuti ? 'Cuti: ' + textCuti : 'Urus Cuti'}</span>
             </button>
           </div>
 
-          <div onclick="openDayDrawer('${cleanDate}')" class="my-1.5 space-y-1 cursor-pointer">
+          <div onclick="openDayDrawer('${dt}')" class="my-1.5 space-y-1 cursor-pointer">
             <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
               <span>07:30 PG</span>
               <span class="text-amber-600 font-extrabold">Rehat</span>
@@ -1362,7 +1409,7 @@
             </div>
           </div>
 
-          <div onclick="openDayDrawer('${cleanDate}')" class="flex-grow space-y-1 my-1 cursor-pointer">
+          <div onclick="openDayDrawer('${dt}')" class="flex-grow space-y-1 my-1 cursor-pointer">
             ${activitiesList.length > 0 ? activitiesList.slice(0, 2).map(act => {
               return `
                 <div class="p-1 rounded bg-slate-50 border ${theme.border} text-[10px] leading-tight">
@@ -1387,23 +1434,22 @@
     }
 
     // ==========================================
-    // 2. PAPARAN MINGGUAN (WEEKLY TIMETABLE)
+    // 2. PAPARAN MINGGUAN
     // ==========================================
     function renderWeeklyTimetable() {
       const container = document.getElementById('weeklyTimetableContainer');
       const selectedWeekNum = parseInt(document.getElementById('selectWeekDropdown').value, 10) || 1;
 
-      // Cari hari dalam minggu tersebut
       let weekObj = NOVEMBER_WEEKS.find(w => w.minggu === selectedWeekNum);
       if (selectedWeekNum === 5) {
         weekObj = {
           minggu: 5,
           hariList: [
-            NOVEMBER_WEEKS[4].hariList[0], // 30 Nov (Isnin)
-            DECEMBER_WEEKS[0].hariList[1], // 01 Dis (Selasa)
-            DECEMBER_WEEKS[0].hariList[2], // 02 Dis (Rabu)
-            DECEMBER_WEEKS[0].hariList[3], // 03 Dis (Khamis)
-            DECEMBER_WEEKS[0].hariList[4]  // 04 Dis (Jumaat)
+            NOVEMBER_WEEKS[4].hariList[0],
+            DECEMBER_WEEKS[0].hariList[1],
+            DECEMBER_WEEKS[0].hariList[2],
+            DECEMBER_WEEKS[0].hariList[3],
+            DECEMBER_WEEKS[0].hariList[4]
           ]
         };
       }
@@ -1425,10 +1471,10 @@
               <tr class="bg-slate-100 text-slate-700 uppercase font-black border-b border-slate-200">
                 <th class="py-2.5 px-3 w-28 text-center border-r border-slate-200">Masa (30 Minit)</th>
                 ${weekObj.hariList.map(d => {
-                  const cleanDate = normalizeDateStr(d.tarikh);
-                  const b = d.cuti ? 'Cuti' : (dayFieldConfig[cleanDate] || 'Belum Ditentukan');
+                  const dt = cleanDate(d.tarikh);
+                  const b = d.cuti ? 'Cuti' : (dayFieldConfig[dt] || 'Belum Ditentukan');
                   const theme = getBidangColorTheme(b);
-                  const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], adaForms: ALL_FORMS };
+                  const dayAtt = dayAttendanceMap[dt] || { cutiForms: [], adaForms: ALL_FORMS };
                   const textCuti = (dayAtt.cutiForms && dayAtt.cutiForms.length > 0)
                     ? 'Cuti: ' + dayAtt.cutiForms.map(f => f.replace('Tingkatan ', 'T')).join(',')
                     : 'Semua Hadir';
@@ -1436,7 +1482,7 @@
                   return `
                     <th class="py-2.5 px-3 border-r border-slate-200 text-center ${d.cuti ? 'bg-rose-50 text-rose-900' : ''}">
                       <div class="font-black text-sm">${d.hari}</div>
-                      <div class="text-[10px] text-slate-500">${cleanDate}</div>
+                      <div class="text-[10px] text-slate-500">${dt}</div>
                       <div class="mt-1"><span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold ${theme.badgeBg} ${theme.badgeText}">${b}</span></div>
                       <div class="text-[9px] font-semibold text-slate-600 mt-0.5">${textCuti}</div>
                     </th>
@@ -1447,12 +1493,12 @@
             <tbody class="divide-y divide-slate-200">
       `;
 
-      // 1. Sebelum Rehat (Slot 07:30 - 10:00)
+      // Sebelum Rehat
       TIME_SLOTS.slice(0, 5).forEach(slot => {
         html += renderWeeklyRow(weekObj, slot);
       });
 
-      // 2. Jalur Rehat (10:00 - 10:30)
+      // Jalur Rehat
       html += `
         <tr class="bg-amber-100/90 text-amber-950 font-black border-y-2 border-amber-300 text-center">
           <td class="py-2 px-3 border-r border-amber-200 text-xs">10:00 – 10:30 PG</td>
@@ -1462,7 +1508,7 @@
         </tr>
       `;
 
-      // 3. Selepas Rehat (Slot 10:30 - 14:30)
+      // Selepas Rehat
       TIME_SLOTS.slice(5).forEach(slot => {
         html += renderWeeklyRow(weekObj, slot);
       });
@@ -1486,8 +1532,8 @@
       `;
 
       weekObj.hariList.forEach(day => {
-        const cleanDate = normalizeDateStr(day.tarikh);
-        const slotKey = `${cleanDate}_slot_${slot.id}`;
+        const dt = cleanDate(day.tarikh);
+        const slotKey = `${dt}_slot_${slot.id}`;
         const slotData = activitiesMap[slotKey] || {};
 
         if (day.cuti) {
@@ -1500,12 +1546,12 @@
         }
 
         const hasContent = slotData.aktiviti && slotData.aktiviti.trim() !== '';
-        const dayBidang = dayFieldConfig[cleanDate] || 'Belum Ditentukan';
+        const dayBidang = dayFieldConfig[dt] || 'Belum Ditentukan';
         const theme = getBidangColorTheme(slotData.bidang || dayBidang);
 
         if (!hasContent) {
           row += `
-            <td onclick="openRangeActivityModal('${slot.id}', '${cleanDate}')" class="py-1.5 px-2 border-r border-slate-200 cursor-pointer hover:bg-indigo-50/30 group align-top">
+            <td onclick="openRangeActivityModal('${slot.id}', '${dt}')" class="py-1.5 px-2 border-r border-slate-200 cursor-pointer hover:bg-indigo-50/30 group align-top">
               <div class="min-h-[46px] rounded-lg border border-dashed border-slate-300 p-1 flex items-center justify-center text-[10px] text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-400 transition">
                 + Isi Aktiviti
               </div>
@@ -1513,7 +1559,7 @@
           `;
         } else {
           row += `
-            <td onclick="openRangeActivityModal('${slot.id}', '${cleanDate}')" class="py-1 px-1.5 border-r border-slate-200 cursor-pointer hover:bg-slate-100 transition align-top">
+            <td onclick="openRangeActivityModal('${slot.id}', '${dt}')" class="py-1 px-1.5 border-r border-slate-200 cursor-pointer hover:bg-slate-100 transition align-top">
               <div class="min-h-[46px] rounded-lg border ${theme.border} bg-white p-1.5 shadow-xs space-y-0.5">
                 <div class="font-bold text-slate-900 leading-tight line-clamp-1">${slotData.aktiviti}</div>
                 <div class="text-[10px] text-indigo-700 font-semibold truncate">${slotData.guru || 'Guru'}</div>
@@ -1529,7 +1575,7 @@
     }
 
     // ==========================================
-    // 3. PAPARAN HARIAN (DAILY AGENDA)
+    // 3. PAPARAN HARIAN
     // ==========================================
     function populateDateDropdown() {
       const select = document.getElementById('selectDateDropdown');
@@ -1541,10 +1587,10 @@
       ];
 
       allActiveDays.forEach(d => {
-        const cleanDate = normalizeDateStr(d.tarikh);
+        const dt = cleanDate(d.tarikh);
         const opt = document.createElement('option');
-        opt.value = cleanDate;
-        opt.textContent = `${cleanDate} (${d.hari})${d.cuti ? ' - CUTI' : ''}`;
+        opt.value = dt;
+        opt.textContent = `${dt} (${d.hari})${d.cuti ? ' - CUTI' : ''}`;
         select.appendChild(opt);
       });
     }
@@ -1641,14 +1687,13 @@
     }
 
     // ==========================================
-    // 4. MOD CETAKAN RASMI (PRINT HUB DOCUMENT)
+    // 4. MOD CETAKAN RASMI (PRINT HUB)
     // ==========================================
     function renderPrintHub() {
       const container = document.getElementById('printHubDocument');
       const format = document.getElementById('printFormatSelect').value;
 
       let html = `
-        <!-- KEPALA SURAT CETAKAN RASMI -->
         <div class="text-center border-b-2 border-slate-900 pb-3 space-y-1">
           <h2 class="text-base font-black uppercase tracking-wider text-slate-900">SMK KAMARUL ARIFFIN (SEMEKAR), LABIS, JOHOR</h2>
           <h3 class="text-sm font-extrabold text-indigo-900">JADUAL PROGRAM PENGISIAN PASCA UASA SESI 2026 (PUasa)</h3>
@@ -1659,12 +1704,11 @@
       if (format === 'FULL_MONTH') {
         html += renderPrintFullProgram();
       } else if (format === 'WEEKLY') {
-        html += renderPrintWeeklyAll();
+        html += `<p class="text-xs text-slate-600 italic">Sila pilih 'Minggu' pada menu atas dan gunakan butang Cetak untuk mencetak jadual mengikut minggu.</p>`;
       } else {
-        html += renderPrintDailyToday();
+        html += `<p class="text-xs text-slate-600 italic">Sila pilih 'Hari' pada menu atas dan gunakan butang Cetak untuk mencetak agenda harian terperinci.</p>`;
       }
 
-      // RUANG TANDATANGAN PENGESAHAN RASMI
       html += `
         <div class="grid grid-cols-2 pt-8 text-xs gap-12 text-center print-page">
           <div class="space-y-12">
@@ -1714,21 +1758,20 @@
       `;
 
       allActiveDays.forEach(d => {
-        const cleanDate = normalizeDateStr(d.tarikh);
-        const dayBidang = d.cuti ? 'Cuti Perayaan' : (dayFieldConfig[cleanDate] || 'Belum Ditentukan');
-        const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], adaForms: ALL_FORMS };
+        const dt = cleanDate(d.tarikh);
+        const dayBidang = d.cuti ? 'Cuti Perayaan' : (dayFieldConfig[dt] || 'Belum Ditentukan');
+        const dayAtt = dayAttendanceMap[dt] || { cutiForms: [], adaForms: ALL_FORMS };
         const textAda = (dayAtt.adaForms && dayAtt.adaForms.length === 4) ? 'Semua (T1-T4)' : (dayAtt.adaForms || []).map(f => f.replace('Tingkatan ', 'T')).join(',');
         const textCuti = (dayAtt.cutiForms && dayAtt.cutiForms.length > 0) ? dayAtt.cutiForms.map(f => f.replace('Tingkatan ', 'T')).join(',') : '-';
 
-        // Cari aktiviti pada hari ini
-        const daySlots = TIME_SLOTS.map(s => activitiesMap[`${cleanDate}_slot_${s.id}`] || {});
+        const daySlots = TIME_SLOTS.map(s => activitiesMap[`${dt}_slot_${s.id}`] || {});
         const acts = daySlots.filter(s => s.aktiviti && s.aktiviti.trim() !== '');
         const actSummary = acts.length > 0 ? Array.from(new Set(acts.map(a => a.aktiviti))).join('; ') : (d.cuti ? d.catatanCuti : 'Belum diisi');
         const teachersSummary = acts.length > 0 ? Array.from(new Set(acts.map(a => a.guru).filter(Boolean))).join('; ') : '-';
 
         tableHtml += `
           <tr class="${d.cuti ? 'bg-rose-50' : ''}">
-            <td class="border border-slate-400 p-1.5 text-center font-bold">${cleanDate}</td>
+            <td class="border border-slate-400 p-1.5 text-center font-bold">${dt}</td>
             <td class="border border-slate-400 p-1.5 text-center">${d.hari}</td>
             <td class="border border-slate-400 p-1.5 text-center font-bold">${dayBidang}</td>
             <td class="border border-slate-400 p-1.5 font-medium">${actSummary}</td>
@@ -1743,20 +1786,12 @@
       return tableHtml;
     }
 
-    function renderPrintWeeklyAll() {
-      return `<p class="text-xs text-slate-600 italic">Sila pilih 'Minggu' pada menu atas dan gunakan butang Cetak untuk mencetak jadual mengikut minggu.</p>`;
-    }
-
-    function renderPrintDailyToday() {
-      return `<p class="text-xs text-slate-600 italic">Sila pilih 'Hari' pada menu atas dan gunakan butang Cetak untuk mencetak agenda harian terperinci.</p>`;
-    }
-
     function printCurrentView() {
       window.print();
     }
 
     // ==========================================
-    // MODAL PENGURUSAN GURU BERBILANG (CHIPS)
+    // PENGURUSAN GURU BERBILANG (MULTI-TEACHER)
     // ==========================================
     function populateTeacherDropdown() {
       const select = document.getElementById('teacherDropdownSelect');
@@ -1863,13 +1898,13 @@
 
     function openRangeActivityModal(initialSlotId, forcedDate = null) {
       isUserEditing = true;
-      const cleanDate = forcedDate || normalizeDateStr(document.getElementById('selectDateDropdown').value || '2026-11-02');
-      if (!cleanDate) return;
+      const cleanDt = forcedDate || cleanDate(document.getElementById('selectDateDropdown').value || '2026-11-02');
+      if (!cleanDt) return;
 
-      const dObj = new Date(cleanDate);
+      const dObj = new Date(cleanDt);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
-      document.getElementById('modalTarikhHidden').value = cleanDate;
+      document.getElementById('modalTarikhHidden').value = cleanDt;
       document.getElementById('modalTarikhHari').value = formattedDate;
 
       // DEFAULT HANYA 30 MINIT (07:30 - 08:00 PG ATAU SLOT DIPILIH)
@@ -1877,8 +1912,8 @@
       document.getElementById('modalWaktuMula').value = startId;
       document.getElementById('modalWaktuTamat').value = getNextSlotEndTime(startId);
 
-      const currentSlotData = activitiesMap[`${cleanDate}_slot_${startId}`] || {};
-      const dayBidang = dayFieldConfig[cleanDate] || 'Belum Ditentukan';
+      const currentSlotData = activitiesMap[`${cleanDt}_slot_${startId}`] || {};
+      const dayBidang = dayFieldConfig[cleanDt] || 'Belum Ditentukan';
       document.getElementById('modalBidang').value = currentSlotData.bidang || dayBidang;
       document.getElementById('modalAktiviti').value = currentSlotData.aktiviti || '';
       document.getElementById('modalDeskripsi').value = currentSlotData.deskripsi || '';
@@ -1903,8 +1938,8 @@
 
     function handleFormSubmit(e) {
       e.preventDefault();
-      const cleanDate = normalizeDateStr(document.getElementById('modalTarikhHidden').value);
-      if (!cleanDate) return;
+      const cleanDt = cleanDate(document.getElementById('modalTarikhHidden').value);
+      if (!cleanDt) return;
 
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
@@ -1939,7 +1974,7 @@
       const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
 
       affectedSlots.forEach(s => {
-        const slotKey = `${cleanDate}_slot_${s.id}`;
+        const slotKey = `${cleanDt}_slot_${s.id}`;
         if (activitiesMap[slotKey] && !activitiesMap[slotKey].isCuti) {
           activitiesMap[slotKey].bidang = bidang;
           activitiesMap[slotKey].aktiviti = aktiviti;
@@ -1952,12 +1987,12 @@
       saveToLocalStorage(true);
       closeModal();
       renderCurrentView();
-      showToast(`Tersimpan ke ${affectedSlots.length} slot & disegerakkan.`);
+      showToast(`Tersimpan ke ${affectedSlots.length} slot.`);
     }
 
     function clearRangeSlot() {
-      const cleanDate = normalizeDateStr(document.getElementById('modalTarikhHidden').value);
-      if (!cleanDate) return;
+      const cleanDt = cleanDate(document.getElementById('modalTarikhHidden').value);
+      if (!cleanDt) return;
 
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
@@ -1976,7 +2011,7 @@
       if (confirm('Kosongkan semua aktiviti bagi slot dalam julat waktu ini?')) {
         const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
         affectedSlots.forEach(s => {
-          const slotKey = `${cleanDate}_slot_${s.id}`;
+          const slotKey = `${cleanDt}_slot_${s.id}`;
           if (activitiesMap[slotKey] && !activitiesMap[slotKey].isCuti) {
             activitiesMap[slotKey].aktiviti = '';
             activitiesMap[slotKey].deskripsi = '';
@@ -1993,18 +2028,18 @@
     }
 
     // ==========================================
-    // MODAL CUTI TINGKATAN SEHARI PENUH
+    // MODAL CUTI TINGKATAN
     // ==========================================
     function openDayAttendanceModal(tarikh) {
       isUserEditing = true;
-      const cleanDate = normalizeDateStr(tarikh);
-      const dObj = new Date(cleanDate);
+      const cleanDt = cleanDate(tarikh);
+      const dObj = new Date(cleanDt);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
-      document.getElementById('attModalTarikh').value = cleanDate;
+      document.getElementById('attModalTarikh').value = cleanDt;
       document.getElementById('attModalSubtitle').textContent = formattedDate;
 
-      const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], catatan: '' };
+      const dayAtt = dayAttendanceMap[cleanDt] || { cutiForms: [], catatan: '' };
       const cutiList = dayAtt.cutiForms || [];
 
       document.getElementById('chkDayCutiT1').checked = cutiList.includes('Tingkatan 1');
@@ -2068,8 +2103,8 @@
     }
 
     function saveDayAttendance() {
-      const cleanDate = normalizeDateStr(document.getElementById('attModalTarikh').value);
-      if (!cleanDate) return;
+      const cleanDt = cleanDate(document.getElementById('attModalTarikh').value);
+      if (!cleanDt) return;
 
       const cutiList = [];
       if (document.getElementById('chkDayCutiT1').checked) cutiList.push('Tingkatan 1');
@@ -2080,8 +2115,8 @@
       const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
       const catatan = document.getElementById('dayAttendanceNote').value.trim();
 
-      dayAttendanceMap[cleanDate] = {
-        tarikh: cleanDate,
+      dayAttendanceMap[cleanDt] = {
+        tarikh: cleanDt,
         cutiForms: cutiList,
         adaForms: adaList,
         catatan: catatan
@@ -2090,7 +2125,7 @@
       saveToLocalStorage(true);
       closeDayAttendanceModal();
       renderCurrentView();
-      showToast('Ketetapan cuti tingkatan disimpan & disiarkan langsung.');
+      showToast('Ketetapan cuti tingkatan disimpan.');
     }
 
     // ==========================================
@@ -2107,17 +2142,17 @@
       ];
 
       allActiveDays.forEach((d, idx) => {
-        const cleanDate = normalizeDateStr(d.tarikh);
-        const currentB = dayFieldConfig[cleanDate] || 'Belum Ditentukan';
+        const dt = cleanDate(d.tarikh);
+        const currentB = dayFieldConfig[dt] || 'Belum Ditentukan';
 
         const row = document.createElement('div');
         row.className = 'p-2.5 flex items-center justify-between gap-3 hover:bg-slate-50';
         row.innerHTML = `
           <div>
-            <span class="font-bold text-slate-800">${idx + 1}. ${cleanDate} (${d.hari})</span>
-            <span class="text-[10px] text-slate-500 block">Minggu ${getMingguFromTarikh(cleanDate)}</span>
+            <span class="font-bold text-slate-800">${idx + 1}. ${dt} (${d.hari})</span>
+            <span class="text-[10px] text-slate-500 block">Minggu ${getMingguFromTarikh(dt)}</span>
           </div>
-          <select data-date="${cleanDate}" class="day-field-select bg-white border border-slate-300 rounded-lg px-2.5 py-1 font-bold text-xs focus:ring-2 focus:ring-indigo-500">
+          <select data-date="${dt}" class="day-field-select bg-white border border-slate-300 rounded-lg px-2.5 py-1 font-bold text-xs focus:ring-2 focus:ring-indigo-500">
             <option value="Bahasa" ${currentB === 'Bahasa' ? 'selected' : ''}>Bidang Bahasa</option>
             <option value="Sains & Matematik" ${currentB === 'Sains & Matematik' ? 'selected' : ''}>Bidang Sains & Matematik</option>
             <option value="Sains Kemasyarakatan" ${currentB === 'Sains Kemasyarakatan' ? 'selected' : ''}>Bidang Sains Kemasyarakatan</option>
@@ -2143,7 +2178,6 @@
         const b = sel.value;
         dayFieldConfig[dt] = b;
 
-        // Kemaskini juga bidang pada setiap slot hari berkenaan jika belum diisi aktiviti
         TIME_SLOTS.forEach(s => {
           const slotKey = `${dt}_slot_${s.id}`;
           if (activitiesMap[slotKey] && !activitiesMap[slotKey].isCuti) {
@@ -2155,7 +2189,7 @@
       saveToLocalStorage(true);
       closeDayFieldAssignModal();
       renderCurrentView();
-      showToast('Ketetapan bidang harian berjaya disimpan & disegerakkan!');
+      showToast('Ketetapan bidang harian disimpan.');
     }
 
     function formatTingkatanList(list) {
@@ -2204,9 +2238,13 @@
       loadSavedData();
       lucide.createIcons();
 
-      // Penstriman polling berterusan setiap 4 saat
-      setTimeout(streamPollFromSheet, 1000);
-      setInterval(streamPollFromSheet, CONFIG.STREAM_INTERVAL);
+      // Penstriman polling berkala yang santai (setiap 30 saat)
+      setInterval(() => syncFromGoogleSheet(false), CONFIG.STREAM_INTERVAL);
+
+      // Auto-sync sebaik sahaja pengguna kembali ke tab web (Smart Tab Focus)
+      window.addEventListener('focus', () => {
+        if (!isUserEditing) syncFromGoogleSheet(false);
+      });
     });
   </script>
 </body>
