@@ -123,7 +123,7 @@
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
             Agihan Saksama Pasca UASA T1–T4 (Jumlah: 23 Hari Persekolahan Aktif)
           </h2>
-          <p class="text-[11px] text-slate-500">Isnin – Khamis: 13 Slot (30 Minit) | Jumaat: 8 Slot (Tamat Jam 12:00 Tengah Hari).</p>
+          <p class="text-[11px] text-slate-500">Pembahagian 5 bidang (Bahasa, Sains & Matematik, Kemasyarakatan, TVET, Umum) bagi murid T1 hingga T4.</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -198,11 +198,11 @@
       </div>
     </section>
 
-    <!-- PANDUAN PANTAS WAKTU & KETETAPAN -->
+    <!-- PANDUAN PANTAS -->
     <div id="quickGuideAlert" class="flex flex-wrap items-center justify-between text-[11px] text-slate-600 bg-indigo-50/70 border border-indigo-100 rounded-xl px-3 py-2 gap-2 no-print">
       <div class="flex flex-wrap items-center gap-2 font-medium">
         <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-600"></i>
-        <span><strong>Waktu Isnin–Khamis:</strong> 07:30 PG – 02:30 PTG | <strong class="text-indigo-900">Jumaat: 07:30 PG – 12:00 TGH</strong> | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong></span>
+        <span><strong>Waktu Sesi:</strong> Sesi Persekolahan Pasca UASA T1–T4 | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong></span>
       </div>
       <div class="flex items-center gap-2">
         <span class="text-rose-700 font-bold">⚠️ Ketetapan T5:</span>
@@ -836,7 +836,6 @@
       "En. Edi Noor Fadli bin Mohd Zen"
     ];
 
-    // SENARAI SEMUA 13 SLOT ASAL
     const TIME_SLOTS = [
       { id: '0730', label: '07:30 – 08:00 PG', startMin: 450, endMin: 480 },
       { id: '0800', label: '08:00 – 08:30 PG', startMin: 480, endMin: 510 },
@@ -845,7 +844,7 @@
       { id: '0930', label: '09:30 – 10:00 PG', startMin: 570, endMin: 600 },
       { id: '1030', label: '10:30 – 11:00 PG', startMin: 630, endMin: 660 },
       { id: '1100', label: '11:00 – 11:30 PG', startMin: 660, endMin: 690 },
-      { id: '1130', label: '11:30 – 12:00 TGH', startMin: 690, endMin: 720 }, // Slot Akhir Hari Jumaat
+      { id: '1130', label: '11:30 – 12:00 TGH', startMin: 690, endMin: 720 },
       { id: '1200', label: '12:00 – 12:30 TGH', startMin: 720, endMin: 750 },
       { id: '1230', label: '12:30 – 01:00 PTG', startMin: 750, endMin: 780 },
       { id: '1300', label: '01:00 – 01:30 PTG', startMin: 780, endMin: 810 },
@@ -1049,7 +1048,6 @@
       }
     ];
 
-    // PEMBANTU HARI & PENENTUAN HAD SLOT JUMAAT
     function getDayOfWeekName(tarikhStr) {
       const clean = cleanDate(tarikhStr);
       for (const w of [...NOVEMBER_WEEKS, ...DECEMBER_WEEKS]) {
@@ -1061,16 +1059,15 @@
       return d.toLocaleDateString('ms-MY', { weekday: 'long' });
     }
 
-    // Mengambil slot aktif: HARI JUMAAT DIBUANG SEMUA SELEPAS 12:00 TGH
     function getSlotsForDay(hariOrDate) {
       let hari = hariOrDate;
       if (hariOrDate && hariOrDate.includes('-')) {
         hari = getDayOfWeekName(hariOrDate);
       }
       if (hari === 'Jumaat') {
-        return TIME_SLOTS.filter(s => s.endMin <= 720); // 8 Slot: 0730 hingga 1130 (Tamat 12:00 TGH)
+        return TIME_SLOTS.filter(s => s.endMin <= 720);
       }
-      return TIME_SLOTS; // 13 Slot biasa
+      return TIME_SLOTS;
     }
 
     function getNextSlotEndTime(startId, isFriday = false) {
@@ -1199,7 +1196,6 @@
               const sId = cleanSlotId(parts[1]);
               const dayName = getDayOfWeekName(dt);
 
-              // Jika hari Jumaat dan slot ID selepas 12:00, gugurkan dari memori
               if (dayName === 'Jumaat') {
                 const sObj = TIME_SLOTS.find(ts => ts.id === sId);
                 if (sObj && sObj.endMin > 720) return;
@@ -1247,12 +1243,11 @@
         const dt = cleanDate(d.tarikh);
         const opt = document.createElement('option');
         opt.value = dt;
-        opt.textContent = `${dt} (${d.hari})${d.cuti ? ' - Cuti' : (d.hari === 'Jumaat' ? ' [Tamat 12:00]' : '')}`;
+        opt.textContent = `${dt} (${d.hari})${d.cuti ? ' - Cuti' : ''}`;
         select.appendChild(opt);
       });
     }
 
-    // STATISTIK KIRAAN TEPAT: JUMAAT 8 SLOT, ISNIN–KHAMIS 13 SLOT
     function updateStatistics() {
       let bDays = 0, sDays = 0, kDays = 0, tDays = 0, uDays = 0;
       let bSlots = 0, sSlots = 0, kSlots = 0, tSlots = 0, uSlots = 0;
@@ -1348,7 +1343,6 @@
       switchView('print');
     }
 
-    // PENJANAAN BUTANG PAKEJ SPM T5
     function renderPackageButtons() {
       const container = document.getElementById('packageFilterButtons');
       if (!container) return;
@@ -1382,7 +1376,6 @@
       renderSpmTimeline();
     }
 
-    // 4. GARIS MASA FOKUS SPM
     function renderSpmTimeline() {
       const container = document.getElementById('spmTimelineContainer');
       if (!container) return;
@@ -1565,9 +1558,7 @@
             const dayAtt = dayAttendanceMap[dt] || { adaForms: ALL_FORMS, cutiForms: [], catatan: '' };
             const attTags = formatAttendanceTags(dayAtt);
             const theme = getBidangColorTheme(assignedBidang);
-            const isJumaat = day.hari === 'Jumaat';
 
-            // Ambil slot aktif mengikut hari (Jumaat dihadkan 12:00)
             const activeSlots = getSlotsForDay(day.hari);
             let daySlots = activeSlots.map(s => {
               const k = `${dt}_slot_${cleanSlotId(s.id)}`;
@@ -1598,10 +1589,7 @@
               <div class="space-y-1.5 flex-grow">
                 <div class="flex items-center justify-between">
                   <span class="font-black text-slate-900 text-xs">${day.dayNum ? day.dayNum + ' ' : ''}${day.hari}</span>
-                  <div class="flex items-center gap-1">
-                    ${isJumaat && !day.cuti ? '<span class="px-1.5 py-0.2 rounded text-[9px] font-black bg-slate-800 text-amber-300">Tamat 12:00</span>' : ''}
-                    <span class="px-2 py-0.2 rounded text-[10px] font-extrabold ${theme.badgeBg} ${theme.badgeText}">${assignedBidang}</span>
-                  </div>
+                  <span class="px-2 py-0.2 rounded text-[10px] font-extrabold ${theme.badgeBg} ${theme.badgeText}">${assignedBidang}</span>
                 </div>
                 <div class="text-[10px] font-mono text-slate-500">${dt}</div>
 
@@ -1696,16 +1684,12 @@
         const attTags = formatAttendanceTags(dayAtt);
         const bidang = day.cuti ? 'Cuti' : (dayFieldConfig[dt] || 'Belum Ditentukan');
         const theme = getBidangColorTheme(bidang);
-        const isJumaat = day.hari === 'Jumaat';
 
         html += `
           <th class="p-3 min-w-[210px]">
             <div class="flex items-center justify-between">
               <span class="font-black text-sm">${day.hari}</span>
-              <div class="flex items-center gap-1">
-                ${isJumaat && !day.cuti ? '<span class="px-1.5 py-0.2 rounded text-[9px] font-black bg-amber-400 text-slate-950">12:00 TGH</span>' : ''}
-                <span class="px-2 py-0.2 rounded text-[10px] font-bold ${theme.badgeBg} ${theme.badgeText}">${bidang}</span>
-              </div>
+              <span class="px-2 py-0.2 rounded text-[10px] font-bold ${theme.badgeBg} ${theme.badgeText}">${bidang}</span>
             </div>
             <div class="text-[11px] text-slate-300 font-mono mt-0.5">${dt}</div>
             <div class="mt-1 text-[10px] font-medium text-emerald-300 bg-slate-800 px-1.5 py-0.5 rounded flex items-center justify-between">
@@ -1745,8 +1729,7 @@
           if (day.cuti) {
             html += `<td class="p-2.5 bg-rose-50/50 text-rose-700 text-[11px] font-bold text-center italic">${escapeHtml(day.catatanCuti || 'Cuti Am')}</td>`;
           } else if (day.hari === 'Jumaat' && slot.startMin >= 720) {
-            // HARI JUMAAT SELEPAS 12:00 TENGAH HARI DIBUANG DARI AKTIVITI
-            html += `<td class="p-2.5 bg-slate-100/70 text-slate-400 text-[10px] text-center font-bold italic select-none">Tamat Persekolahan (12:00 TGH)</td>`;
+            html += `<td class="p-2.5 bg-slate-50 text-slate-300 text-center text-xs select-none">-</td>`;
           } else {
             html += `
               <td class="p-2.5 align-top cursor-pointer hover:bg-indigo-50/40 transition" onclick="openRangeActivityModal('${sId}', '${dt}')">
@@ -1801,7 +1784,6 @@
       const bidang = dayFieldConfig[dt] || 'Belum Ditentukan';
       const theme = getBidangColorTheme(bidang);
       const dayName = getDayOfWeekName(dt);
-      const isJumaat = dayName === 'Jumaat';
       const activeSlots = getSlotsForDay(dayName);
 
       let html = `
@@ -1810,7 +1792,6 @@
             <div class="flex items-center gap-2">
               <h2 class="text-base font-black text-slate-900">${formattedDate}</h2>
               <span class="px-2.5 py-0.5 rounded text-xs font-bold ${theme.badgeBg} ${theme.badgeText}">${bidang}</span>
-              ${isJumaat ? '<span class="px-2 py-0.5 rounded text-xs font-black bg-slate-800 text-amber-300">Tamat 12:00 Tengah Hari</span>' : ''}
             </div>
             <p class="text-xs text-slate-500 mt-0.5">Minggu ${getMingguFromTarikh(dt)} • ${activeSlots.length} Slot Pasca UASA T1–T4 (30 Minit)</p>
           </div>
@@ -1878,7 +1859,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // 5. MOD RUMUSAN JADUAL BERKOTAK (TABLE STANDARD SEKOLAH)
+    // 5. MOD RUMUSAN JADUAL BERKOTAK
     function handlePrintFormatChange() {
       const fmt = document.getElementById('printFormatSelect').value;
       const weekSel = document.getElementById('printWeekSelect');
@@ -1906,7 +1887,7 @@
         const dt = cleanDate(d.tarikh);
         const opt = document.createElement('option');
         opt.value = dt;
-        opt.textContent = `${dt} (${d.hari})${d.cuti ? ' - Cuti' : (d.hari === 'Jumaat' ? ' [Tamat 12:00]' : '')}`;
+        opt.textContent = `${dt} (${d.hari})${d.cuti ? ' - Cuti' : ''}`;
         select.appendChild(opt);
       });
     }
@@ -1920,7 +1901,7 @@
         <div class="text-center space-y-1 pb-4 border-b-2 border-slate-900 mb-6 print-header">
           <h1 class="text-base sm:text-lg font-black uppercase text-slate-900 tracking-wider">SMK KAMARUL ARIFFIN, LABIS, JOHOR</h1>
           <h2 class="text-xs sm:text-sm font-bold text-slate-700 uppercase">Jadual Pengisian Program Pasca UASA (Tingkatan 1 – Tingkatan 4) Sesi 2026</h2>
-          <p class="text-[11px] text-slate-500 font-medium">Masa: Isnin – Khamis (07:30 PG – 02:30 PTG) | Jumaat (07:30 PG – 12:00 TGH) • Rehat: 10:00 – 10:30 PG</p>
+          <p class="text-[11px] text-slate-500 font-medium">Rehat Rasmi: 10:00 – 10:30 PG</p>
         </div>
       `;
 
@@ -1975,7 +1956,6 @@
         return;
       }
 
-      // Menentukan senarai hari berdasarkan mod yang dipilih (FULL / WEEKLY / DAILY)
       let targetDays = [];
       const allActiveDays = [
         ...NOVEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active)),
@@ -2004,18 +1984,15 @@
         targetDays = allActiveDays.filter(d => cleanDate(d.tarikh) === dVal);
       }
 
-      // Menjana Jadual Berkotak Bagi Setiap Hari
       targetDays.forEach(day => {
         const dt = cleanDate(day.tarikh);
         const dayAtt = dayAttendanceMap[dt] || { adaForms: ALL_FORMS, cutiForms: [], catatan: '' };
         const attTags = formatAttendanceTags(dayAtt);
         const bidang = day.cuti ? 'Cuti Perayaan / Am' : (dayFieldConfig[dt] || 'Belum Ditentukan');
-        const isJumaat = day.hari === 'Jumaat';
-        const activeSlots = getSlotsForDay(day.hari); // 8 slot untuk Jumaat, 13 untuk hari lain
+        const activeSlots = getSlotsForDay(day.hari);
 
         html += `
           <div class="calendar-box space-y-2 break-inside-avoid mb-8">
-            <!-- KEPALA JADUAL: TARIKH & BIDANG -->
             <div class="p-3 bg-slate-900 text-white rounded-t-xl flex flex-wrap items-center justify-between gap-2 text-xs">
               <div class="flex items-center gap-2">
                 <span class="font-black text-sm text-amber-300 font-mono">${dt}</span>
@@ -2026,7 +2003,6 @@
               <div class="flex flex-wrap items-center gap-2 text-[11px]">
                 <span class="bg-emerald-800 text-emerald-100 px-2 py-0.5 rounded font-semibold">Hadir: ${day.cuti ? 'Tiada' : attTags.hadirText}</span>
                 ${attTags.hasCuti && !day.cuti ? `<span class="bg-rose-900 text-rose-100 px-2 py-0.5 rounded font-semibold">Cuti: ${attTags.cutiText}</span>` : ''}
-                ${isJumaat ? '<span class="bg-amber-600 text-white px-2 py-0.5 rounded font-black">Tamat: 12:00 TGH</span>' : ''}
               </div>
             </div>
 
@@ -2037,7 +2013,6 @@
               </div>
             ` : ''}
 
-            <!-- JADUAL BERKOTAK 5 LAJUR -->
             <table class="w-full border-collapse border border-slate-400 text-left text-xs bg-white">
               <thead class="bg-slate-100 text-slate-800 font-bold uppercase text-[11px]">
                 <tr>
@@ -2063,7 +2038,6 @@
           activeSlots.forEach(slot => {
             const sId = cleanSlotId(slot.id);
 
-            // Baris Rehat
             if (sId === '1030') {
               html += `
                 <tr class="bg-amber-100 text-amber-950 font-black text-center border-y-2 border-amber-300">
@@ -2128,12 +2102,11 @@
       const dObj = new Date(cleanDt);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
       const dayName = getDayOfWeekName(cleanDt);
-      const isJumaat = dayName === 'Jumaat';
       const activeSlots = getSlotsForDay(dayName);
 
       document.getElementById('drawerDateTitle').textContent = `Jadual Slot: ${formattedDate}`;
       const dayBidang = dayFieldConfig[cleanDt] || 'Belum Ditentukan';
-      document.getElementById('drawerDateSubtitle').textContent = `Bidang: ${dayBidang} • Waktu: 07:30 PG hingga ${isJumaat ? '12:00 TGH (Jumaat)' : '02:30 PTG'}`;
+      document.getElementById('drawerDateSubtitle').textContent = `Bidang: ${dayBidang}`;
 
       const dayAtt = dayAttendanceMap[cleanDt] || { adaForms: ALL_FORMS, cutiForms: [] };
       const tags = formatAttendanceTags(dayAtt);
@@ -2196,7 +2169,6 @@
       openDayAttendanceModal(currentDrawerDate);
     }
 
-    // CATATAN HARIAN
     function openDayNoteModal(tarikh) {
       isUserEditing = true;
       const cleanDt = cleanDate(tarikh);
@@ -2243,7 +2215,6 @@
       showToast('Catatan harian berjaya disimpan.');
     }
 
-    // CUTI TINGKATAN T1–T4
     function openDayAttendanceModal(tarikh) {
       isUserEditing = true;
       const cleanDt = cleanDate(tarikh);
@@ -2332,7 +2303,6 @@
       showToast('Ketetapan cuti tingkatan T1–T4 disimpan.');
     }
 
-    // BIDANG HARIAN
     function openDayFieldAssignModal() {
       isUserEditing = true;
       const listContainer = document.getElementById('dayFieldAssignList');
@@ -2397,7 +2367,6 @@
       showToast('Ketetapan bidang harian disimpan.');
     }
 
-    // PENGURUSAN GURU
     function populateTeacherDropdown() {
       const select = document.getElementById('teacherDropdownSelect');
       if (!select) return;
@@ -2464,14 +2433,12 @@
       renderSelectedTeacherChips();
     }
 
-    // MODAL PENGISIAN SLOT DENGAN KAWALAN HARI JUMAAT
     function populateModalTimeSelects(isFriday) {
       const startSel = document.getElementById('modalWaktuMula');
       const endSel = document.getElementById('modalWaktuTamat');
       startSel.innerHTML = '';
       endSel.innerHTML = '';
 
-      // Tentukan had slot mengikut hari
       const availableSlots = isFriday ? TIME_SLOTS.filter(s => s.endMin <= 720) : TIME_SLOTS;
 
       availableSlots.forEach(s => {
@@ -2490,7 +2457,7 @@
             { val: '1000', label: '10:00 Pagi (Waktu Rehat)' },
             { val: '1100', label: '11:00 Pagi' },
             { val: '1130', label: '11:30 Pagi' },
-            { val: '1200', label: '12:00 Tengah Hari (Maksimum Jumaat)' }
+            { val: '1200', label: '12:00 Tengah Hari' }
           ]
         : [
             { val: '0800', label: '08:00 Pagi (30 Minit)' },
@@ -2565,8 +2532,8 @@
       const isFriday = dayName === 'Jumaat';
 
       document.getElementById('modalTarikhHidden').value = cleanDt;
-      document.getElementById('modalTarikhHari').value = `${cleanDt} (${formattedDate.split(',')[0]})${isFriday ? ' [Jumaat]' : ''}`;
-      document.getElementById('modalTimeNotice').textContent = isFriday ? 'Jumaat: Tamat 12:00 TGH' : 'Default: 30 Minit';
+      document.getElementById('modalTarikhHari').value = `${cleanDt} (${formattedDate.split(',')[0]})`;
+      document.getElementById('modalTimeNotice').textContent = 'Default: 30 Minit';
 
       populateModalTimeSelects(isFriday);
 
@@ -2829,7 +2796,7 @@
               const dayName = getDayOfWeekName(dt);
               if (dayName === 'Jumaat') {
                 const sObj = TIME_SLOTS.find(ts => ts.id === sId);
-                if (sObj && sObj.endMin > 720) return; // Padam / elak data slot selepas 12:00 bagi Jumaat
+                if (sObj && sObj.endMin > 720) return;
               }
 
               const slotKey = `${dt}_slot_${sId}`;
