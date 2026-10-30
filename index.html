@@ -81,7 +81,7 @@
             <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa & SPM 2026</h1>
             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">puasa.semekar.com</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA (T1–T4) • Garis Masa Fokus Peperiksaan SPM Tingkatan 5 (5S1, 5S2, 5S3)</p>
+          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA (T1–T4) • Garis Masa Fokus Pakej SPM Tingkatan 5 (5S1, 5S2, 5S3)</p>
         </div>
       </div>
 
@@ -204,7 +204,7 @@
       </div>
       <div class="flex items-center gap-2">
         <span class="text-rose-700 font-bold">⚠️ Ketetapan T5:</span>
-        <span class="text-slate-600">Murid Tingkatan 5 <strong>tidak terlibat langsung</strong> dengan aktiviti Pasca UASA (fokus garis masa SPM).</span>
+        <span class="text-slate-600">Murid Tingkatan 5 <strong>tidak terlibat langsung</strong> dengan aktiviti Pasca UASA (fokus garis masa SPM mengikut pakej).</span>
       </div>
     </div>
 
@@ -299,9 +299,9 @@
             <span class="p-1.5 bg-indigo-800 rounded-lg text-amber-300">
               <i data-lucide="target" class="w-5 h-5"></i>
             </span>
-            <h2 class="text-base font-black tracking-wide">Garis Masa Fokus Harian Peperiksaan SPM 2026 (Tingkatan 5)</h2>
+            <h2 class="text-base font-black tracking-wide">Garis Masa Fokus Pakej Peperiksaan SPM 2026 (Tingkatan 5)</h2>
           </div>
-          <p class="text-xs text-indigo-200">Prinsip Ringkas: Setiap hari hanya fokus <strong>1 atau 2 mata pelajaran</strong> yang bakal diambil pada hari seterusnya.</p>
+          <p class="text-xs text-indigo-200">Prinsip Ringkas: Setiap hari hanya fokus <strong>1 atau 2 mata pelajaran</strong> yang bakal diambil pada hari seterusnya mengikut pakej murid.</p>
         </div>
         <div class="flex items-center gap-2 self-start md:self-auto">
           <button onclick="printCurrentView()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 border border-white/20 transition">
@@ -311,50 +311,21 @@
         </div>
       </div>
 
-      <!-- KAD PEMILIHAN KUMPULAN & PENAPIS MASA -->
+      <!-- KAD PEMILIHAN PAKEJ ELEKTIF CALON -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-4 no-print">
         <div>
-          <span class="text-xs font-black uppercase tracking-wider text-slate-700 block mb-2">Pilih Kumpulan Calon Tingkatan 5:</span>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <button onclick="setSpmFilterClass('ALL')" id="spmFilterALL" class="p-3 rounded-xl border text-left transition flex flex-col justify-between bg-indigo-600 text-white border-indigo-600 shadow-xs">
-              <div class="flex items-center justify-between">
-                <span class="font-black text-xs">Semua Calon T5</span>
-                <i data-lucide="users" class="w-4 h-4"></i>
-              </div>
-              <span class="text-[10px] text-indigo-100 mt-1">Gambaran Menyeluruh Sekolah</span>
-            </button>
-
-            <button onclick="setSpmFilterClass('5S1')" id="spmFilter5S1" class="p-3 rounded-xl border text-left transition flex flex-col justify-between bg-white text-slate-700 border-slate-200 hover:border-indigo-400">
-              <div class="flex items-center justify-between">
-                <span class="font-black text-xs text-indigo-700">Kumpulan 5S1</span>
-                <span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.2 rounded font-bold">STEM</span>
-              </div>
-              <span class="text-[10px] text-slate-500 mt-1">Fizik, Kimia, AddMath, Bio/Kelestarian</span>
-            </button>
-
-            <button onclick="setSpmFilterClass('5S2')" id="spmFilter5S2" class="p-3 rounded-xl border text-left transition flex flex-col justify-between bg-white text-slate-700 border-slate-200 hover:border-emerald-400">
-              <div class="flex items-center justify-between">
-                <span class="font-black text-xs text-emerald-700">Kumpulan 5S2</span>
-                <span class="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.2 rounded font-bold">Ikhtisas</span>
-              </div>
-              <span class="text-[10px] text-slate-500 mt-1">Sains, PSV, Perniagaan/Kelestarian</span>
-            </button>
-
-            <button onclick="setSpmFilterClass('5S3')" id="spmFilter5S3" class="p-3 rounded-xl border text-left transition flex flex-col justify-between bg-white text-slate-700 border-slate-200 hover:border-amber-400">
-              <div class="flex items-center justify-between">
-                <span class="font-black text-xs text-amber-700">Kumpulan 5S3</span>
-                <span class="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.2 rounded font-bold">Sastera</span>
-              </div>
-              <span class="text-[10px] text-slate-500 mt-1">Sains Teras, PSV, Pendidikan Moral/PI</span>
-            </button>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-700 block">Pilih Pakej Mata Pelajaran Calon:</span>
+            <span class="text-[11px] text-slate-400">Klik pakej untuk melihat garis masa khusus</span>
           </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5" id="packageFilterButtons"></div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs">
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
           <div class="flex items-center gap-2">
-            <span class="font-bold text-slate-600">Pilih Fasa Garis Masa:</span>
+            <span class="font-bold text-slate-600">Pilih Fasa Tarikh:</span>
             <select id="spmWeekFilter" onchange="renderSpmTimeline()" class="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500 text-xs">
-              <option value="ALL">Semua Fasa Garis Masa (11 Nov – 17 Dis 2026)</option>
+              <option value="ALL">Semua Fasa Peperiksaan (11 Nov – 17 Dis 2026)</option>
               <option value="FASA_1">Fasa 1: Pecutan Awal Amali & BM (11 Nov – 15 Nov)</option>
               <option value="FASA_2">Fasa 2: Minggu Ujian Amali Sains LP (16 Nov – 22 Nov)</option>
               <option value="FASA_3">Fasa 3: Peperiksaan Teras - BM, BI, PI/Moral & Math (23 Nov – 29 Nov)</option>
@@ -366,7 +337,7 @@
 
           <div class="relative w-full sm:w-64">
             <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400"></i>
-            <input type="text" id="spmSearchInput" oninput="renderSpmTimeline()" placeholder="Cari subjek (cth: Matematik, Fizik)..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500">
+            <input type="text" id="spmSearchInput" oninput="renderSpmTimeline()" placeholder="Cari subjek / tajuk..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500">
           </div>
         </div>
       </div>
@@ -793,7 +764,7 @@
           </button>
 
           <div class="flex items-center gap-2">
-            <button type="button" onclick="closeModal()" class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
+            <button type="button" onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
             <button type="submit" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
               <i data-lucide="check" class="w-3.5 h-3.5"></i>
               <span>Simpan & Kunci</span>
@@ -901,109 +872,154 @@
       '1300': '1330', '1330': '1400', '1400': '1430'
     };
 
-    // PANGKALAN DATA GARIS MASA HARIAN TINGKATAN 5 (SPM 2026)
-    // Berprinsip: Maksimum 1 atau 2 subjek fokus sehari menjelang paper seterusnya
+    // SENARAI 5 PECAHAN PAKEJ TINGKATAN 5 SMK KAMARUL ARIFFIN
+    const SPM_PACKAGES = [
+      {
+        id: 'ALL',
+        name: 'Semua Calon Tingkatan 5',
+        badge: 'Semua',
+        badgeColor: 'bg-indigo-600 text-white',
+        desc: 'Paparan keseluruhan semua aliran calon Tingkatan 5 (5S1, 5S2, 5S3)'
+      },
+      {
+        id: 'P1',
+        name: 'Pakej 1: 5S1 Sains Tulen (Biologi)',
+        badge: '5S1 Bio',
+        badgeColor: 'bg-indigo-100 text-indigo-800 border border-indigo-300',
+        desc: 'Teras + Fizik, Kimia, AddMath & Biologi (+ PI/Moral, Tasawwur, BC)'
+      },
+      {
+        id: 'P2',
+        name: 'Pakej 2: 5S1 STEM (Asas Kelestarian)',
+        badge: '5S1 Lestari',
+        badgeColor: 'bg-blue-100 text-blue-800 border border-blue-300',
+        desc: 'Teras + Fizik, Kimia, AddMath & Asas Kelestarian (+ PI/Moral, Tasawwur, BC)'
+      },
+      {
+        id: 'P3',
+        name: 'Pakej 3: 5S2 Sastera Ikhtisas (Perniagaan)',
+        badge: '5S2 Niaga',
+        badgeColor: 'bg-emerald-100 text-emerald-800 border border-emerald-300',
+        desc: 'Teras + Sains, PSV & Perniagaan (+ PI/Moral, Tasawwur, BC)'
+      },
+      {
+        id: 'P4',
+        name: 'Pakej 4: 5S2 Sastera Ikhtisas (Kelestarian)',
+        badge: '5S2 Lestari',
+        badgeColor: 'bg-teal-100 text-teal-800 border border-teal-300',
+        desc: 'Teras + Sains, PSV & Asas Kelestarian (+ PI/Moral, Tasawwur, BC)'
+      },
+      {
+        id: 'P5',
+        name: 'Pakej 5: 5S3 Kemanusiaan (Sastera Asas)',
+        badge: '5S3 Sastera',
+        badgeColor: 'bg-amber-100 text-amber-800 border border-amber-300',
+        desc: 'Teras + Sains & PSV (+ PI/Moral, BC - Tiada Tasawwur)'
+      }
+    ];
+
+    // PANGKALAN DATA GARIS MASA FOKUS 1–2 SUBJEK SEHARI MENGIKUT PAKEJ
     const SPM_DAILY_TIMELINE = [
-      // FASA 1: PECUTAN AMALI & BM
+      // FASA 1: PECUTAN AWAL
       {
         tarikh: '2026-11-11', hari: 'Rabu', fasa: 'FASA_1', isExamDay: false,
         fokusUtama: 'Matematik & Bahasa Melayu',
-        sebabFokus: 'Persediaan awal 2 subjek wajib lulus SPM',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        sebabFokus: 'Persediaan awal 2 mata pelajaran wajib lulus SPM',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         slot1: { time: '08:30 – 11:30 PG', subject: 'Matematik (Kertas 2)', topic: 'Sukatan Serakan, Graf Gerakan & Garis Lurus', room: 'Dewan Kuliah T5' },
         slot2: { time: '01:30 – 04:00 PTG', subject: 'Bahasa Melayu (Kertas 1)', topic: 'Teknik Karangan Respons Terbuka & Format SPM', room: 'Dewan Kuliah T5' }
       },
       {
         tarikh: '2026-11-12', hari: 'Khamis', fasa: 'FASA_1', isExamDay: false,
         fokusUtama: 'Sejarah & Bahasa Inggeris',
-        sebabFokus: 'Pengukuhan teras kemanusiaan & bahasa',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        sebabFokus: 'Pengukuhan teras fakta sejarah & kemahiran menulis CEFR',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         slot1: { time: '08:30 – 11:30 PG', subject: 'Sejarah (Kertas 2)', topic: 'Fokus Tingkatan 4: Bab 2 & 3 (Nasionalisme & Konflik Dunia)', room: 'Dewan Kuliah T5' },
         slot2: { time: '01:30 – 04:00 PTG', subject: 'Bahasa Inggeris (Paper 2)', topic: 'Part 3 Extended Writing (Article, Review & Report)', room: 'Dewan Kuliah T5' }
       },
       {
         tarikh: '2026-11-13', hari: 'Jumaat', fasa: 'FASA_1', isExamDay: false,
-        fokusUtama: 'Amali Fizik (5S1) | Bahasa Melayu Rumusan (5S2 & 5S3)',
-        sebabFokus: 'Menjelang Ujian Amali Fizik Isnin ini (5S1) & Pemantapan BM (5S2/5S3)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:00 – 11:30 PG', subject: '5S1: Fizik Amali | 5S2 & 5S3: BM Rumusan', topic: '5S1: Manipulasi Radas Optik & Elektrik | 5S2/5S3: Teknik Skor 30 Markah Rumusan', room: 'Makmal Fizik / Dewan Kuliah' },
-        slot2: { time: '02:30 – 04:00 PTG', subject: 'Ulang Kaji Kendiri Terpimpin', topic: 'Semakan Nota Poket Rumus & Formula', room: 'Bilik Seminar T5' }
+        fokusUtama: 'P1 & P2: Amali Fizik | P3, P4, P5: BM Rumusan 30 Markah',
+        sebabFokus: '5S1 bersiap ke Ujian Amali Fizik Isnin ini; 5S2 & 5S3 kuasai rumusan',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:00 – 11:30 PG', subject: 'P1/P2: Fizik Amali | P3/P4/P5: BM Rumusan', topic: '5S1: Manipulasi Radas Optik & Elektrik | 5S2/5S3: Teknik Skor 30 Markah Rumusan', room: 'Makmal Fizik / Dewan Kuliah' },
+        slot2: { time: '02:30 – 04:00 PTG', subject: 'Ulang Kaji Kendiri Terpimpin', topic: 'Semakan Nota Poket Rumus & Formula Teras', room: 'Bilik Seminar T5' }
       },
       {
         tarikh: '2026-11-14', hari: 'Sabtu', fasa: 'FASA_1', isExamDay: false,
-        fokusUtama: 'Amali Kimia (5S1) | Sejarah T5 (5S2 & 5S3)',
+        fokusUtama: 'P1 & P2: Amali Kimia | P3, P4, P5: Sejarah T5 Bab 1–4',
         sebabFokus: 'Pecutan Hujung Minggu (Pagi ke Tengah Hari Sahaja)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: '5S1: Amali Kimia | 5S2 & 5S3: Sejarah Bab 1–4', topic: '5S1: Titrasi Asid-Bes & Graf Suhu | 5S2/5S3: Kedaulatan & Perlembagaan Negara', room: 'Makmal Kimia / Dewan T5' },
-        slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Petang & Malam Rehat Penuh Untuk Kesejahteraan Emosi Murid', room: 'Rumah' }
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'P1/P2: Amali Kimia | P3/P4/P5: Sejarah T5', topic: '5S1: Titrasi Asid-Bes & Graf Suhu | 5S2/5S3: Kedaulatan & Perlembagaan Persekutuan', room: 'Makmal Kimia / Dewan T5' },
+        slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Petang & Malam Rehat Penuh Untuk Kesejahteraan Mental Calon', room: 'Rumah' }
       },
       {
         tarikh: '2026-11-15', hari: 'Ahad', fasa: 'FASA_1', isExamDay: false,
-        fokusUtama: 'SOP Amali Sains (5S1) | Komsas & Novel BM (5S2 & 5S3)',
+        fokusUtama: 'P1: Amali Fizik & Bio | P2: Amali Fizik & Kimia | P3/P4/P5: Komsas BM',
         sebabFokus: 'Sehari sebelum Ujian Amali Sains Berpusat LP',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: 'Persediaan Mental & Bahan Amali', topic: '5S1: Taklimat Ketua Panitia Sains | 5S2/5S3: Bedah Watak & Perwatakan Novel BM', room: 'Pusat Sumber SEMEKAR' },
-        slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Tidur Awal & Semakan Kad Pengenalan / Slip Peperiksaan', room: 'Rumah' }
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'Persediaan SOP Amali & Komsas Novel', topic: '5S1: Taklimat Ketua Makmal Sains | 5S2/5S3: Bedah Watak & Perwatakan Novel BM', room: 'Pusat Sumber SEMEKAR' },
+        slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Tidur Awal & Semakan Kad Pengenalan serta Alat Tulis', room: 'Rumah' }
       },
 
-      // FASA 2: MINGGU UJIAN AMALI & GERAK GEMPUR BM
+      // FASA 2: MINGGU UJIAN AMALI LP
       {
         tarikh: '2026-11-16', hari: 'Isnin', fasa: 'FASA_2', isExamDay: true,
-        fokusUtama: 'EXAM LP: Amali Fizik (5S1) | FOKUS: Bahasa Melayu (5S2 & 5S3)',
-        sebabFokus: 'Hari Ujian Amali Sains Sidang 1',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:00 – 12:00 TGH: Ujian Amali Fizik 4531/3 (Semua 5S1)',
-        slot1: { time: '08:30 – 11:30 PG', subject: '5S2 & 5S3: Morfologi & Tatabahasa BM K2', topic: 'Latih Tubi Golongan Kata, Sintaksis & Peribahasa', room: 'Dewan Kuliah T5' },
-        slot2: { time: '02:00 – 04:00 PTG', subject: 'Semua T5: Karangan Respons Terbuka', topic: 'Fokus Isu Perpaduan, Ekonomi & Teknologi Hijau', room: 'Dewan Kuliah T5' }
+        fokusUtama: 'EXAM LP: Amali Fizik (P1, P2) | FOKUS: Bahasa Melayu (P3, P4, P5)',
+        sebabFokus: 'Ujian Amali Sains Sidang 1 (Fizik)',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:00 – 12:00 TGH: Ujian Amali Fizik 4531/3 (Pakej 1 & Pakej 2 Sahaja)',
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P3, P4, P5: Morfologi & Tatabahasa BM K2', topic: 'Latih Tubi Golongan Kata, Sintaksis & Peribahasa SPM', room: 'Dewan Kuliah T5' },
+        slot2: { time: '02:00 – 04:00 PTG', subject: 'Semua Pakej: Karangan BM Respons Terbuka', topic: 'Fokus Isu Perpaduan, Ekonomi Semasa & Sains Teknologi', room: 'Dewan Kuliah T5' }
       },
       {
         tarikh: '2026-11-17', hari: 'Selasa', fasa: 'FASA_2', isExamDay: true,
-        fokusUtama: 'EXAM LP: Amali Kimia (5S1) | FOKUS: Sejarah KBAT (5S2 & 5S3)',
-        sebabFokus: 'Hari Ujian Amali Sains Sidang 2',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:00 – 12:00 TGH: Ujian Amali Kimia 4541/3 (Semua 5S1)',
-        slot1: { time: '08:30 – 11:30 PG', subject: '5S2 & 5S3: Teknik KBAT Sejarah K2', topic: 'Cara Menjawab Iktibar, Patriotisme & Nilai Murni (8 Markah)', room: 'Dewan Kuliah T5' },
-        slot2: { time: '02:00 – 04:00 PTG', subject: 'Semua T5: Pemahaman Petikan Umum & Komsas BM', topic: 'Teknik Menjawab Soalan 2(a) hingga 2(d) Kertas 2', room: 'Dewan Kuliah T5' }
+        fokusUtama: 'EXAM LP: Amali Kimia (P1, P2) | FOKUS: Sejarah KBAT (P3, P4, P5)',
+        sebabFokus: 'Ujian Amali Sains Sidang 2 (Kimia)',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:00 – 12:00 TGH: Ujian Amali Kimia 4541/3 (Pakej 1 & Pakej 2 Sahaja)',
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P3, P4, P5: Teknik KBAT Sejarah K2', topic: 'Kaedah Menjawab Soalan Iktibar, Patriotisme & Nilai Murni (8 Markah)', room: 'Dewan Kuliah T5' },
+        slot2: { time: '02:00 – 04:00 PTG', subject: 'Semua Pakej: Pemahaman Petikan Umum & Komsas BM', topic: 'Teknik Menjawab Soalan 2(a) hingga 2(d) Kertas 2', room: 'Dewan Kuliah T5' }
       },
       {
         tarikh: '2026-11-18', hari: 'Rabu', fasa: 'FASA_2', isExamDay: true,
-        fokusUtama: 'EXAM LP: Amali Biologi (5S1 Bio) | FOKUS TUNGGAL: Bahasa Melayu',
-        sebabFokus: 'Hari Ujian Amali Sains Sidang 3 & Penutup Fasa Amali',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:00 – 12:00 TGH: Ujian Amali Biologi 4551/3 (Separuh 5S1)',
-        slot1: { time: '08:30 – 11:30 PG', subject: '5S1 (Kelestarian) & 5S2/5S3: BM Kertas 1', topic: 'Latih Tubi Karangan Bahagian A (Esei Pendek 30 Markah)', room: 'Dewan Kuliah T5' },
-        slot2: { time: '02:00 – 04:00 PTG', subject: 'Semua T5: Simulasi Audio BM Kertas 4 (Mendengar)', topic: 'Ujian Mendengar Rakaman Audio Format Sebenar LPM', room: 'Dewan Kuliah T5' }
+        fokusUtama: 'EXAM LP: Amali Bio (P1 Sahaja) | FOKUS TUNGGAL: Bahasa Melayu',
+        sebabFokus: 'Ujian Amali Sains Sidang 3 (Biologi) & Penutup Fasa Amali',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:00 – 12:00 TGH: Ujian Amali Biologi 4551/3 (Pakej 1 Sahaja)',
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P2, P3, P4, P5: BM Kertas 1 (Bahagian A)', topic: 'Latih Tubi Esei Pendek 30 Markah Berdasarkan Bahan Rangsangan', room: 'Dewan Kuliah T5' },
+        slot2: { time: '02:00 – 04:00 PTG', subject: 'Semua Pakej: Simulasi Audio BM Kertas 4', topic: 'Ujian Mendengar Audio Mengikut Format Masa Sebenar LPM', room: 'Dewan Kuliah T5' }
       },
       {
         tarikh: '2026-11-19', hari: 'Khamis', fasa: 'FASA_2', isExamDay: false,
         fokusUtama: 'FOKUS TUNGGAL: Bahasa Melayu Kertas 1',
         sebabFokus: '4 hari menjelang Peperiksaan Bertulis BM SPM',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         slot1: { time: '08:30 – 11:30 PG', subject: 'Bahasa Melayu (Kertas 1)', topic: 'Simulasi Menulis Esei Bahagian B Mengikut Masa Penuh (2 Jam)', room: 'Bilik Seminar T5' },
-        slot2: { time: '01:30 – 04:00 PTG', subject: 'Bahasa Melayu (Kertas 1)', topic: 'Bedah Skema Perenggan Kesimpulan & Ungkapan Menarik / Peribahasa', room: 'Bilik Seminar T5' }
+        slot2: { time: '01:30 – 04:00 PTG', subject: 'Bahasa Melayu (Kertas 1)', topic: 'Bedah Skema Perenggan Kesimpulan & Frasa Menarik / Peribahasa', room: 'Bilik Seminar T5' }
       },
       {
         tarikh: '2026-11-20', hari: 'Jumaat', fasa: 'FASA_2', isExamDay: false,
         fokusUtama: 'FOKUS TUNGGAL: Bahasa Melayu Kertas 2',
         sebabFokus: '3 hari menjelang Peperiksaan Bertulis BM SPM',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:00 – 11:30 PG', subject: 'Bahasa Melayu (Kertas 2)', topic: 'Bedah 5 Set Rumusan Ramalan & Skema Kata Tugas', room: 'Dewan Kuliah T5' },
-        slot2: { time: '02:30 – 04:00 PTG', subject: 'Majlis Restu Ilmu & Taklimat Dewan Peperiksaan', topic: 'Amanat Pengetua, Susunan Meja Peperiksaan & Doa Restu', room: 'Dewan Peperiksaan' }
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:00 – 11:30 PG', subject: 'Bahasa Melayu (Kertas 2)', topic: 'Bedah 5 Set Rumusan Ramalan & Skema Kata Tugas LPM', room: 'Dewan Kuliah T5' },
+        slot2: { time: '02:30 – 04:00 PTG', subject: 'Majlis Restu Ilmu & Taklimat Dewan Peperiksaan', topic: 'Amanat Pengetua, Semakan Angka Giliran Meja Peperiksaan & Doa Restu', room: 'Dewan Peperiksaan' }
       },
       {
         tarikh: '2026-11-21', hari: 'Sabtu', fasa: 'FASA_2', isExamDay: false,
         fokusUtama: 'FOKUS TUNGGAL: Bahasa Melayu (Sentuhan Akhir)',
         sebabFokus: '2 hari menjelang Peperiksaan Bertulis BM SPM (Pagi Sahaja)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: 'Bahasa Melayu (Kertas 1, 2, 4)', topic: '10 Kesilapan Lazim Menggugurkan Markah BM & Tip Skor A', room: 'Dewan Kuliah T5' },
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'Bahasa Melayu (Kertas 1, 2, 4)', topic: '10 Kesilapan Lazim Menggugurkan Markah BM & Petua Skor Cemerlang', room: 'Dewan Kuliah T5' },
         slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Rehat Mental Calon Bersama Keluarga', room: 'Rumah' }
       },
       {
         tarikh: '2026-11-22', hari: 'Ahad', fasa: 'FASA_2', isExamDay: false,
         fokusUtama: 'REHAT & KETENANGAN MINDA',
         sebabFokus: 'Sehari sebelum Peperiksaan Bertulis BM SPM',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 11:30 PG', subject: 'Semakan Santai Kendiri', topic: 'Imbasan Pantas Frasa Menarik & Tema Novel (Tidak Bebankan Minda)', room: 'Di Rumah / PSS' },
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:30 – 11:30 PG', subject: 'Semakan Santai Kendiri', topic: 'Imbasan Pantas Frasa Menarik & Tema Novel (Ketenangan Minda)', room: 'Di Rumah / PSS' },
         slot2: { time: 'Petang Rehat', subject: 'TIDUR AWAL & REHAT', topic: 'Pastikan Rehat Cukup Menjelang Peperiksaan Jam 8:00 Pagi Esok', room: 'Rumah' }
       },
 
@@ -1012,7 +1028,7 @@
         tarikh: '2026-11-23', hari: 'Isnin', fasa: 'FASA_3', isExamDay: true,
         fokusUtama: 'EXAM: Bahasa Melayu | Petang: FOKUS Bahasa Inggeris',
         sebabFokus: 'Menghadapi Paper BI pada keesokan harinya',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         examInfo: '09:00–09:30 (K4) | 10:45–12:45 (K1) | 02:30–05:00 (K2): Bahasa Melayu',
         slot1: { time: 'Pagi & Petang', subject: 'PEPERIKSAAN BERTULIS BM', topic: 'Menduduki Peperiksaan Bahasa Melayu di Dewan Semekar', room: 'Dewan Semekar' },
         slot2: { time: '05:15 – 06:15 PTG', subject: 'FOKUS: Bahasa Inggeris (Esok)', topic: 'Taklimat Santai BI: Listening Hacks Paper 4 & Reading Paper 1 Esok', room: 'Dewan Kuliah T5' }
@@ -1021,16 +1037,16 @@
         tarikh: '2026-11-24', hari: 'Selasa', fasa: 'FASA_3', isExamDay: true,
         fokusUtama: 'EXAM: Bahasa Inggeris | Petang: FOKUS Pendidikan Islam / Moral',
         sebabFokus: 'Menghadapi Paper Pendidikan Islam & Moral pada keesokan harinya',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         examInfo: '09:00–09:40 (K4) | 11:00–12:30 (K1) | 02:30–04:00 (K2): Bahasa Inggeris',
         slot1: { time: 'Pagi & Petang', subject: 'PEPERIKSAAN BERTULIS BI', topic: 'Menduduki Peperiksaan Bahasa Inggeris di Dewan Semekar', room: 'Dewan Semekar' },
-        slot2: { time: '04:30 – 06:00 PTG', subject: 'FOKUS: Pend. Islam & Pend. Moral (Esok)', topic: 'Klinik Kilat: Fiqh & Hadis KBAT (PI) / Isu Situasi Moral (Moral)', room: 'Surau / Bilik Tayang' }
+        slot2: { time: '04:30 – 06:00 PTG', subject: 'FOKUS: Pend. Islam & Moral (Esok)', topic: 'Klinik Kilat: Fiqh & Hadis KBAT (PI) / Isu Situasi Nilai Universal (Moral)', room: 'Surau / Bilik Tayang' }
       },
       {
         tarikh: '2026-11-25', hari: 'Rabu', fasa: 'FASA_3', isExamDay: true,
         fokusUtama: 'EXAM: PI / Moral (Pagi) | FOKUS TUNGGAL: Matematik',
         sebabFokus: 'Paper tamat 10:45 pg; masa emas persediaan penuh Matematik esok',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         examInfo: '08:15 – 10:45 PG: Pendidikan Islam (1223) / Pendidikan Moral (1225)',
         slot1: { time: '11:30 – 01:30 TGH', subject: 'FOKUS: Matematik Kertas 2 (Bahagian 1)', topic: 'Topik Wajib: Graf Gerakan, Cukai, Insurans & Matematik Kewangan', room: 'Dewan Kuliah T5' },
         slot2: { time: '02:30 – 04:30 PTG', subject: 'FOKUS: Matematik Kertas 2 (Bahagian 2)', topic: 'Topik Wajib: Pelan & Dongakan, Kebarangkalian & Matriks K2', room: 'Dewan Kuliah T5' }
@@ -1039,7 +1055,7 @@
         tarikh: '2026-11-26', hari: 'Khamis', fasa: 'FASA_3', isExamDay: true,
         fokusUtama: 'EXAM: Matematik (K1 & K2) | Petang: Rehat Penuh',
         sebabFokus: 'Menamatkan fasa kertas teras minggu pertama',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         examInfo: '08:15–09:45 (K1) | 10:45–01:15 (K2): Matematik SPM',
         slot1: { time: 'Pagi', subject: 'PEPERIKSAAN MATEMATIK', topic: 'Menduduki Peperiksaan Matematik di Dewan Semekar', room: 'Dewan Semekar' },
         slot2: { time: '02:30 – 04:00 PTG', subject: 'REHAT & TAKLIMAT SEJARAH', topic: 'Rehat Mental & Pengagihan Modul Ramalan Sejarah untuk Isnin Depan', room: 'Dewan Kuliah T5' }
@@ -1048,7 +1064,7 @@
         tarikh: '2026-11-27', hari: 'Jumaat', fasa: 'FASA_3', isExamDay: false,
         fokusUtama: 'FOKUS TUNGGAL: Sejarah Tingkatan 4',
         sebabFokus: 'Membina asas fakta Tingkatan 4 menjelang Paper Sejarah Isnin',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         slot1: { time: '08:00 – 11:30 PG', subject: 'Sejarah (Kertas 2)', topic: 'Bedah Bab 1 hingga 5 T4: Kerajaan Alam Melayu, Persekutuan & Perlembagaan', room: 'Dewan Kuliah T5' },
         slot2: { time: '02:30 – 04:00 PTG', subject: 'Sejarah (Kertas 2 Struktur)', topic: 'Teknik Menjawab Struktur Bahagian A Berdasarkan Fakta T4', room: 'Dewan Kuliah T5' }
       },
@@ -1056,7 +1072,7 @@
         tarikh: '2026-11-28', hari: 'Sabtu', fasa: 'FASA_3', isExamDay: false,
         fokusUtama: 'FOKUS TUNGGAL: Sejarah Tingkatan 5',
         sebabFokus: 'Menguasai fakta Tingkatan 5 menjelang Paper Sejarah Isnin (Pagi Sahaja)',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         slot1: { time: '08:30 – 12:30 TGH', subject: 'Sejarah (Kertas 2 Esei)', topic: 'Bedah Bab 1 hingga 6 T5: Kedaulatan, Demokrasi, Pilihan Raya & Dasar Pembangunan', room: 'Dewan Kuliah T5' },
         slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Petang Rehat Penuh Untuk Menyimpan Memori Fakta', room: 'Rumah' }
       },
@@ -1064,70 +1080,70 @@
         tarikh: '2026-11-29', hari: 'Ahad', fasa: 'FASA_3', isExamDay: false,
         fokusUtama: 'Sejarah Kertas 1 & Sentuhan Akhir',
         sebabFokus: 'Sehari sebelum Peperiksaan Sejarah & Tasawwur Islam',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
         slot1: { time: '08:30 – 11:30 PG', subject: 'Sejarah (Kertas 1)', topic: 'Latih Tubi 40 Soalan Pantas Objektif & Semakan Kata Kunci KBAT', room: 'Dewan Kuliah T5' },
-        slot2: { time: '11:45 – 12:45 TGH', subject: 'Klinik Tasawwur Islam (Calon Islam 5S1 & 5S2)', topic: 'Imbasan Akhir Konsep Islam Menjelang Peperiksaan Petang Esok', room: 'Surau Al-Kauthar' }
+        slot2: { time: '11:45 – 12:45 TGH', subject: 'Klinik Tasawwur Islam (Calon Islam P1–P4)', topic: 'Imbasan Akhir Konsep Islam Menjelang Peperiksaan Petang Esok (P5 tiada Tasawwur)', room: 'Surau Al-Kauthar' }
       },
 
-      // FASA 4: SEJARAH, PSV, BIO/NIAGA, FIZIK/SAINS
+      // FASA 4: ELEKTIF & PERCABANGAN PAKEJ
       {
         tarikh: '2026-11-30', hari: 'Isnin', fasa: 'FASA_4', isExamDay: true,
-        fokusUtama: 'EXAM: Sejarah & Tasawwur | Petang: FOKUS PSV (5S2 & 5S3)',
-        sebabFokus: 'Calon 5S2 & 5S3 menduduki PSV esok; 5S1 fokus Biologi/Fizik',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:15–09:15 (K1) | 10:30–01:00 (K2): Sejarah • 02:30–05:00: Tasawwur (Islam 5S1/5S2)',
+        fokusUtama: 'EXAM: Sejarah & Tasawwur | Petang: FOKUS Mengikut Pakej',
+        sebabFokus: 'P3/P4/P5 hadapi PSV esok; P1 hadapi Biologi esok lusa',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:15–01:00: Sejarah (Semua Pakej) • 02:30–05:00: Tasawwur (Islam P1–P4)',
         slot1: { time: 'Pagi', subject: 'PEPERIKSAAN SEJARAH', topic: 'Menduduki Peperiksaan Sejarah di Dewan Semekar', room: 'Dewan Semekar' },
-        slot2: { time: '02:30 – 04:30 PTG', subject: '5S2 & 5S3: FOKUS PSV (Esok) | 5S1: FOKUS Biologi', topic: '5S2/5S3: Persediaan Kertas & Olahan Warna K2 Melukis | 5S1: Esei Fisiologi Bio', room: 'Bilik Seni / Makmal Bio' }
+        slot2: { time: '02:30 – 04:30 PTG', subject: 'P3/P4/P5: FOKUS PSV Melukis (Esok) | P1: FOKUS Biologi', topic: 'P3/P4/P5: Olahan Warna & Media K2 Melukis | P1: Esei Fisiologi Biologi', room: 'Bilik Seni / Makmal Bio' }
       },
       {
         tarikh: '2026-12-01', hari: 'Selasa', fasa: 'FASA_4', isExamDay: true,
-        fokusUtama: 'EXAM: PSV (5S2 & 5S3) | FOKUS: Biologi (5S1) & Perniagaan (5S2)',
+        fokusUtama: 'EXAM: PSV (P3, P4, P5) | FOKUS: Biologi (P1) & Perniagaan (P3)',
         sebabFokus: 'Menghadapi Paper Biologi & Perniagaan esok pagi',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:15–11:15 (K2 Melukis) | 12:00–01:00 (K1 Teori): PSV (5S2 & 5S3)',
-        slot1: { time: '08:30 – 11:30 PG', subject: '5S1: FOKUS Biologi (Esok) / Fizik K2', topic: '5S1 Bio: Soalan Esei Respirasi, Genetik & Koordinasi | Non-Bio: Formula Fizik', room: 'Makmal Bio / Bilik Seminar' },
-        slot2: { time: '02:00 – 04:00 PTG', subject: '5S2: FOKUS Perniagaan (Esok)', topic: 'Kajian Kes Bahagian C (16 Markah) & Pengiraan Nisbah Kewangan', room: 'Bilik Perniagaan' }
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:15–11:15 (K2 Melukis) | 12:00–01:00 (K1 Teori): PSV (P3, P4, P5)',
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P1: FOKUS Biologi (Esok Exam!) | P2: FOKUS Fizik K2', topic: 'P1 Bio: Esei Respirasi, Genetik & Koordinasi | P2: Rumus Fizik K2', room: 'Makmal Bio / Bilik Seminar' },
+        slot2: { time: '02:00 – 04:00 PTG', subject: 'P3: FOKUS Perniagaan (Esok Exam!)', topic: 'Kajian Kes Bahagian C (16 Markah) & Pengiraan Nisbah Kewangan', room: 'Bilik Perniagaan' }
       },
       {
         tarikh: '2026-12-02', hari: 'Rabu', fasa: 'FASA_4', isExamDay: true,
-        fokusUtama: 'EXAM: Biologi & Perniagaan | Petang: FOKUS Fizik & Sains Teras',
+        fokusUtama: 'EXAM: Biologi (P1) & Perniagaan (P3) | Petang: FOKUS Fizik & Sains Teras',
         sebabFokus: 'Menghadapi Paper Fizik & Sains Teras esok pagi',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:15–09:30 (K1) | 10:45–01:00/01:15 (K2): Biologi (5S1) & Perniagaan (5S2)',
-        slot1: { time: '08:30 – 11:30 PG', subject: 'Calon Tiada Paper: Ulang Kaji Fizik & Sains', topic: '5S1 Non-Bio: Fizik K2 | 5S3 & 5S2 Non-Niaga: Sains Teras K2', room: 'Dewan Kuliah T5' },
-        slot2: { time: '02:30 – 04:30 PTG', subject: 'SEMUA: FOKUS Fizik (5S1) & Sains Teras (5S2 & 5S3)', topic: '5S1: Reka Bentuk & Formula Fizik | 5S2/5S3: Pemboleh Ubah & KBAT Sains Teras', room: 'Dewan Kuliah / Seminar' }
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:15–01:15: Biologi (Pakej 1) & Perniagaan (Pakej 3)',
+        slot1: { time: '08:30 – 11:30 PG', subject: 'Pakej Tiada Paper: Ulang Kaji Fizik (P2) & Sains Teras (P4, P5)', topic: 'P2: Reka Bentuk Fizik K2 | P4/P5: Pemboleh Ubah Sains Teras K2', room: 'Dewan Kuliah T5' },
+        slot2: { time: '02:30 – 04:30 PTG', subject: 'SEMUA: FOKUS Fizik (P1, P2) & Sains Teras (P3, P4, P5)', topic: 'P1/P2: Formula & Graf Fizik | P3/P4/P5: Eksperimen & Aplikasi Sains Teras', room: 'Dewan Kuliah / Seminar' }
       },
       {
         tarikh: '2026-12-03', hari: 'Khamis', fasa: 'FASA_4', isExamDay: true,
-        fokusUtama: 'EXAM: Fizik (5S1) & Sains Teras (5S2 & 5S3)',
-        sebabFokus: 'Majoriti 5S3 dan sebahagian 5S2 tamat SPM pada hari ini',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        examInfo: '08:15–09:30 (K1) | 10:30–01:00 (K2): Fizik (5S1) & Sains Teras (5S2, 5S3)',
+        fokusUtama: 'EXAM: Fizik (P1, P2) & Sains Teras (P3, P4, P5)',
+        sebabFokus: 'Majoriti Pakej 5 dan sebahagian Pakej 3 tamat SPM hari ini!',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        examInfo: '08:15–01:00: Fizik (P1, P2) & Sains Teras (P3, P4, P5)',
         slot1: { time: 'Pagi', subject: 'PEPERIKSAAN FIZIK & SAINS TERAS', topic: 'Menduduki Peperiksaan di Dewan Semekar', room: 'Dewan Semekar' },
         slot2: { time: '02:30 – 04:00 PTG', subject: 'Calon BC: FOKUS Bahasa Cina (Selasa Depan)', topic: 'Taklimat Format Esei & Prosa Klasik Bahasa Cina', room: 'Bilik Bahasa' }
       },
       {
         tarikh: '2026-12-04', hari: 'Jumaat', fasa: 'FASA_4', isExamDay: false,
-        fokusUtama: 'Asas Kelestarian & Bahasa Cina | 5S1: Kimia',
-        sebabFokus: 'Fokus subjek elektif berbaki',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:00 – 11:30 PG', subject: 'Calon Kelestarian: Bengkel Hijau | Calon BC: Esei', topic: 'Kelestarian: 5R, Audit Sisa & Tenaga | BC: Format Esei K1', room: 'Bengkel RBT / Bilik Bahasa' },
-        slot2: { time: '02:30 – 04:00 PTG', subject: '5S1: Kimia (Kertas 2)', topic: 'Stoikiometri, Pengiraan Mol & Asid-Bes', room: 'Makmal Kimia' }
+        fokusUtama: 'P2 & P4: Asas Kelestarian | Calon BC: Esei BC | P1: Kimia K2',
+        sebabFokus: 'Pecutan subjek elektif berbaki',
+        packages: ['P1', 'P2', 'P3', 'P4', 'P5'],
+        slot1: { time: '08:00 – 11:30 PG', subject: 'P2/P4: Kelestarian Hijau | Calon BC: Esei', topic: 'P2/P4: 5R, Audit Sisa & Tenaga | BC: Teknik Karangan K1', room: 'Bengkel RBT / Bilik Bahasa' },
+        slot2: { time: '02:30 – 04:00 PTG', subject: 'P1: Kimia (Kertas 2)', topic: 'Stoikiometri, Pengiraan Mol & Asid-Bes', room: 'Makmal Kimia' }
       },
       {
         tarikh: '2026-12-05', hari: 'Sabtu', fasa: 'FASA_4', isExamDay: false,
-        fokusUtama: 'Pecutan Hujung Minggu: BC, Kelestarian & Kimia',
-        sebabFokus: 'Pagi ke tengah hari sahaja; calon 5S3 berehat',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: 'Calon BC: Puisi Klasik | Kelestarian: Kitaran Hayat | 5S1: Kimia Karbon', topic: 'Latih Tubi Khusus Mengikut Bilik Subjek Masing-Masing', room: 'Bilik Khas' },
+        fokusUtama: 'P2 & P4: Kelestarian | Calon BC: Puisi | P1: Kimia Karbon',
+        sebabFokus: 'Pagi ke tengah hari sahaja; Pakej 5 dan calon tamat berehat',
+        packages: ['P1', 'P2', 'P3', 'P4'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'P2/P4: Kelestarian K1 | Calon BC: Puisi | P1: Sebatian Karbon', topic: 'Latih Tubi Berfokus Mengikut Bilik Subjek Masing-Masing', room: 'Bilik Khas' },
         slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Rehat Mental Menjelang Peperiksaan Minggu Depan', room: 'Rumah' }
       },
       {
         tarikh: '2026-12-06', hari: 'Ahad', fasa: 'FASA_4', isExamDay: false,
-        fokusUtama: 'Simulasi BC & Asas Kelestarian | 5S1: Add Math',
+        fokusUtama: 'Simulasi BC & Asas Kelestarian | P1: Add Math Kalkulus',
         sebabFokus: 'Pecutan Pagi Ahad',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: 'Calon BC: Simulasi K1 | Kelestarian: Ramalan | 5S1: Kalkulus Add Math', topic: 'Latih Tubi Berfokus Berdasarkan Soalan Percubaan Negeri', room: 'Bilik Khas' },
+        packages: ['P1', 'P2', 'P3', 'P4'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'Calon BC: Simulasi K1 | P2/P4: Ramalan Kelestarian | P1: Kalkulus', topic: 'Latih Tubi Berdasarkan Soalan Percubaan Negeri Terpilih', room: 'Bilik Khas' },
         slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Petang Rehat Penuh', room: 'Rumah' }
       },
 
@@ -1136,99 +1152,99 @@
         tarikh: '2026-12-07', hari: 'Isnin', fasa: 'FASA_5', isExamDay: false,
         fokusUtama: 'FOKUS TUNGGAL: Bahasa Cina & Asas Kelestarian',
         sebabFokus: 'Sehari sebelum Kertas Bahasa Cina SPM',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        slot1: { time: '08:30 – 11:30 PG', subject: 'Calon BC: Sentuhan Akhir Guru BC | Kelestarian: Latih Tubi', topic: 'BC: Kertas 1 & 2 Skor Maksimum | Kelestarian: Modul Ramalan Akhir', room: 'Bilik Bahasa / RBT' },
-        slot2: { time: '01:30 – 03:30 PTG', subject: '5S1 Tulen: Kimia Redoks & Sel Kimia', topic: 'Penyelesaian Persamaan Kimia Redoks Kertas 2', room: 'Makmal Kimia' }
+        packages: ['P1', 'P2', 'P3', 'P4'],
+        slot1: { time: '08:30 – 11:30 PG', subject: 'Calon BC: Sentuhan Akhir Guru BC | P2/P4: Modul Kelestarian', topic: 'BC: Kertas 1 & 2 Skor Cemerlang | Kelestarian: Ramalan Akhir', room: 'Bilik Bahasa / RBT' },
+        slot2: { time: '01:30 – 03:30 PTG', subject: 'P1: Kimia Redoks & Sel Kimia', topic: 'Penyelesaian Persamaan Kimia Redoks Kertas 2', room: 'Makmal Kimia' }
       },
       {
         tarikh: '2026-12-08', hari: 'Selasa', fasa: 'FASA_5', isExamDay: true,
-        fokusUtama: 'EXAM: Bahasa Cina | FOKUS: Asas Kelestarian (Esok)',
-        sebabFokus: 'Calon Asas Kelestarian menduduki kertas pada petang esok',
-        targetClasses: ['5S1', '5S2', '5S3'],
+        fokusUtama: 'EXAM: Bahasa Cina | FOKUS: Asas Kelestarian (Esok Exam!)',
+        sebabFokus: 'Calon Asas Kelestarian (P2 & P4) menduduki kertas pada petang esok',
+        packages: ['P1', 'P2', 'P3', 'P4'],
         examInfo: '08:15–10:00 (K1) | 02:30–04:45 (K2): Bahasa Cina SPM',
-        slot1: { time: '08:30 – 11:30 PG', subject: 'Calon Kelestarian: FOKUS Asas Kelestarian (Esok)', topic: 'Semakan Poket Nota & Latihan Soalan Struktur Kertas 1', room: 'Bilik Seminar' },
-        slot2: { time: '01:30 – 03:30 PTG', subject: '5S1 (Non-Kelestarian): Add Math (Hukum Linear & Vektor)', topic: 'Latih Tubi Kertas 2 Bahagian B', room: 'Bilik Seminar' }
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P2 & P4: FOKUS Asas Kelestarian (Esok Exam!)', topic: 'Semakan Poket Nota & Latihan Soalan Struktur Kertas 1', room: 'Bilik Seminar' },
+        slot2: { time: '01:30 – 03:30 PTG', subject: 'P1: Add Math (Hukum Linear & Vektor)', topic: 'Latih Tubi Kertas 2 Bahagian B', room: 'Bilik Seminar' }
       },
       {
         tarikh: '2026-12-09', hari: 'Rabu', fasa: 'FASA_5', isExamDay: true,
-        fokusUtama: 'EXAM: Asas Kelestarian (Petang) | 5S1: Kimia',
-        sebabFokus: 'Calon 5S2 menamatkan SPM sepenuhnya selepas hari ini',
-        targetClasses: ['5S1', '5S2'],
-        examInfo: '02:30 – 05:00 PTG: Asas Kelestarian (3768/1)',
-        slot1: { time: '09:00 – 11:30 PG', subject: 'Kelestarian: Sentuhan Pagi Terakhir Sebelum Exam', topic: 'Semakan Istilah Teknologi Hijau & Pengurusan Sisa', room: 'Bilik Seminar' },
-        slot2: { time: '09:00 – 11:30 PG', subject: '5S1 (Semua): Kimia Kertas 2 (Bahagian B & C)', topic: 'Format Esei Eksperimen & Analisis Data', room: 'Makmal Kimia' }
+        fokusUtama: 'EXAM: Asas Kelestarian (Petang) | P1: Kimia K2',
+        sebabFokus: 'Pakej 4 tamat SPM 100% hari ini! Pakej 1 & 2 teruskan Kimia',
+        packages: ['P1', 'P2', 'P4'],
+        examInfo: '02:30 – 05:00 PTG: Asas Kelestarian 3768/1 (Pakej 2 & Pakej 4)',
+        slot1: { time: '09:00 – 11:30 PG', subject: 'P2/P4: Sentuhan Pagi Sebelum Exam Petang', topic: 'Semakan Istilah Teknologi Hijau & Pengurusan Sisa Lestari', room: 'Bilik Seminar' },
+        slot2: { time: '09:00 – 11:30 PG', subject: 'P1: Kimia Kertas 2 (Bahagian B & C)', topic: 'Format Esei Eksperimen & Analisis Data Kuantitatif', room: 'Makmal Kimia' }
       },
       {
         tarikh: '2026-12-10', hari: 'Khamis', fasa: 'FASA_5', isExamDay: false,
-        fokusUtama: 'FOKUS TUNGGAL 5S1: Kimia Kertas 2',
-        sebabFokus: 'Calon 5S2 & 5S3 selesai SPM; 5S1 fokus Kimia & Add Math',
-        targetClasses: ['5S1'],
-        slot1: { time: '08:30 – 11:30 PG', subject: '5S1: Kimia (Termokimia & Haba Tindak Balas)', topic: 'Pengiraan Nilai Haba, Gambar Rajah Aras Tenaga & Graf', room: 'Makmal Kimia' },
-        slot2: { time: '01:30 – 03:30 PTG', subject: '5S1: Add Math (Pengaturcaraan Linear)', topic: 'Topik Pilihan Bahagian C (10 Markah Penuh)', room: 'Bilik Seminar T5' }
+        fokusUtama: 'FOKUS TUNGGAL P1 & P2: Kimia Kertas 2',
+        sebabFokus: 'Hanya calon STEM (5S1) yang masih meneruskan SPM',
+        packages: ['P1', 'P2'],
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P1/P2: Kimia (Termokimia & Haba Tindak Balas)', topic: 'Pengiraan Nilai Haba, Gambar Rajah Aras Tenaga & Graf', room: 'Makmal Kimia' },
+        slot2: { time: '01:30 – 03:30 PTG', subject: 'P1/P2: Add Math (Pengaturcaraan Linear)', topic: 'Topik Pilihan Bahagian C (10 Markah Penuh)', room: 'Bilik Seminar T5' }
       },
       {
         tarikh: '2026-12-11', hari: 'Jumaat', fasa: 'FASA_5', isExamDay: false,
-        fokusUtama: 'FOKUS TUNGGAL 5S1: Kimia Kertas 1 (Objektif)',
+        fokusUtama: 'FOKUS TUNGGAL P1 & P2: Kimia Kertas 1 (Objektif)',
         sebabFokus: 'Memastikan penguasaan 40 markah objektif Kimia',
-        targetClasses: ['5S1'],
-        slot1: { time: '08:00 – 11:30 PG', subject: '5S1: Latih Tubi 40 Soalan Pantas Kimia Kertas 1', topic: 'Analisis Soalan Perangkap & Ujian Kualitatif Gas/Garam', room: 'Makmal Kimia' },
-        slot2: { time: '02:30 – 04:00 PTG', subject: '5S1: Add Math (Penyelesaian Segi Tiga)', topic: 'Topik Pilihan Bahagian C (10 Markah Mudah)', room: 'Bilik Seminar T5' }
+        packages: ['P1', 'P2'],
+        slot1: { time: '08:00 – 11:30 PG', subject: 'P1/P2: Latih Tubi 40 Soalan Pantas Kimia K1', topic: 'Analisis Soalan Perangkap & Ujian Kualitatif Gas/Garam', room: 'Makmal Kimia' },
+        slot2: { time: '02:30 – 04:00 PTG', subject: 'P1/P2: Add Math (Penyelesaian Segi Tiga)', topic: 'Topik Pilihan Bahagian C (10 Markah Mudah Skor)', room: 'Bilik Seminar T5' }
       },
       {
         tarikh: '2026-12-12', hari: 'Sabtu', fasa: 'FASA_5', isExamDay: false,
-        fokusUtama: 'FOKUS TUNGGAL 5S1: Bedah Soalan Percubaan Kimia',
+        fokusUtama: 'FOKUS TUNGGAL P1 & P2: Bedah Percubaan Kimia',
         sebabFokus: 'Pagi sahaja menjelang Paper Kimia Selasa',
-        targetClasses: ['5S1'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: '5S1: Percubaan SBP & MRSM Kimia Kertas 2', topic: 'Analisis Trend Soalan & Pembetulan Kesilapan Lazim', room: 'Makmal Kimia' },
+        packages: ['P1', 'P2'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'P1/P2: Percubaan SBP & MRSM Kimia Kertas 2', topic: 'Analisis Trend Soalan & Pembetulan Kesilapan Lazim', room: 'Makmal Kimia' },
         slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Petang Rehat Penuh', room: 'Rumah' }
       },
       {
         tarikh: '2026-12-13', hari: 'Ahad', fasa: 'FASA_5', isExamDay: false,
-        fokusUtama: '5S1: Add Math & Semakan Nota Kimia',
+        fokusUtama: 'P1 & P2: Add Math & Semakan Poket Kimia',
         sebabFokus: 'Pagi sahaja menjelang minggu akhir',
-        targetClasses: ['5S1'],
-        slot1: { time: '08:30 – 12:30 TGH', subject: '5S1: Add Math (Taburan Binomial & Normal)', topic: 'Penggunaan Rumus & Jadual Skor Piawai', room: 'Bilik Seminar' },
+        packages: ['P1', 'P2'],
+        slot1: { time: '08:30 – 12:30 TGH', subject: 'P1/P2: Add Math (Taburan Binomial & Normal)', topic: 'Penggunaan Rumus & Jadual Skor Piawai', room: 'Bilik Seminar' },
         slot2: { time: 'Petang Rehat', subject: 'REHAT DI RUMAH', topic: 'Rehat Mental Menjelang Paper Kimia', room: 'Rumah' }
       },
 
-      // FASA 6: MINGGU KIMIA & MATEMATIK TAMBAHAN
+      // FASA 6: MINGGU KIMIA & ADDMATH (PENUTUP)
       {
         tarikh: '2026-12-14', hari: 'Isnin', fasa: 'FASA_6', isExamDay: false,
-        fokusUtama: 'FOKUS TUNGGAL 5S1: Kimia (Sentuhan Akhir)',
+        fokusUtama: 'FOKUS TUNGGAL P1 & P2: Kimia (Sentuhan Akhir)',
         sebabFokus: 'Sehari sebelum Peperiksaan Kimia SPM',
-        targetClasses: ['5S1'],
-        slot1: { time: '08:30 – 11:30 PG', subject: '5S1: Sentuhan Akhir Guru Kimia SPM', topic: 'Semakan Istilah Saintifik Tepat & Formula Akhir', room: 'Makmal Kimia' },
-        slot2: { time: '01:30 – 03:00 PTG', subject: '5S1: Rehat Minda & Semakan Alat Tulis', topic: 'Persediaan Kalkulator & Jadual Berkala Unsur', room: 'Bilik Seminar' }
+        packages: ['P1', 'P2'],
+        slot1: { time: '08:30 – 11:30 PG', subject: 'P1/P2: Sentuhan Akhir Guru Kimia SPM', topic: 'Semakan Istilah Saintifik Tepat & Formula Akhir', room: 'Makmal Kimia' },
+        slot2: { time: '01:30 – 03:00 PTG', subject: 'P1/P2: Rehat Minda & Semakan Alat Tulis', topic: 'Persediaan Kalkulator & Jadual Berkala Unsur', room: 'Bilik Seminar' }
       },
       {
         tarikh: '2026-12-15', hari: 'Selasa', fasa: 'FASA_6', isExamDay: true,
         fokusUtama: 'EXAM: Kimia | Petang: FOKUS Matematik Tambahan',
         sebabFokus: 'Kertas terakhir SPM 2026 adalah Matematik Tambahan pada Khamis',
-        targetClasses: ['5S1'],
-        examInfo: '08:15–09:30 (K1) | 10:45–01:15 (K2): Kimia SPM',
+        packages: ['P1', 'P2'],
+        examInfo: '08:15–09:30 (K1) | 10:45–01:15 (K2): Kimia SPM (Pakej 1 & Pakej 2)',
         slot1: { time: 'Pagi', subject: 'PEPERIKSAAN KIMIA', topic: 'Menduduki Peperiksaan Kimia di Dewan Semekar', room: 'Dewan Semekar' },
         slot2: { time: '02:30 – 04:30 PTG', subject: 'FOKUS: Add Math (Kertas 1 & 2)', topic: 'Semakan Buku Rumus Rasmi & Strategi Memilih Soalan Bahagian C', room: 'Dewan Kuliah T5' }
       },
       {
         tarikh: '2026-12-16', hari: 'Rabu', fasa: 'FASA_6', isExamDay: false,
-        fokusUtama: 'FOKUS TUNGGAL: Matematik Tambahan',
+        fokusUtama: 'FOKUS TUNGGAL P1 & P2: Matematik Tambahan',
         sebabFokus: 'Sehari sebelum Peperiksaan Terakhir SPM 2026',
-        targetClasses: ['5S1'],
+        packages: ['P1', 'P2'],
         slot1: { time: '08:30 – 11:30 PG', subject: 'Add Math (Bahagian A & B Wajib Skor)', topic: 'Fungsi Kuadratik, Sistem Persamaan, Janjang & Sukatan Membulat', room: 'Bilik Seminar T5' },
         slot2: { time: '01:30 – 03:30 PTG', subject: 'Add Math (Teknik Kalkulator & Semakan Jawapan)', topic: 'Kaedah Jimat Masa Menyemak Nilai Pengamiran & Matriks', room: 'Bilik Seminar T5' }
       },
       {
         tarikh: '2026-12-17', hari: 'Khamis', fasa: 'FASA_6', isExamDay: true,
         fokusUtama: 'EXAM: Matematik Tambahan (Kertas Penutup SPM 2026)',
-        sebabFokus: 'Hari Terakhir Peperiksaan SPM 2026',
-        targetClasses: ['5S1'],
+        sebabFokus: 'Hari Terakhir Peperiksaan SPM 2026 untuk Seluruh Warga SEMEKAR!',
+        packages: ['P1', 'P2'],
         examInfo: '08:15–10:15 (K1) | 02:30–05:00 (K2): Matematik Tambahan (3472)',
         slot1: { time: 'Pagi & Petang', subject: 'PEPERIKSAAN MATEMATIK TAMBAHAN', topic: 'Menduduki Peperiksaan di Dewan Semekar', room: 'Dewan Semekar' },
         slot2: { time: '05:00 PTG', subject: 'SELESAI SEPENUHNYA SPM 2026', topic: 'Syukur & Tahniah Kepada Semua Calon SPM SMK Kamarul Ariffin!', room: 'Dataran Semekar' }
       }
     ];
 
-    let currentSpmFilter = 'ALL';
+    let currentSpmPackage = 'ALL';
 
     function cleanDate(raw) {
       if (!raw) return '';
@@ -1499,6 +1515,7 @@
 
       populateTeacherDropdown();
       populateDateDropdown();
+      renderPackageButtons();
       renderCurrentView();
       updateStatistics();
     }
@@ -1637,24 +1654,41 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // FUNGSI PENAPISAN KUMPULAN CALON SPM
-    function setSpmFilterClass(targetClass) {
-      currentSpmFilter = targetClass;
-      ['ALL', '5S1', '5S2', '5S3'].forEach(c => {
-        const btn = document.getElementById(`spmFilter${c}`);
-        if (btn) {
-          if (c === targetClass) {
-            btn.className = 'p-3 rounded-xl border text-left transition flex flex-col justify-between bg-indigo-600 text-white border-indigo-600 shadow-xs';
-            const icon = btn.querySelector('span, i');
-          } else {
-            btn.className = 'p-3 rounded-xl border text-left transition flex flex-col justify-between bg-white text-slate-700 border-slate-200 hover:border-indigo-400';
-          }
-        }
+    // PENJANAAN BUTANG PAKEJ
+    function renderPackageButtons() {
+      const container = document.getElementById('packageFilterButtons');
+      if (!container) return;
+      container.innerHTML = '';
+
+      SPM_PACKAGES.forEach(pkg => {
+        const isActive = currentSpmPackage === pkg.id;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => setSpmPackageFilter(pkg.id);
+        btn.className = `p-3 rounded-xl border text-left transition flex flex-col justify-between ${
+          isActive 
+            ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm ring-2 ring-indigo-300' 
+            : 'bg-white text-slate-700 border-slate-200 hover:border-indigo-400'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between gap-1">
+            <span class="font-black text-xs ${isActive ? 'text-white' : 'text-slate-900'}">${escapeHtml(pkg.name)}</span>
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${isActive ? 'bg-indigo-500 text-white' : pkg.badgeColor}">${escapeHtml(pkg.badge)}</span>
+          </div>
+          <span class="text-[10px] mt-1.5 leading-snug line-clamp-2 ${isActive ? 'text-indigo-100' : 'text-slate-500'}">${escapeHtml(pkg.desc)}</span>
+        `;
+        container.appendChild(btn);
       });
+    }
+
+    function setSpmPackageFilter(pkgId) {
+      currentSpmPackage = pkgId;
+      renderPackageButtons();
       renderSpmTimeline();
     }
 
-    // 4. PAPARAN KHAS: BAR GARIS MASA FOKUS 1–2 SUBJEK HARIAN SPM
+    // 4. PAPARAN KHAS: BAR GARIS MASA FOKUS 1–2 SUBJEK HARIAN MENGIKUT PAKEJ
     function renderSpmTimeline() {
       const container = document.getElementById('spmTimelineContainer');
       if (!container) return;
@@ -1669,8 +1703,8 @@
         timelineData = timelineData.filter(d => d.fasa === weekFmt);
       }
 
-      if (currentSpmFilter !== 'ALL') {
-        timelineData = timelineData.filter(d => d.targetClasses.includes(currentSpmFilter));
+      if (currentSpmPackage !== 'ALL') {
+        timelineData = timelineData.filter(d => d.packages.includes(currentSpmPackage));
       }
 
       if (searchQ) {
@@ -1688,7 +1722,7 @@
         container.innerHTML = `
           <div class="py-12 pr-4 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
             <i data-lucide="calendar-x" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i>
-            <p class="text-xs font-semibold">Tiada jadual ditemui bagi penapis kumpulan / fasa ini.</p>
+            <p class="text-xs font-semibold">Tiada jadual ditemui bagi pakej / fasa pilihan ini.</p>
           </div>
         `;
         if (window.lucide) lucide.createIcons();
@@ -1717,11 +1751,11 @@
             : (isWeekend ? 'bg-amber-50/30 border-amber-200 hover:border-amber-400 shadow-xs' : 'bg-white border-slate-200 hover:border-indigo-400 shadow-xs')
         }`;
 
-        // Lencana Kumpulan Terlibat
-        const classBadges = item.targetClasses.map(c => {
-          if (c === '5S1') return '<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-[10px]">5S1</span>';
-          if (c === '5S2') return '<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">5S2</span>';
-          return '<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">5S3</span>';
+        // Lencana Pakej Terlibat
+        const packageBadges = item.packages.map(pId => {
+          const pObj = SPM_PACKAGES.find(p => p.id === pId);
+          if (!pObj) return '';
+          return `<span class="px-2 py-0.5 rounded font-bold text-[10px] ${pObj.badgeColor}">${escapeHtml(pObj.badge)}</span>`;
         }).join(' ');
 
         let examBannerHtml = '';
@@ -1731,9 +1765,9 @@
               <div class="flex items-center justify-between text-[11px] font-black tracking-wider uppercase">
                 <span class="flex items-center gap-1.5">
                   <i data-lucide="alert-circle" class="w-4 h-4 text-rose-200"></i>
-                  HARI PEPERIKSAAN BERTULIS SPM LP
+                  HARI PEPERIKSAAN BERTULIS SPM LPM
                 </span>
-                <span class="bg-rose-700 px-2 py-0.5 rounded text-[10px]">Dewan Peperiksaan</span>
+                <span class="bg-rose-700 px-2 py-0.5 rounded text-[10px]">Dewan Semekar</span>
               </div>
               <p class="font-extrabold text-xs sm:text-sm">${escapeHtml(item.examInfo)}</p>
             </div>
@@ -1741,11 +1775,11 @@
         }
 
         card.innerHTML = `
-          <!-- KEPALA KAD: TARIKH & FOKUS TUNGGAL -->
+          <!-- KEPALA KAD: TARIKH & PAKEJ TERLIBAT -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-            <div class="flex items-center gap-2.5">
+            <div class="flex flex-wrap items-center gap-2">
               <span class="px-2.5 py-1 bg-slate-900 text-white rounded-lg text-xs font-mono font-bold">${item.tarikh} (${item.hari})</span>
-              <div class="flex items-center gap-1">${classBadges}</div>
+              <div class="flex flex-wrap items-center gap-1">${packageBadges}</div>
             </div>
             <span class="text-[11px] font-semibold text-slate-500 italic">${escapeHtml(item.sebabFokus)}</span>
           </div>
@@ -1755,7 +1789,7 @@
           <!-- KOTAK FOKUS 1 ATAU 2 SUBJEK BESAR -->
           <div class="p-3 bg-indigo-50/70 border border-indigo-200 rounded-xl flex items-center justify-between">
             <div>
-              <span class="text-[10px] font-black uppercase tracking-wider text-indigo-600 block">Fokus Utama Hari Ini:</span>
+              <span class="text-[10px] font-black uppercase tracking-wider text-indigo-600 block">Fokus 1–2 Subjek Hari Ini:</span>
               <h3 class="text-sm sm:text-base font-black text-slate-900 mt-0.5">${escapeHtml(item.fokusUtama)}</h3>
             </div>
             <span class="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
@@ -2168,13 +2202,13 @@
         html += `
           <div class="space-y-4 py-2">
             <div class="p-3 bg-slate-100 rounded border border-slate-300 text-xs">
-              <strong>Ketetapan Tingkatan 5:</strong> Murid T5 (5S1, 5S2, 5S3) TIDAK TERLIBAT Pasca UASA. Setiap hari difokuskan kepada maksimum 1–2 mata pelajaran menjelang peperiksaan seterusnya.
+              <strong>Ketetapan Pakej Tingkatan 5:</strong> Murid T5 (5S1, 5S2, 5S3) TIDAK TERLIBAT Pasca UASA. Setiap hari difokuskan kepada maksimum 1–2 mata pelajaran menjelang peperiksaan seterusnya mengikut pakej murid.
             </div>
             <table class="w-full border-collapse border border-slate-400 text-left text-[11px]">
               <thead class="bg-slate-100 font-bold">
                 <tr>
                   <th class="border p-2 w-24">Tarikh & Hari</th>
-                  <th class="border p-2 w-20">Sasaran</th>
+                  <th class="border p-2 w-28">Pakej Terlibat</th>
                   <th class="border p-2 w-48">Fokus Utama</th>
                   <th class="border p-2">Sesi 1 (Pagi)</th>
                   <th class="border p-2">Sesi 2 (Petang)</th>
@@ -2183,10 +2217,15 @@
               <tbody class="divide-y divide-slate-300">
         `;
         SPM_DAILY_TIMELINE.forEach(d => {
+          let pkgBadges = d.packages.map(p => {
+            const found = SPM_PACKAGES.find(x => x.id === p);
+            return found ? found.badge : p;
+          }).join(', ');
+
           html += `
             <tr class="${d.isExamDay ? 'bg-rose-50/50 font-medium' : ''}">
               <td class="border p-2 font-mono align-top"><strong>${d.hari}</strong><br>${d.tarikh}</td>
-              <td class="border p-2 font-bold align-top text-indigo-900">${d.targetClasses.join(', ')}</td>
+              <td class="border p-2 font-bold align-top text-indigo-900">${pkgBadges}</td>
               <td class="border p-2 align-top">
                 <strong class="text-slate-900">${d.fokusUtama}</strong><br>
                 <span class="text-[10px] text-slate-500">${d.sebabFokus}</span>
