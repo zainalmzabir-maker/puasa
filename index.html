@@ -36,32 +36,30 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- STATUS PENYEGERAKAN GOOGLE SHEET -->
-  <header class="bg-slate-900 text-white border-b border-slate-800 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-xs gap-2">
+  <!-- BAR PENSTRIMAN LANGSUNG (LIVE STREAMING SYNC) -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 no-print sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between text-xs gap-2">
       <div class="flex items-center gap-2.5">
         <span class="relative flex h-2.5 w-2.5">
           <span id="syncPulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span id="syncDot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span class="font-bold text-slate-100" id="syncStatusTitle">Penyegerakan Google Sheet</span>
+        <span class="font-bold text-slate-100" id="syncStatusTitle">Penstriman Langsung Aktif</span>
         <span class="text-slate-400 hidden sm:inline">•</span>
-        <span id="syncStatusSubtitle" class="text-slate-300">Format baris kalis had 50k aksara</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Data bersegerak automatik setiap 4 saat</span>
       </div>
-      <div class="flex items-center gap-2">
-        <button onclick="testConnection()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded border border-slate-700 font-semibold text-[11px] transition">
-          ⚡ Uji Sambungan Sheet
-        </button>
-        <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Tersedia</span>
-        <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white font-medium ml-1">
-          <i data-lucide="external-link" class="w-3.5 h-3.5 inline"></i>
+      <div class="flex items-center gap-3">
+        <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Menyambung...</span>
+        <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white font-medium flex items-center gap-1 transition">
+          <span>Google Sheet</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
         </a>
       </div>
     </div>
   </header>
 
   <!-- KEPALA HALAMAN UTAMA -->
-  <div class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
+  <div class="bg-white border-b border-slate-200 shadow-sm no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md font-black text-lg tracking-tight">
@@ -72,7 +70,7 @@
             <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa</h1>
             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">SEMEKAR 2026</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Auto-Simpan Aktif</p>
+          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Penstriman Google Sheet</p>
         </div>
       </div>
 
@@ -80,16 +78,6 @@
         <button onclick="openBlockConfigModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-200 transition">
           <i data-lucide="sliders" class="w-4 h-4"></i>
           <span>Tetapkan Bidang Blok</span>
-        </button>
-
-        <button onclick="manualSyncToSheet()" id="btnManualPush" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
-          <i data-lucide="cloud-upload" class="w-4 h-4" id="pushIcon"></i>
-          <span>Hantar Terus ke Sheet</span>
-        </button>
-
-        <button onclick="syncFromGoogleSheet(true)" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition" title="Muat turun data terkini dari Google Sheet">
-          <i data-lucide="refresh-cw" class="w-4 h-4" id="syncIcon"></i>
-          <span>Muat Semula</span>
         </button>
 
         <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded-lg transition">
@@ -110,7 +98,7 @@
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
             Rumusan Pengisian Program (273 Slot Aktif • Tepat 25% Setiap Bidang)
           </h2>
-          <p class="text-[11px] text-slate-500">Ketetapan cuti harian dan slot aktiviti disimpan kekal ke storan dan disegerakkan automatik.</p>
+          <p class="text-[11px] text-slate-500">Isi julat waktu untuk mengisi berbilang slot serentak. Data disegerakkan secara langsung ke semua peranti.</p>
         </div>
 
         <div class="flex items-center gap-2 text-xs font-semibold">
@@ -120,7 +108,7 @@
         </div>
       </div>
 
-      <!-- BAR KEMAJUAN PENGISIAN KESELURUHAN -->
+      <!-- BAR KEMAJUAN PENGISIAN -->
       <div class="space-y-1">
         <div class="flex justify-between text-[11px] font-bold text-slate-600">
           <span>Kemajuan Pengisian Keseluruhan:</span>
@@ -134,7 +122,7 @@
         </div>
       </div>
 
-      <!-- KAD 4 BLOK BIDANG -->
+      <!-- KAD 4 BLOK -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
         <div class="p-2.5 bg-blue-50/70 border-t-4 border-blue-600 rounded-xl space-y-0.5">
           <div class="flex items-center justify-between">
@@ -368,7 +356,7 @@
     </div>
   </div>
 
-  <!-- MODAL PENYUNTINGAN AKTIVITI (DENGAN PEMILIHAN JULAT WAKTU) -->
+  <!-- MODAL PENYUNTINGAN AKTIVITI (JULAT WAKTU) -->
   <div id="activityModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
@@ -510,8 +498,8 @@
           <div class="flex items-center gap-2">
             <button type="button" onclick="closeModal()" class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
             <button type="submit" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
-              <i data-lucide="cloud-check" class="w-3.5 h-3.5"></i>
-              <span>Simpan & Segerak ke Sheet</span>
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              <span>Simpan & Kunci</span>
             </button>
           </div>
         </div>
@@ -591,7 +579,8 @@
     const CONFIG = {
       SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec',
       SHEET_ID: '13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI',
-      STORAGE_KEY: 'PUASA_SEMEKAR_OVERHAUL_STABLE'
+      STORAGE_KEY: 'PUASA_SEMEKAR_STREAMING_FINAL',
+      STREAM_INTERVAL: 4000 // Penstriman latar belakang setiap 4 saat
     };
 
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
@@ -690,11 +679,28 @@
 
     let activitiesMap = {};
     let dayAttendanceMap = {};
-    let autoSaveTimeout = null;
+    let isUserEditing = false;
+    let autoSaveTimer = null;
+
+    // Normalizer Tarikh Kalis UTC/ISO
+    function normalizeDateStr(raw) {
+      if (!raw) return '';
+      const s = raw.toString().trim();
+      if (s.includes('T')) {
+        try {
+          const d = new Date(s);
+          // Tambah 8 jam untuk waktu Malaysia sekiranya UTC
+          const myTime = new Date(d.getTime() + (8 * 3600 * 1000));
+          return myTime.toISOString().split('T')[0];
+        } catch(e) {}
+      }
+      return s.split('T')[0];
+    }
 
     function getMingguFromTarikh(tarikh) {
       if (!tarikh) return 1;
-      const parts = tarikh.split('-');
+      const t = normalizeDateStr(tarikh);
+      const parts = t.split('-');
       if (parts.length < 3) return 1;
       const d = parseInt(parts[2], 10);
       const m = parseInt(parts[1], 10);
@@ -718,9 +724,10 @@
       ];
 
       allActiveDays.forEach(d => {
-        if (!dayAttendanceMap[d.tarikh]) {
-          dayAttendanceMap[d.tarikh] = {
-            tarikh: d.tarikh,
+        const cleanDate = normalizeDateStr(d.tarikh);
+        if (!dayAttendanceMap[cleanDate]) {
+          dayAttendanceMap[cleanDate] = {
+            tarikh: cleanDate,
             hari: d.hari,
             cutiForms: [],
             adaForms: [...ALL_FORMS],
@@ -729,7 +736,7 @@
         }
 
         TIME_SLOTS.forEach((slot, sIdx) => {
-          const slotKey = `${d.tarikh}_slot_${slot.id}`;
+          const slotKey = `${cleanDate}_slot_${slot.id}`;
           let blockNum = 0;
           let defaultBidang = 'Belum Ditentukan';
           let defaultAktiviti = '';
@@ -749,8 +756,8 @@
 
           initial[slotKey] = {
             id: slotKey,
-            minggu: getMingguFromTarikh(d.tarikh),
-            tarikh: d.tarikh,
+            minggu: getMingguFromTarikh(cleanDate),
+            tarikh: cleanDate,
             hari: d.hari,
             slotId: slot.id,
             slotIndex: sIdx,
@@ -801,55 +808,51 @@
       updateStatistics();
     }
 
-    function saveToLocalStorage(triggerSync = true) {
+    function saveToLocalStorage(triggerStreamingPush = true) {
       localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(activitiesMap));
       localStorage.setItem(CONFIG.STORAGE_KEY + '_BLOCKS', JSON.stringify(blockFieldConfig));
       localStorage.setItem(CONFIG.STORAGE_KEY + '_DAY_ATT', JSON.stringify(dayAttendanceMap));
       updateStatistics();
-      if (triggerSync) {
-        triggerAutoSave();
+
+      if (triggerStreamingPush) {
+        triggerInstantPush();
       }
     }
 
-    function triggerAutoSave() {
+    // ==========================================
+    // AUTO-PUSH KE GOOGLE SHEET TANPA BUTANG
+    // ==========================================
+    function triggerInstantPush() {
       updateSyncStatusUI('saving');
-      if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
-      autoSaveTimeout = setTimeout(() => {
-        pushDataToGoogleSheet(false);
-      }, 700);
+      if (autoSaveTimer) clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(() => {
+        streamPushToSheet();
+      }, 500);
     }
 
-    async function manualSyncToSheet() {
-      const btn = document.getElementById('btnManualPush');
-      const icon = document.getElementById('pushIcon');
-      btn.disabled = true;
-      icon.classList.add('animate-spin');
-
-      await pushDataToGoogleSheet(true);
-
-      btn.disabled = false;
-      icon.classList.remove('animate-spin');
-    }
-
-    async function pushDataToGoogleSheet(isManual = false) {
-      updateSyncStatusUI('saving');
-
-      const slotsPayload = Object.values(activitiesMap).map(s => ({
-        id: s.id,
-        minggu: s.minggu || getMingguFromTarikh(s.tarikh),
-        tarikh: s.tarikh,
-        hari: s.hari,
-        slotId: s.slotId || '',
-        masa: s.masa || '',
-        bidang: s.bidang || '',
-        aktiviti: s.aktiviti || '',
-        guru: s.guru || '',
-        lokasi: s.lokasi || '',
-        deskripsi: s.deskripsi || ''
-      }));
+    async function streamPushToSheet() {
+      // Himpunkan slot yang berisi dan cuti
+      const slotsPayload = [];
+      Object.values(activitiesMap).forEach(s => {
+        if (s.aktiviti && s.aktiviti.trim() !== '') {
+          slotsPayload.push({
+            id: s.id,
+            minggu: s.minggu || getMingguFromTarikh(s.tarikh),
+            tarikh: normalizeDateStr(s.tarikh),
+            hari: s.hari,
+            slotId: s.slotId || '',
+            masa: s.masa || '',
+            bidang: s.bidang || '',
+            aktiviti: s.aktiviti || '',
+            guru: s.guru || '',
+            lokasi: s.lokasi || '',
+            deskripsi: s.deskripsi || ''
+          });
+        }
+      });
 
       const attendancePayload = Object.values(dayAttendanceMap).map(a => ({
-        tarikh: a.tarikh,
+        tarikh: normalizeDateStr(a.tarikh),
         hari: a.hari,
         cutiForms: a.cutiForms || [],
         adaForms: a.adaForms || [],
@@ -869,118 +872,103 @@
           body: JSON.stringify(payload)
         });
 
-        const rawText = await response.text();
-        let result;
-        try {
-          result = JSON.parse(rawText);
-        } catch(e) {
-          throw new Error('Google memulangkan halaman HTML. Pastikan tetapan Deployment access "Anyone".');
-        }
-
-        if (result.status === 'success') {
-          updateSyncStatusUI('saved', result.timestamp);
-          if (isManual) showToast('✅ Data berjaya dihantar ke Google Sheet!');
+        const raw = await response.text();
+        const res = JSON.parse(raw);
+        if (res.status === 'success') {
+          updateSyncStatusUI('live', res.timestamp);
         } else {
-          updateSyncStatusUI('error', result.message);
-          if (isManual) alert('Ralat dari Sheet: ' + result.message);
+          updateSyncStatusUI('error', res.message);
         }
       } catch (err) {
-        console.error('Push error:', err);
-        updateSyncStatusUI('offline', err.message);
-        if (isManual) alert('Gagal berhubung ke Google Sheet: ' + err.message);
+        console.warn('Auto-save network warning:', err);
+        updateSyncStatusUI('offline');
       }
     }
 
-    async function syncFromGoogleSheet(isManual = false) {
-      const btnSync = document.getElementById('btnSync');
-      const syncIcon = document.getElementById('syncIcon');
-      if (isManual) {
-        btnSync.disabled = true;
-        syncIcon.classList.add('animate-spin');
-      }
+    // ==========================================
+    // PENSTRIMAN LATAR BELAKANG (POLL SETIAP 4 SAAT)
+    // ==========================================
+    async function streamPollFromSheet() {
+      // Jangan timpa jika pengguna sedang menaip dalam borang
+      if (isUserEditing) return;
 
       try {
-        const res = await fetch(CONFIG.SCRIPT_URL + '?action=read&t=' + Date.now());
-        const rawText = await res.text();
-        let json;
-        try {
-          json = JSON.parse(rawText);
-        } catch(e) {
-          throw new Error('Sila semak Web App access "Anyone".');
-        }
+        const res = await fetch(CONFIG.SCRIPT_URL + '?action=stream&t=' + Date.now());
+        const raw = await res.text();
+        const json = JSON.parse(raw);
 
         if (json.status === 'success') {
-          let hasIncoming = false;
+          let hasChange = false;
 
-          // 1. Muatkan Slots
-          if (json.slots && Array.isArray(json.slots) && json.slots.length > 0) {
-            json.slots.forEach(item => {
-              if (item.id && activitiesMap[item.id]) {
-                if (item.aktiviti && item.aktiviti.trim() !== '') {
-                  activitiesMap[item.id] = { ...activitiesMap[item.id], ...item };
-                  hasIncoming = true;
+          // 1. Terima Cuti Harian dari Sheet
+          if (json.attendance && Array.isArray(json.attendance)) {
+            json.attendance.forEach(item => {
+              const cleanDate = normalizeDateStr(item.tarikh);
+              if (cleanDate) {
+                const cutiRaw = item.cutiForms;
+                const cutiList = Array.isArray(cutiRaw) ? cutiRaw : (cutiRaw ? cutiRaw.toString().split(',').map(s => s.trim()).filter(Boolean) : []);
+                const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
+
+                // Bandingkan jika ada perubahan
+                const existing = dayAttendanceMap[cleanDate];
+                const existingCuti = existing ? (existing.cutiForms || []).join(',') : '';
+                const newCuti = cutiList.join(',');
+
+                if (existingCuti !== newCuti) {
+                  dayAttendanceMap[cleanDate] = {
+                    tarikh: cleanDate,
+                    hari: item.hari || '',
+                    cutiForms: cutiList,
+                    adaForms: adaList,
+                    catatan: item.catatan || ''
+                  };
+                  hasChange = true;
                 }
               }
             });
           }
 
-          // 2. Muatkan Cuti Harian
-          if (json.attendance && Array.isArray(json.attendance) && json.attendance.length > 0) {
-            json.attendance.forEach(item => {
-              if (item.tarikh) {
-                const cutiRaw = item.cutiForms;
-                const cutiList = Array.isArray(cutiRaw) ? cutiRaw : (cutiRaw ? cutiRaw.toString().split(',').map(s => s.trim()).filter(Boolean) : []);
-                const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
-                dayAttendanceMap[item.tarikh] = {
-                  tarikh: item.tarikh,
-                  hari: item.hari || '',
-                  cutiForms: cutiList,
-                  adaForms: adaList,
-                  catatan: item.catatan || ''
-                };
-                hasIncoming = true;
+          // 2. Terima Slot Aktiviti dari Sheet
+          if (json.slots && Array.isArray(json.slots)) {
+            json.slots.forEach(item => {
+              const cleanDate = normalizeDateStr(item.tarikh);
+              const slotKey = `${cleanDate}_slot_${item.slotId}`;
+              if (activitiesMap[slotKey]) {
+                const cur = activitiesMap[slotKey];
+                if (cur.aktiviti !== item.aktiviti || cur.guru !== item.guru || cur.bidang !== item.bidang) {
+                  activitiesMap[slotKey] = {
+                    ...cur,
+                    aktiviti: item.aktiviti || '',
+                    guru: item.guru || '',
+                    lokasi: item.lokasi || '',
+                    bidang: item.bidang || cur.bidang,
+                    deskripsi: item.deskripsi || ''
+                  };
+                  hasChange = true;
+                }
               }
             });
           }
 
-          // 3. Muatkan Blok
+          // 3. Terima Tetapan Blok
           if (json.blocks && typeof json.blocks === 'object') {
-            blockFieldConfig = { ...blockFieldConfig, ...json.blocks };
-            hasIncoming = true;
+            for (let b = 1; b <= 4; b++) {
+              if (json.blocks[b] && blockFieldConfig[b] !== json.blocks[b]) {
+                blockFieldConfig[b] = json.blocks[b];
+                hasChange = true;
+              }
+            }
           }
 
-          saveToLocalStorage(false);
-          renderMonthCalendar();
-          updateSyncStatusUI('saved');
-
-          if (isManual) {
-            showToast(hasIncoming ? 'Data diselaraskan dari Google Sheet.' : 'Helaian Sheet masih bersih. Data tempatan selamat.');
+          if (hasChange) {
+            saveToLocalStorage(false);
+            renderMonthCalendar();
           }
-        }
-      } catch (err) {
-        console.warn('Gagal muat turun:', err);
-        updateSyncStatusUI('offline', err.message);
-        if (isManual) alert('Ralat Muat Semula: ' + err.message);
-      } finally {
-        if (isManual) {
-          btnSync.disabled = false;
-          syncIcon.classList.remove('animate-spin');
-        }
-      }
-    }
 
-    async function testConnection() {
-      showToast('Menguji sambungan ke Google Apps Script...');
-      try {
-        const res = await fetch(CONFIG.SCRIPT_URL + '?action=test&t=' + Date.now());
-        const text = await res.text();
-        if (text.includes('<!DOCTYPE html>')) {
-          alert('AMARAN KEBENARAN:\n\nGoogle memulangkan halaman Login. Sila pastikan Deployment disetkan kepada "Anyone".');
-        } else {
-          alert('STATUS: TERSAMBUNG!\n\nGoogle Apps Script membalas dengan JSON yang sah. Data boleh dihantar & dibaca.');
+          updateSyncStatusUI('live');
         }
       } catch (err) {
-        alert('RALAT SAMBUNGAN:\n\n' + err.message);
+        // Abaikan ralat sementara semasa polling
       }
     }
 
@@ -992,29 +980,29 @@
       const label = document.getElementById('lastSyncLabel');
 
       const now = new Date();
-      const timeStr = info || now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+      const timeStr = info || now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
       if (status === 'saving') {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75';
-        title.textContent = 'Menyimpan...';
+        title.textContent = 'Menyimpan ke Cloud...';
         subtitle.textContent = 'Sedang menghantar ke Google Sheet';
         label.textContent = 'Menyimpan...';
         label.className = 'text-amber-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
-      } else if (status === 'saved') {
+      } else if (status === 'live') {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
-        title.textContent = 'Tersimpan ke Google Sheet';
-        subtitle.textContent = 'Data cuti & aktiviti disegerakkan';
-        label.textContent = `Tersimpan: ${timeStr}`;
+        title.textContent = 'Bersiaran Langsung (Live Sync)';
+        subtitle.textContent = 'Semua peranti melihat data yang sama';
+        label.textContent = `Langsung: ${timeStr}`;
         label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       } else {
-        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500';
+        dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-400';
         pulse.className = 'hidden';
-        title.textContent = 'Belum Masuk ke Sheet';
-        subtitle.textContent = 'Klik butang "Hantar Terus ke Sheet"';
-        label.textContent = 'Ralat Hantar';
-        label.className = 'text-rose-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
+        title.textContent = 'Luar Talian';
+        subtitle.textContent = 'Data kekal selamat di peranti ini';
+        label.textContent = 'Storan Tempatan';
+        label.className = 'text-blue-300 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       }
     }
 
@@ -1107,8 +1095,9 @@
         `;
       }
 
+      const cleanDate = normalizeDateStr(day.tarikh);
       const isCuti = day.cuti;
-      const daySlots = TIME_SLOTS.map(s => activitiesMap[`${day.tarikh}_slot_${s.id}`] || {});
+      const daySlots = TIME_SLOTS.map(s => activitiesMap[`${cleanDate}_slot_${s.id}`] || {});
       
       let filledCount = 0;
       let activitiesList = [];
@@ -1126,7 +1115,7 @@
         }
       });
 
-      const dayAtt = dayAttendanceMap[day.tarikh] || { cutiForms: [], adaForms: [...ALL_FORMS] };
+      const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], adaForms: [...ALL_FORMS] };
       const textAda = formatTingkatanList(dayAtt.adaForms || ALL_FORMS);
       const textCuti = (dayAtt.cutiForms && dayAtt.cutiForms.length > 0)
         ? dayAtt.cutiForms.map(f => f.replace('Tingkatan ', 'T')).join(',')
@@ -1145,7 +1134,7 @@
 
       if (isCuti) {
         return `
-          <div onclick="openDayDrawer('${day.tarikh}')" class="calendar-box group bg-rose-50/90 hover:bg-rose-100/90 transition cursor-pointer p-3 min-h-[175px] flex flex-col justify-between border-b sm:border-b-0 border-r border-rose-200">
+          <div onclick="openDayDrawer('${cleanDate}')" class="calendar-box group bg-rose-50/90 hover:bg-rose-100/90 transition cursor-pointer p-3 min-h-[175px] flex flex-col justify-between border-b sm:border-b-0 border-r border-rose-200">
             <div class="flex items-start justify-between">
               <div>
                 <span class="text-xl font-black text-rose-700 leading-none">${day.dayNum}</span>
@@ -1175,13 +1164,13 @@
               <span class="text-[10px] font-bold text-slate-500 uppercase ml-1">${day.hari}</span>
             </div>
 
-            <button onclick="event.stopPropagation(); openDayAttendanceModal('${day.tarikh}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${textCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200'} border transition flex items-center gap-1">
+            <button onclick="event.stopPropagation(); openDayAttendanceModal('${cleanDate}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${textCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200'} border transition flex items-center gap-1">
               <i data-lucide="users" class="w-3 h-3"></i>
               <span>${textCuti ? 'Cuti: ' + textCuti : 'Urus Cuti'}</span>
             </button>
           </div>
 
-          <div onclick="openDayDrawer('${day.tarikh}')" class="my-1.5 space-y-1 cursor-pointer">
+          <div onclick="openDayDrawer('${cleanDate}')" class="my-1.5 space-y-1 cursor-pointer">
             <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
               <span>07:30 PG</span>
               <span class="text-amber-600 font-extrabold">Rehat</span>
@@ -1197,7 +1186,7 @@
             </div>
           </div>
 
-          <div onclick="openDayDrawer('${day.tarikh}')" class="flex-grow space-y-1 my-1 cursor-pointer">
+          <div onclick="openDayDrawer('${cleanDate}')" class="flex-grow space-y-1 my-1 cursor-pointer">
             ${activitiesList.length > 0 ? activitiesList.slice(0, 2).map(act => {
               const theme = getBidangColorTheme(act.bidang);
               return `
@@ -1226,13 +1215,15 @@
     }
 
     function openDayAttendanceModal(tarikh) {
-      const dObj = new Date(tarikh);
+      isUserEditing = true;
+      const cleanDate = normalizeDateStr(tarikh);
+      const dObj = new Date(cleanDate);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
-      document.getElementById('attModalTarikh').value = tarikh;
+      document.getElementById('attModalTarikh').value = cleanDate;
       document.getElementById('attModalSubtitle').textContent = formattedDate;
 
-      const dayAtt = dayAttendanceMap[tarikh] || { cutiForms: [], catatan: '' };
+      const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], catatan: '' };
       const cutiList = dayAtt.cutiForms || [];
 
       document.getElementById('chkDayCutiT1').checked = cutiList.includes('Tingkatan 1');
@@ -1251,6 +1242,7 @@
     }
 
     function closeDayAttendanceModal() {
+      isUserEditing = false;
       document.getElementById('dayAttendanceModal').classList.add('hidden');
     }
 
@@ -1300,8 +1292,8 @@
     }
 
     function saveDayAttendance() {
-      const tarikh = document.getElementById('attModalTarikh').value;
-      if (!tarikh) return;
+      const cleanDate = normalizeDateStr(document.getElementById('attModalTarikh').value);
+      if (!cleanDate) return;
 
       const cutiList = [];
       if (document.getElementById('chkDayCutiT1').checked) cutiList.push('Tingkatan 1');
@@ -1312,8 +1304,8 @@
       const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
       const catatan = document.getElementById('dayAttendanceNote').value.trim();
 
-      dayAttendanceMap[tarikh] = {
-        tarikh: tarikh,
+      dayAttendanceMap[cleanDate] = {
+        tarikh: cleanDate,
         cutiForms: cutiList,
         adaForms: adaList,
         catatan: catatan
@@ -1323,32 +1315,33 @@
       closeDayAttendanceModal();
 
       const drawerTarikh = document.getElementById('drawerSlotList').getAttribute('data-tarikh');
-      if (drawerTarikh === tarikh) {
-        openDayDrawer(tarikh);
+      if (drawerTarikh === cleanDate) {
+        openDayDrawer(cleanDate);
       }
 
       renderMonthCalendar();
-      showToast('Ketetapan cuti tingkatan disimpan & dihantar ke Sheet.');
+      showToast('Ketetapan cuti tingkatan disimpan & disiarkan langsung.');
     }
 
     function openDayDrawer(tarikh) {
-      const dObj = new Date(tarikh);
+      const cleanDate = normalizeDateStr(tarikh);
+      const dObj = new Date(cleanDate);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
       
       document.getElementById('drawerDateTitle').textContent = `Jadual Slot: ${formattedDate}`;
 
       const listContainer = document.getElementById('drawerSlotList');
-      listContainer.setAttribute('data-tarikh', tarikh);
+      listContainer.setAttribute('data-tarikh', cleanDate);
       listContainer.innerHTML = '';
 
-      const dayAtt = dayAttendanceMap[tarikh] || { cutiForms: [], adaForms: [...ALL_FORMS] };
+      const dayAtt = dayAttendanceMap[cleanDate] || { cutiForms: [], adaForms: [...ALL_FORMS] };
       const adaArr = dayAtt.adaForms || ALL_FORMS;
       const cutiArr = dayAtt.cutiForms || [];
 
       document.getElementById('drawerFormsPresent').textContent = adaArr.length === 4 ? 'Semua Hadir (T1, T2, T3, T4)' : (adaArr.length > 0 ? adaArr.join(', ') : 'Tiada');
       document.getElementById('drawerFormsHoliday').textContent = cutiArr.length > 0 ? cutiArr.join(', ') : 'Tiada Pelepasan';
 
-      const slots = TIME_SLOTS.map(s => activitiesMap[`${tarikh}_slot_${s.id}`]);
+      const slots = TIME_SLOTS.map(s => activitiesMap[`${cleanDate}_slot_${s.id}`] || {});
 
       slots.forEach((s, idx) => {
         if (idx === 5) {
@@ -1416,30 +1409,27 @@
     }
 
     function openRangeActivityModal(initialSlotId) {
-      const tarikh = document.getElementById('drawerSlotList').getAttribute('data-tarikh');
-      if (!tarikh) return;
+      isUserEditing = true;
+      const cleanDate = normalizeDateStr(document.getElementById('drawerSlotList').getAttribute('data-tarikh'));
+      if (!cleanDate) return;
 
-      const dObj = new Date(tarikh);
+      const dObj = new Date(cleanDate);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
-      document.getElementById('modalTarikhHidden').value = tarikh;
+      document.getElementById('modalTarikhHidden').value = cleanDate;
       document.getElementById('modalTarikhHari').value = formattedDate;
 
       let startId = initialSlotId || '0730';
       document.getElementById('modalWaktuMula').value = startId;
 
-      const currentSlotData = activitiesMap[`${tarikh}_slot_${startId}`] || {};
+      const currentSlotData = activitiesMap[`${cleanDate}_slot_${startId}`] || {};
       document.getElementById('modalBidang').value = currentSlotData.bidang || 'Belum Ditentukan';
       document.getElementById('modalAktiviti').value = currentSlotData.aktiviti || '';
       document.getElementById('modalDeskripsi').value = currentSlotData.deskripsi || '';
       document.getElementById('modalGuru').value = currentSlotData.guru || '';
       document.getElementById('modalLokasi').value = currentSlotData.lokasi || '';
 
-      let matchingSlots = TIME_SLOTS.filter(s => s.id >= startId);
-      if (matchingSlots.length > 0) {
-        document.getElementById('modalWaktuTamat').value = '1430';
-      }
-
+      document.getElementById('modalWaktuTamat').value = '1430';
       validateTimeRange();
 
       document.getElementById('modalTitle').textContent = currentSlotData.aktiviti ? 'Kemas Kini Aktiviti Julat Waktu' : 'Pengisian Aktiviti Mengikut Julat Waktu';
@@ -1447,6 +1437,7 @@
     }
 
     function closeModal() {
+      isUserEditing = false;
       document.getElementById('activityModal').classList.add('hidden');
     }
 
@@ -1484,8 +1475,8 @@
 
     function handleFormSubmit(e) {
       e.preventDefault();
-      const tarikh = document.getElementById('modalTarikhHidden').value;
-      if (!tarikh) return;
+      const cleanDate = normalizeDateStr(document.getElementById('modalTarikhHidden').value);
+      if (!cleanDate) return;
 
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
@@ -1515,7 +1506,7 @@
       const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
 
       affectedSlots.forEach(s => {
-        const slotKey = `${tarikh}_slot_${s.id}`;
+        const slotKey = `${cleanDate}_slot_${s.id}`;
         if (activitiesMap[slotKey] && !activitiesMap[slotKey].isCuti) {
           activitiesMap[slotKey].bidang = bidang;
           activitiesMap[slotKey].aktiviti = aktiviti;
@@ -1527,14 +1518,14 @@
 
       saveToLocalStorage(true);
       closeModal();
-      openDayDrawer(tarikh);
+      openDayDrawer(cleanDate);
       renderMonthCalendar();
-      showToast(`Tersimpan ke ${affectedSlots.length} slot & disegerakkan ke Sheet!`);
+      showToast(`Tersimpan ke ${affectedSlots.length} slot & disiarkan langsung!`);
     }
 
     function clearRangeSlot() {
-      const tarikh = document.getElementById('modalTarikhHidden').value;
-      if (!tarikh) return;
+      const cleanDate = normalizeDateStr(document.getElementById('modalTarikhHidden').value);
+      if (!cleanDate) return;
 
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
@@ -1553,7 +1544,7 @@
       if (confirm('Kosongkan semua aktiviti bagi slot dalam julat waktu ini?')) {
         const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
         affectedSlots.forEach(s => {
-          const slotKey = `${tarikh}_slot_${s.id}`;
+          const slotKey = `${cleanDate}_slot_${s.id}`;
           if (activitiesMap[slotKey] && !activitiesMap[slotKey].isCuti) {
             activitiesMap[slotKey].aktiviti = '';
             activitiesMap[slotKey].deskripsi = '';
@@ -1564,7 +1555,7 @@
 
         saveToLocalStorage(true);
         closeModal();
-        openDayDrawer(tarikh);
+        openDayDrawer(cleanDate);
         renderMonthCalendar();
         showToast('Julat waktu berjaya dikosongkan.');
       }
@@ -1635,6 +1626,7 @@
     }
 
     function openBlockConfigModal() {
+      isUserEditing = true;
       document.getElementById('cfgBlock1').value = blockFieldConfig[1] || 'Belum Ditentukan';
       document.getElementById('cfgBlock2').value = blockFieldConfig[2] || 'Belum Ditentukan';
       document.getElementById('cfgBlock3').value = blockFieldConfig[3] || 'Belum Ditentukan';
@@ -1643,6 +1635,7 @@
     }
 
     function closeBlockConfigModal() {
+      isUserEditing = false;
       document.getElementById('blockConfigModal').classList.add('hidden');
     }
 
@@ -1661,7 +1654,7 @@
       saveToLocalStorage(true);
       closeBlockConfigModal();
       renderMonthCalendar();
-      showToast('Tetapan 4 Blok berjaya dikemas kini & disegerakkan!');
+      showToast('Tetapan 4 Blok berjaya dikemas kini & disiarkan langsung!');
     }
 
     function showToast(msg) {
@@ -1684,7 +1677,10 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadSavedData();
       lucide.createIcons();
-      setTimeout(() => syncFromGoogleSheet(false), 1200);
+
+      // Mulakan Penstriman (Stream Polling) setiap 4 saat secara berterusan
+      setTimeout(streamPollFromSheet, 1000);
+      setInterval(streamPollFromSheet, CONFIG.STREAM_INTERVAL);
     });
   </script>
 </body>
