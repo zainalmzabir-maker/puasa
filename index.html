@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PUasa & Saranan Kelas SPM (SEMEKAR 2026)</title>
+  <title>PUasa & Pengurusan SPM 2026 (SEMEKAR)</title>
   
   <!-- FAVICON LOGO SEKOLAH -->
   <link rel="icon" type="image/png" href="logo.png">
@@ -53,7 +53,7 @@
         </span>
         <span class="font-bold text-slate-100" id="syncStatusTitle">Tersambung ke Google Sheet</span>
         <span class="text-slate-400 hidden sm:inline">•</span>
-        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti murid, catatan SPM & aktiviti tersimpan selamat</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti murid T1–T4 & aktiviti tersimpan selamat</span>
       </div>
       <div class="flex items-center gap-2">
         <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Terselaras</span>
@@ -79,29 +79,29 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa & SPM 2026</h1>
-            <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">SEMEKAR</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">puasa.semekar.com</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Sistem Pengurusan Pasca UASA & Perancangan Kelas Bimbingan SPM Calon T5 (5S1, 5S2, 5S3)</p>
+          <p class="text-xs text-slate-500 font-medium">Pengurusan Pasca UASA (T1–T4) & Jadual Kotak-Kotak Harian SPM Tingkatan 5 (5S1, 5S2, 5S3)</p>
         </div>
       </div>
 
-      <!-- NAVIGASI MOD PAPARAN (DITAMBAH TAB SPM) -->
+      <!-- NAVIGASI MOD PAPARAN -->
       <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
         <button onclick="switchView('month')" id="navBtnMonth" class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-indigo-700 shadow-xs flex items-center gap-1.5">
           <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-          <span>Bulan</span>
+          <span>Bulan (T1–T4)</span>
         </button>
         <button onclick="switchView('week')" id="navBtnWeek" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
           <i data-lucide="table" class="w-3.5 h-3.5"></i>
-          <span>Minggu</span>
+          <span>Minggu (T1–T4)</span>
         </button>
         <button onclick="switchView('day')" id="navBtnDay" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
           <i data-lucide="calendar-days" class="w-3.5 h-3.5"></i>
-          <span>Hari</span>
+          <span>Hari (T1–T4)</span>
         </button>
         <button onclick="switchView('spm')" id="navBtnSpm" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
           <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
-          <span>Saranan Kelas SPM</span>
+          <span>Jadual Harian SPM (T5)</span>
         </button>
         <button onclick="switchView('print')" id="navBtnPrint" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
           <i data-lucide="printer" class="w-3.5 h-3.5"></i>
@@ -113,15 +113,15 @@
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-5 w-full flex-grow space-y-5">
 
-    <!-- PANEL STATISTIK: AGIHAN MENGIKUT HARI (23 HARI) -->
+    <!-- PANEL STATISTIK: AGIHAN MENGIKUT HARI T1–T4 (23 HARI) -->
     <section id="statsSection" class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3 no-print">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
-            Agihan Saksama Mengikut Hari Persekolahan (Jumlah: 23 Hari Aktif)
+            Agihan Saksama Pasca UASA T1–T4 (Jumlah: 23 Hari Aktif)
           </h2>
-          <p class="text-[11px] text-slate-500">Pembahagian 5 bidang (Bahasa, Sains & Matematik, Kemasyarakatan, TVET, Umum) mengikut bilangan <strong>HARI persekolahan</strong>.</p>
+          <p class="text-[11px] text-slate-500">Pembahagian 5 bidang (Bahasa, Sains & Matematik, Kemasyarakatan, TVET, Umum) untuk murid Tingkatan 1 hingga Tingkatan 4 sahaja.</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <!-- KAD 5 BIDANG (KIRAAN HARI) -->
+      <!-- KAD 5 BIDANG -->
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
         <div class="p-2.5 bg-blue-50/70 border-t-4 border-blue-600 rounded-xl space-y-0.5">
           <div class="flex items-center justify-between">
@@ -200,11 +200,11 @@
     <div id="quickGuideAlert" class="flex flex-wrap items-center justify-between text-[11px] text-slate-600 bg-indigo-50/70 border border-indigo-100 rounded-xl px-3 py-2 gap-2 no-print">
       <div class="flex items-center gap-2 font-medium">
         <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-600"></i>
-        <span><strong>Waktu Persekolahan:</strong> 07:30 PG – 02:30 PTG | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong></span>
+        <span><strong>Waktu Pasca UASA T1–T4:</strong> 07:30 PG – 02:30 PTG | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong></span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-indigo-700 font-bold">💡 Status Segerak:</span>
-        <span class="text-slate-500">Data dikemas kini secara automatik terus ke Google Sheet setiap kali disimpan.</span>
+        <span class="text-rose-700 font-bold">⚠️ Ketetapan T5:</span>
+        <span class="text-slate-600">Murid Tingkatan 5 <strong>tidak terlibat langsung</strong> dengan aktiviti Pasca UASA (fokus kelas SPM sahaja).</span>
       </div>
     </div>
 
@@ -231,7 +231,7 @@
           </select>
           <div class="relative">
             <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400"></i>
-            <input type="text" id="searchInput" oninput="renderMonthCalendar()" placeholder="Cari guru / aktiviti..." class="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 w-44">
+            <input type="text" id="searchInput" oninput="renderMonthCalendar()" placeholder="Cari aktiviti T1–T4..." class="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 w-44">
           </div>
         </div>
       </div>
@@ -289,110 +289,94 @@
       <div id="dailyAgendaContainer" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 space-y-4"></div>
     </div>
 
-    <!-- 4. PAPARAN MOD KHAS: SARANAN KELAS BIMBINGAN SPM 2026 (NEW TAB) -->
+    <!-- 4. PAPARAN MOD KHAS: JADUAL HARIAN KOTAK-KOTAK TINGKATAN 5 (SPM 2026) -->
     <div id="viewSectionSpm" class="space-y-5 hidden">
-      <!-- KAD PENGENALAN & KELAS CALON SPM -->
+      
+      <!-- NOTIS PENEGASAN STATUS TINGKATAN 5 -->
+      <div class="p-4 bg-rose-50 border-l-4 border-rose-600 rounded-xl text-xs space-y-1 text-rose-950 shadow-xs">
+        <div class="flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+          <span class="font-black uppercase tracking-wider text-rose-900">Jadual Pengurusan Peperiksaan & Kelas Bimbingan Harian SPM Tingkatan 5 (5S1, 5S2, 5S3)</span>
+        </div>
+        <p class="leading-relaxed text-rose-800">
+          Murid Tingkatan 5 <strong>TIDAK TERLIBAT LANGSUNG</strong> dengan aktiviti Pasca UASA. Di bawah adalah jadual harian (termasuk Jumaat, Sabtu & Ahad) yang menyelaraskan waktu peperiksaan sebenar Lembaga Peperiksaan Malaysia serta kelas-kelas pecutan berfokus sehingga 17 Disember 2026.
+        </p>
+      </div>
+
+      <!-- KAD KAWALAN & PENAPIS HARIAN KOTAK-KOTAK -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
           <div>
             <div class="flex items-center gap-2">
-              <span class="p-1.5 bg-rose-100 text-rose-700 rounded-lg">
-                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+              <span class="p-1.5 bg-indigo-100 text-indigo-700 rounded-lg">
+                <i data-lucide="calendar-range" class="w-5 h-5"></i>
               </span>
-              <h2 class="text-base sm:text-lg font-black text-slate-900">Pelan Saranan Kelas Bimbingan & Pecutan SPM 2026</h2>
+              <h2 class="text-base sm:text-lg font-black text-slate-900">Jadual Kotak-Kotak Harian Menjelang & Semasa SPM 2026</h2>
             </div>
-            <p class="text-xs text-slate-500 mt-0.5">Diselaraskan mengikut Jadual Rasmi Peperiksaan Bertulis SPM 2026 (23 Nov – 17 Dis 2026) & Ujian Amali Sains (16 – 18 Nov 2026).</p>
+            <p class="text-xs text-slate-500 mt-0.5">Waktu Isnin – Khamis (hingga 4:00 ptg) • Jumaat (pagi & petang) • Sabtu & Ahad (pagi hingga tengah hari sahaja).</p>
           </div>
 
-          <div class="flex items-center gap-2 no-print">
-            <button onclick="printCurrentView()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-xs">
+          <div class="flex flex-wrap items-center gap-2 no-print">
+            <button onclick="printCurrentView()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-xs">
               <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-              <span>Cetak Pelan SPM</span>
+              <span>Cetak Jadual Harian SPM</span>
             </button>
           </div>
         </div>
 
-        <!-- PROFIL 3 KELAS CALON TINGKATAN 5 SEMEKAR -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-          <!-- KAD 5S1 -->
-          <div class="p-3.5 rounded-xl border border-indigo-200 bg-indigo-50/50 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="px-2 py-0.5 bg-indigo-600 text-white font-black rounded text-[11px]">5S1 (Sains Tulen)</span>
-              <span class="text-[10px] font-bold text-indigo-700 bg-indigo-100 px-1.5 py-0.5 rounded">Aliran STEM</span>
-            </div>
-            <div class="space-y-1 text-slate-700 text-[11px] leading-relaxed">
-              <p><strong>Teras Wajib:</strong> BM, BI, Math, Sejarah, PI / Moral.</p>
-              <p><strong>Elektif Wajib Kelas:</strong> Fizik, Kimia, Matematik Tambahan.</p>
-              <p><strong>Pilihan Separuh Calon:</strong> Biologi <span class="text-slate-400">ATAU</span> Asas Kelestarian.</p>
-              <p><strong>Agama & Bahasa:</strong> Tasawwur Islam (Murid Islam) • Bahasa Cina (Murid Cina).</p>
+        <!-- BAR PENAPIS & CARIAN -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs no-print">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Tapis Mengikut Kelas T5:</label>
+            <div class="inline-flex w-full rounded-lg border border-slate-300 p-0.5 bg-slate-50 font-semibold">
+              <button onclick="setSpmFilterClass('ALL')" id="spmFilterALL" class="flex-1 py-1 text-center rounded bg-indigo-600 text-white shadow-2xs font-bold">Semua Kelas</button>
+              <button onclick="setSpmFilterClass('5S1')" id="spmFilter5S1" class="flex-1 py-1 text-center rounded text-slate-600 hover:text-slate-900">5S1</button>
+              <button onclick="setSpmFilterClass('5S2')" id="spmFilter5S2" class="flex-1 py-1 text-center rounded text-slate-600 hover:text-slate-900">5S2</button>
+              <button onclick="setSpmFilterClass('5S3')" id="spmFilter5S3" class="flex-1 py-1 text-center rounded text-slate-600 hover:text-slate-900">5S3</button>
             </div>
           </div>
 
-          <!-- KAD 5S2 -->
-          <div class="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/50 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="px-2 py-0.5 bg-emerald-600 text-white font-black rounded text-[11px]">5S2 (Sains Sosial)</span>
-              <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">Sastera Ikhtisas</span>
-            </div>
-            <div class="space-y-1 text-slate-700 text-[11px] leading-relaxed">
-              <p><strong>Teras Wajib:</strong> BM, BI, Math, Sejarah, Sains, PI / Moral.</p>
-              <p><strong>Elektif Wajib Kelas:</strong> Pendidikan Seni Visual (PSV).</p>
-              <p><strong>Pilihan Separuh Calon:</strong> Perniagaan <span class="text-slate-400">ATAU</span> Asas Kelestarian.</p>
-              <p><strong>Agama & Bahasa:</strong> Tasawwur Islam (Murid Islam) • Bahasa Cina (Murid Cina).</p>
-            </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Pilih Fasa / Minggu:</label>
+            <select id="spmWeekFilter" onchange="renderSpmDailyGrid()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-xs focus:ring-2 focus:ring-indigo-500">
+              <option value="ALL">Semua Fasa (09 Nov – 17 Dis 2026)</option>
+              <option value="FASA_1">Fasa 1: Pecutan Amali & Teras (09 Nov – 15 Nov)</option>
+              <option value="FASA_2">Fasa 2: Ujian Amali & Pra-Bertulis (16 Nov – 22 Nov)</option>
+              <option value="FASA_3">Fasa 3: Minggu BM, BI, PI/Moral & Math (23 Nov – 29 Nov)</option>
+              <option value="FASA_4">Fasa 4: Minggu Sejarah, PSV, Bio/Niaga, Fizik/Sains (30 Nov – 06 Dis)</option>
+              <option value="FASA_5">Fasa 5: Minggu Bahasa Cina & Asas Kelestarian (07 Dis – 13 Dis)</option>
+              <option value="FASA_6">Fasa 6: Minggu Kimia & Matematik Tambahan (14 Dis – 17 Dis)</option>
+            </select>
           </div>
 
-          <!-- KAD 5S3 -->
-          <div class="p-3.5 rounded-xl border border-amber-200 bg-amber-50/50 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="px-2 py-0.5 bg-amber-600 text-white font-black rounded text-[11px]">5S3 (Kemanusiaan)</span>
-              <span class="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">Sastera Asas</span>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Cari Kertas / Subjek / Guru:</label>
+            <div class="relative">
+              <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400"></i>
+              <input type="text" id="spmSearchInput" oninput="renderSpmDailyGrid()" placeholder="Cth: Matematik, Fizik, Sejarah..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500">
             </div>
-            <div class="space-y-1 text-slate-700 text-[11px] leading-relaxed">
-              <p><strong>Teras Wajib:</strong> BM, BI, Math, Sejarah, Sains, PI / Moral.</p>
-              <p><strong>Elektif Wajib Kelas:</strong> Pendidikan Seni Visual (PSV).</p>
-              <p><strong>Agama (Teras Sahaja):</strong> PI (Murid Islam Sahaja - Tiada Tasawwur).</p>
-              <p><strong>Bahasa:</strong> Bahasa Cina (Calon Cina).</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- BAR PENAPIS SARANAN -->
-        <div class="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-slate-100 text-xs no-print">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="font-bold text-slate-700 uppercase text-[11px]">Tapis Sasaran Kelas:</span>
-            <div class="inline-flex rounded-lg border border-slate-300 p-0.5 bg-slate-50 font-semibold">
-              <button onclick="setSpmFilterClass('ALL')" id="spmFilterALL" class="px-2.5 py-1 rounded bg-indigo-600 text-white shadow-2xs">Semua Calon</button>
-              <button onclick="setSpmFilterClass('5S1')" id="spmFilter5S1" class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900">5S1 Sahaja</button>
-              <button onclick="setSpmFilterClass('5S2')" id="spmFilter5S2" class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900">5S2 Sahaja</button>
-              <button onclick="setSpmFilterClass('5S3')" id="spmFilter5S3" class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900">5S3 Sahaja</button>
-            </div>
-          </div>
-
-          <div class="text-[11px] text-slate-500 font-medium bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200">
-            📌 Disyorkan dijalankan semasa jurang persediaan (petang sebelum paper / hujung minggu pecutan).
           </div>
         </div>
       </div>
 
-      <!-- SENARAI KAD SARANAN KELAS SEBELUM SETIAP PAPER SPM 2026 -->
-      <div id="spmRecommendationsContainer" class="space-y-4"></div>
+      <!-- GRID KOTAK-KOTAK HARIAN SPM -->
+      <div id="spmDailyGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
     <!-- 5. MOD CETAKAN RASMI (PRINT HUB) -->
     <div id="viewSectionPrint" class="space-y-4 hidden">
       <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3 no-print">
         <div>
-          <h3 class="text-sm font-bold text-slate-900">Pusat Cetakan Rasmi Jadual PUasa SEMEKAR 2026</h3>
+          <h3 class="text-sm font-bold text-slate-900">Pusat Cetakan Rasmi Jadual SEMEKAR 2026</h3>
           <p class="text-xs text-slate-500">Format dokumen rasmi untuk dicetak atau disimpan ke PDF.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
           <select id="printFormatSelect" onchange="renderPrintHub()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg px-3 py-1.5 font-bold">
-            <option value="FULL_MONTH">Cetak Keseluruhan Program (Nov & Dis)</option>
-            <option value="WEEKLY">Cetak Jadual Mengikut Minggu</option>
-            <option value="DAILY">Cetak Jadual Mengikut Hari</option>
-            <option value="SPM_PLAN">Cetak Pelan Saranan Kelas SPM 2026</option>
+            <option value="SPM_DAILY">Cetak Jadual Kotak-Kotak Harian SPM (T5)</option>
+            <option value="FULL_MONTH">Cetak Program Pasca UASA T1–T4 (Nov & Dis)</option>
+            <option value="WEEKLY">Cetak Pasca UASA Mengikut Minggu</option>
+            <option value="DAILY">Cetak Pasca UASA Mengikut Hari</option>
           </select>
 
           <button onclick="window.print()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm">
@@ -407,7 +391,7 @@
 
   </main>
 
-  <!-- MODAL HARIAN: PECAHAN 13 SLOT (30 MINIT) [z-50] -->
+  <!-- MODAL HARIAN: PECAHAN 13 SLOT T1–T4 [z-50] -->
   <div id="dayDrawerModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-4xl my-6 overflow-hidden flex flex-col max-h-[92vh]">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between flex-shrink-0">
@@ -416,7 +400,7 @@
             <i data-lucide="calendar-days" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="text-sm sm:text-base font-bold" id="drawerDateTitle">Jadual Slot Harian</h3>
+            <h3 class="text-sm sm:text-base font-bold" id="drawerDateTitle">Jadual Slot Harian Pasca UASA (T1–T4)</h3>
             <p class="text-[11px] text-slate-400" id="drawerDateSubtitle">Program Pasca UASA SEMEKAR • 07:30 PG hingga 02:30 PTG</p>
           </div>
         </div>
@@ -511,7 +495,7 @@
             <button type="button" onclick="appendNotePreset('SPM: Sains / Fizik / Kimia / Biologi')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg border border-amber-300 font-semibold text-[10px]">
               SPM: Sains / Tulen
             </button>
-            <button type="button" onclick="appendNotePreset('Peringatan: Zon Larangan Bising Dewan Semekar')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-lg border border-rose-300 font-semibold text-[10px]">
+            <button type="button" onclick="appendNotePreset('Peringatan: Zon Larangan Bising Dewan Semekar (T1–T4 di Blok Belakang)')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-lg border border-rose-300 font-semibold text-[10px]">
               Zon Larangan Bising
             </button>
           </div>
@@ -542,7 +526,7 @@
     </div>
   </div>
 
-  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH [z-[60]] -->
+  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH (T1–T4) [z-[60]] -->
   <div id="dayAttendanceModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
       <div class="px-5 py-3.5 bg-indigo-900 text-white flex items-center justify-between">
@@ -551,7 +535,7 @@
             <i data-lucide="calendar-check" class="w-5 h-5 text-indigo-200"></i>
           </div>
           <div>
-            <h3 class="text-sm sm:text-base font-bold" id="attModalTitle">Ketetapan Cuti Tingkatan Sehari Penuh</h3>
+            <h3 class="text-sm sm:text-base font-bold" id="attModalTitle">Ketetapan Cuti Tingkatan Sehari Penuh (T1–T4)</h3>
             <p class="text-[11px] text-indigo-200" id="attModalSubtitle">Tarikh Terpilih</p>
           </div>
         </div>
@@ -567,7 +551,7 @@
           <span class="font-bold text-slate-700 block">Pilihan Pantas:</span>
           <div class="flex flex-wrap gap-1.5">
             <button type="button" onclick="setAttendancePreset('ALL_PRESENT')" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg border border-emerald-200 font-semibold transition">
-              Semua Tingkatan Hadir
+              Semua Hadir (T1–T4)
             </button>
             <button type="button" onclick="setAttendancePreset('T1_T2_CUTI')" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg border border-rose-200 font-semibold transition">
               Tingkatan 1 & 2 Cuti
@@ -584,7 +568,7 @@
         <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
           <span class="font-bold text-slate-800 text-[11px] uppercase flex items-center gap-1.5">
             <i data-lucide="check-square" class="w-3.5 h-3.5 text-indigo-600"></i>
-            Tandakan Tingkatan Yang Diberi Cuti / Pelepasan:
+            Tandakan Tingkatan (T1–T4) Yang Diberi Cuti / Pelepasan:
           </span>
 
           <div class="grid grid-cols-2 gap-2">
@@ -636,14 +620,14 @@
     </div>
   </div>
 
-  <!-- MODAL PENYUNTINGAN AKTIVITI [z-[60]] -->
+  <!-- MODAL PENYUNTINGAN AKTIVITI PASCA UASA [z-[60]] -->
   <div id="activityModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i data-lucide="clock" class="w-5 h-5 text-indigo-400"></i>
           <div>
-            <h3 class="text-sm sm:text-base font-bold" id="modalTitle">Pengisian Slot Aktiviti</h3>
+            <h3 class="text-sm sm:text-base font-bold" id="modalTitle">Pengisian Slot Pasca UASA (T1–T4)</h3>
             <p class="text-[11px] text-slate-400">Isi maklumat aktiviti, guru, lokasi serta catatan khusus slot</p>
           </div>
         </div>
@@ -770,7 +754,7 @@
               <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
               Lokasi / Tempat
             </label>
-            <input type="text" id="modalLokasi" placeholder="Dewan Semekar / Makmal / Kelas" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <input type="text" id="modalLokasi" placeholder="Dewan Semekar / Makmal / Bilik Darjah" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
           </div>
 
           <div>
@@ -786,7 +770,7 @@
               <i data-lucide="sticky-note" class="w-3.5 h-3.5 text-amber-600"></i>
               Catatan / Peringatan Slot Masa Ini
             </span>
-            <span class="text-[10px] text-slate-400">Contoh: Bawa alat geometri / Khusus T3 & T4 di dewan</span>
+            <span class="text-[10px] text-slate-400">Contoh: Bawa alat lukisan / Khusus T3 & T4 di dewan</span>
           </label>
           <input type="text" id="modalCatatan" placeholder="Taip catatan atau peringatan khas bagi slot masa ini..." class="w-full bg-amber-50/40 border border-amber-300 rounded-lg px-2.5 py-1.5 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs font-medium">
         </div>
@@ -815,7 +799,7 @@
         <div class="flex items-center gap-2">
           <i data-lucide="sliders" class="w-5 h-5 text-indigo-400"></i>
           <div>
-            <h3 class="text-sm sm:text-base font-bold">Tetapkan Bidang Mengikut Hari (23 Hari Persekolahan)</h3>
+            <h3 class="text-sm sm:text-base font-bold">Tetapkan Bidang Mengikut Hari (23 Hari Persekolahan T1–T4)</h3>
             <p class="text-[11px] text-slate-400">Agihan mengikut kiraan hari persekolahan (5 Bidang)</p>
           </div>
         </div>
@@ -847,6 +831,7 @@
       STREAM_INTERVAL: 30000
     };
 
+    // Khusus Tingkatan 1 hingga Tingkatan 4 sahaja bagi Pasca UASA
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
 
     const TEACHER_LIST = [
@@ -905,228 +890,323 @@
       '1300': '1330', '1330': '1400', '1400': '1430'
     };
 
-    // PANGKALAN DATA CADANGAN KELAS PEPERIKSAAN SPM 2026 UNTUK CALON SEMEKAR
-    const SPM_2026_MASTER_PLAN = [
+    // PANGKALAN DATA JADUAL HARIAN KOTAK-KOTAK TINGKATAN 5 (SPM 2026)
+    // Merangkumi Isnin-Khamis (hingga 4 ptg), Jumaat (pagi & petang), Sabtu-Ahad (pagi-tgh hari)
+    const SPM_DAILY_SCHEDULE = [
+      // MINGGU 1: PECUTAN AWAL & AMALI (09 NOV - 15 NOV 2026)
       {
-        id: 'spm_amali',
-        tarikhPaper: '16 – 18 Nov 2026',
-        hariPaper: 'Isnin – Rabu',
-        kertasCode: '4531/3, 4541/3, 4551/3',
-        kertasNama: 'Ujian Amali Sains Berpusat (Fizik, Kimia, Biologi)',
-        waktuExam: 'Sesi Sidang Pagi LP',
-        targetClasses: ['5S1'],
-        targetAudience: 'Semua 5S1 (Fizik & Kimia) • Sebahagian 5S1 (Biologi)',
-        sarananMasa: 'Jumaat 13 Nov & Sabtu 14 Nov 2026',
-        slotKelas: '02:30 – 04:30 Petang (Jumaat) & 09:00 – 11:30 Pagi (Sabtu)',
-        namaKelas: 'Bengkel Teknikal Amali Sains: Manipulasi Radas & Analisis Graf',
-        guruCadangan: 'En. Mohd Riduwan (GKMP Sains) & Panitia Sains Tulen',
-        lokasi: 'Makmal Fizik & Makmal Kimia SEMEKAR',
-        fokus: 'Kemahiran membaca buret, mikroskop, susunan litar, pembinaan jadual data dan pernyataan hipotesis jitu.',
-        catatanPengurusan: 'Murid 5S2 & 5S3 kekal mengikuti aktiviti Pasca UASA biasa. Tiada gangguan dewan peperiksaan.'
+        tarikh: '2026-11-09', hari: 'Isnin', fasa: 'FASA_1', statusExam: false, examNote: 'Cuti Umum Hari Deepavali',
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: 'Ulang Kaji Kendiri Di Rumah: Rumusan BM & Formula Matematik', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Di Rumah (Cuti Am)' }
+        ]
       },
       {
-        id: 'spm_bm',
-        tarikhPaper: '23 Nov 2026',
-        hariPaper: 'Isnin',
-        kertasCode: '1103/4, 1103/1, 1103/2',
-        kertasNama: 'Bahasa Melayu (Kertas 4 Mendengar, Kertas 1 & Kertas 2)',
-        waktuExam: '09:00 – 09:30 PG (K4) | 10:45 PG – 12:45 TGH (K1) | 02:30 – 05:00 PTG (K2)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Semua Calon T5 (5S1, 5S2, 5S3) - Wajib Lulus SPM',
-        sarananMasa: 'Jumaat 20 Nov & Sabtu 21 Nov 2026 (Pra-Kertas)',
-        slotKelas: '02:30 – 04:30 Petang (Jumaat) & 08:30 – 11:30 Pagi (Sabtu)',
-        namaKelas: 'Pecutan Akhir BM: Rumusan 30 Markah, Novel & Karangan Respons Terbuka',
-        guruCadangan: 'Pn. Rohana (GKMP Bahasa) & Guru Panitia BM',
-        lokasi: 'Bilik Seminar & Pusat Sumber SEMEKAR',
-        fokus: 'Teknik menjawab pantas Kertas 2 (Morfologi, Sintaksis, Rumusan), format esei Kertas 1 dan simulasi audio Kertas 4.',
-        catatanPengurusan: 'Isnin 23 Nov: Dewan Peperiksaan dibuka. Zon Senyap Blok Utama. Murid T1-T4 wajib berada di blok bilik darjah belakang.'
+        tarikh: '2026-11-10', hari: 'Selasa', fasa: 'FASA_1', statusExam: false, examNote: 'Cuti Perayaan Tambahan KPM Deepavali',
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: 'Ulang Kaji Kendiri Di Rumah: Garis Kronologi Sejarah Tingkatan 4', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Di Rumah (Cuti Am)' }
+        ]
       },
       {
-        id: 'spm_bi',
-        tarikhPaper: '24 Nov 2026',
-        hariPaper: 'Selasa',
-        kertasCode: '1119/4, 1119/1, 1119/2',
-        kertasNama: 'Bahasa Inggeris (Kertas 4 Mendengar, Kertas 1 Reading & Kertas 2 Writing)',
-        waktuExam: '09:00 – 09:40 PG (K4) | 11:00 PG – 12:30 TGH (K1) | 02:30 – 04:00 PTG (K2)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Semua Calon T5 (5S1, 5S2, 5S3)',
-        sarananMasa: 'Isnin 23 Nov 2026 (Petang Selepas BM)',
-        slotKelas: '05:15 – 06:30 Petang (Taklimat Santai) atau Isnin Malam',
-        namaKelas: 'Final Touch: CEFR Extended Writing Part 3 & Listening Hacks',
-        guruCadangan: 'Guru Panitia Bahasa Inggeris',
-        lokasi: 'Bilik Bahasa / Dewan Kuliah / Sesi Google Meet Santai',
-        fokus: 'Struktur esei Review/Article, perbendaharaan kata fungsian (cohesive devices) dan ketepatan mendengar Paper 4.',
-        catatanPengurusan: 'Calon baru tamat BM Kertas 2 jam 5:00 petang. Sesi bimbingan dibuat secara santai tanpa tekanan.'
+        tarikh: '2026-11-11', hari: 'Rabu', fasa: 'FASA_1', statusExam: false, examNote: 'Hari Persekolahan Biasa / Kelas Pecutan T5',
+        sessions: [
+          { time: '08:00 – 10:00 PG', title: 'Pecutan Matematik: Sukatan Serakan & Graf Gerakan K2', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'En. Mohd Riduwan', room: 'Dewan Kuliah T5' },
+          { time: '10:30 – 12:30 TGH', title: 'Pecutan BM K1: Format Esei Respons Terbuka & Perenggan Pendahuluan', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Pn. Rohana', room: 'Dewan Kuliah T5' },
+          { time: '02:00 – 04:00 PTG', title: 'Bengkel Teknikal Amali: Membaca Skala Nonius, Tolok & Buret', target: '5S1 Sahaja', classes: ['5S1'], teacher: 'Panitia Fizik & Kimia', room: 'Makmal Fizik/Kimia' },
+          { time: '02:00 – 04:00 PTG', title: 'Klinik Skor Sains Teras K2: Mengenal Pasti Pemboleh Ubah', target: '5S2 & 5S3', classes: ['5S2','5S3'], teacher: 'Panitia Sains', room: 'Bilik Seminar' }
+        ]
       },
       {
-        id: 'spm_pi_moral',
-        tarikhPaper: '25 Nov 2026',
-        hariPaper: 'Rabu',
-        kertasCode: '1223/1, 1225',
-        kertasNama: 'Pendidikan Islam (1223/1) & Pendidikan Moral (1225)',
-        waktuExam: '08:15 – 10:45 Pagi (2 Jam 30 Minit)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Calon Islam (PI: 5S1, 5S2, 5S3) • Calon Bukan Islam (Moral: 5S1, 5S2, 5S3)',
-        sarananMasa: 'Selasa 24 Nov 2026 (Petang Selepas BI K2)',
-        slotKelas: '04:30 – 06:15 Petang',
-        namaKelas: 'Klinik Menjawab Ayat Kefahaman / Hadis KBAT & Situasi Nilai Moral',
-        guruCadangan: 'Panitia Pend. Islam (Ustaz/Ustazah) & Panitia Moral',
-        lokasi: 'Surau Al-Kauthar SEMEKAR (PI) & Bilik Tayang (Moral)',
-        fokus: 'P. Islam: Fiqh, Sirah, Akidah, hukum tajwid & KBAT 6 markah. Moral: Analisis isu semasa berteraskan nilai universal.',
-        catatanPengurusan: 'Kertas peperiksaan tamat jam 10:45 pagi pada hari Rabu, memberi ruang separuh hari untuk persediaan Matematik esoknya.'
+        tarikh: '2026-11-12', hari: 'Khamis', fasa: 'FASA_1', statusExam: false, examNote: 'Hari Pecutan Sejarah & Bahasa Inggeris',
+        sessions: [
+          { time: '08:00 – 10:00 PG', title: 'Bedah Topik Sejarah T4: Bab 2 Kebangkitan Nasionalisme & Bab 3 Perang Dunia', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'En. Mohamaad Fadzeli', room: 'Dewan Kuliah T5' },
+          { time: '10:30 – 12:30 TGH', title: 'BI CEFR: Mastering Part 3 Extended Writing (Article & Review)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia BI', room: 'Dewan Kuliah T5' },
+          { time: '02:00 – 04:00 PTG', title: '5S1: Amali Biologi (Ujian Makanan & Mikroskop) / 5S2: Asas Perniagaan', target: '5S1 & 5S2', classes: ['5S1','5S2'], teacher: 'Panitia Berkaitan', room: 'Makmal Bio / Bilik Niaga' },
+          { time: '02:00 – 04:00 PTG', title: '5S3: Latihan Intensif Karangan Deskriptif BM', target: '5S3 Sahaja', classes: ['5S3'], teacher: 'Guru BM T5', room: 'Bilik 5S3' }
+        ]
       },
       {
-        id: 'spm_math',
-        tarikhPaper: '26 Nov 2026',
-        hariPaper: 'Khamis',
-        kertasCode: '1449/1, 1449/2',
-        kertasNama: 'Matematik (Kertas 1 Objektif & Kertas 2 Subjektif)',
-        waktuExam: '08:15 – 09:45 PG (K1) | 10:45 PG – 01:15 TGH (K2)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Semua Calon T5 (5S1, 5S2, 5S3) - Wajib Lulus SPM',
-        sarananMasa: 'Rabu 25 Nov 2026 (Sesi Separuh Hari Emas)',
-        slotKelas: '11:30 Pagi – 01:30 Tengah Hari ATAU 02:30 – 05:00 Petang',
-        namaKelas: 'Maraton Skor Matematik Kertas 2: Topik Wajib Markah Penuh',
-        guruCadangan: 'En. Mohd Riduwan & Guru Panitia Matematik',
-        lokasi: 'Bilik Seminar & Dewan Kuliah',
-        fokus: 'Graf Gerakan, Insurans & Percukaian, Pelan & Dongakan, Kebarangkalian, Sukatan Serakan, dan penguasaan kalkulator saintifik.',
-        catatanPengurusan: 'Manfaatkan pelepasan awal hari Rabu (selepas paper Moral/PI) untuk bimbingan intensif Matematik.'
+        tarikh: '2026-11-13', hari: 'Jumaat', fasa: 'FASA_1', statusExam: false, examNote: 'Hari Jumaat (Pagi & Petang)',
+        sessions: [
+          { time: '08:00 – 10:00 PG', title: '5S1: Simulasi Amali Fizik (Litar Elektrik & Pembiasan Kaca)', target: '5S1 Sahaja', classes: ['5S1'], teacher: 'Cikgu Fizik', room: 'Makmal Fizik' },
+          { time: '08:00 – 10:00 PG', title: '5S2 & 5S3: Klinik Rumusan BM (Format 30 Markah Cemerlang)', target: '5S2 & 5S3', classes: ['5S2','5S3'], teacher: 'Pn. Norul Hafidzah', room: 'Dewan Kuliah T5' },
+          { time: '10:15 – 11:45 PG', title: 'Pendidikan Islam (Hukum Tajwid & Hadis) / Nilai Moral Universal', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Ustaz / Guru Moral', room: 'Surau / Bilik Tayang' },
+          { time: '12:00 – 02:30 PTG', title: 'REHAT PANJANG / SOLAT JUMAAT', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Masjid / Surau' },
+          { time: '02:30 – 04:00 PTG', title: 'Klinik Matematik: Garis Lurus & Transformasi Isometri K2', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia Matematik', room: 'Bilik Seminar' }
+        ]
       },
       {
-        id: 'spm_sej_tasawwur',
-        tarikhPaper: '30 Nov 2026',
-        hariPaper: 'Isnin',
-        kertasCode: '1249/1, 1249/2, 5226',
-        kertasNama: 'Sejarah (K1 & K2) & Tasawwur Islam (Petang)',
-        waktuExam: '08:15 – 09:15 PG (Sej K1) | 10:30 PG – 01:00 TGH (Sej K2) | 02:30 – 05:00 PTG (Tasawwur)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Sejarah: Semua Calon (5S1, 5S2, 5S3) • Tasawwur: Calon Islam 5S1 & 5S2 Sahaja',
-        sarananMasa: 'Jumaat 27 Nov, Sabtu 28 Nov & Ahad 29 Nov 2026 (Jurang 3 Hari)',
-        slotKelas: 'Pagi Jumaat (Sejarah T4), Pagi Sabtu (Sejarah T5), Petang Ahad (Tasawwur)',
-        namaKelas: 'Kem Bedah Fakta Sejarah SPM & Klinik Tasawwur Islam',
-        guruCadangan: 'En. Mohamaad Fadzeli (GKMP Kemasyarakatan) & Panitia Sejarah/Tasawwur',
-        lokasi: 'Bilik Seminar & Surau Sekolah',
-        fokus: 'Sejarah: Garis kronologi T4 & T5, pembinaan kedaulatan, Perlembagaan Persekutuan, soalan KBAT Iktibar. Tasawwur: Konsep pandangan hidup Islam.',
-        catatanPengurusan: 'Murid 5S3 tidak mengambil Tasawwur Islam, boleh pulang awal selepas Sejarah K2 jam 1.00 tengah hari untuk persediaan PSV.'
+        tarikh: '2026-11-14', hari: 'Sabtu', fasa: 'FASA_1', statusExam: false, examNote: 'Hari Sabtu (Pagi Hingga Tengah Hari Sahaja)',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: '5S1: Simulasi Amali Kimia (Titrasi Asid-Bes & Kuantitatif)', target: '5S1 Sahaja', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '08:30 – 10:30 PG', title: '5S2 & 5S3: Maraton Sejarah T5 (Bab 1 Kedaulatan & Bab 2 Perlembagaan)', target: '5S2 & 5S3', classes: ['5S2','5S3'], teacher: 'En. Mohamaad Fadzeli', room: 'Dewan Kuliah T5' },
+          { time: '10:45 – 12:30 TGH', title: 'Simulasi Pantas Mendengar BI Paper 4 (Audio Test)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia BI', room: 'Pusat Sumber SEMEKAR' }
+        ]
       },
       {
-        id: 'spm_psv',
-        tarikhPaper: '01 Dis 2026',
-        hariPaper: 'Selasa',
-        kertasCode: '2611/2, 2611/1',
-        kertasNama: 'Pendidikan Seni Visual (Kertas 2 Melukis & Kertas 1 Teori Seni)',
-        waktuExam: '08:15 – 11:15 PG (K2 Melukis) | 12:00 – 01:00 TGH (K1 Teori)',
-        targetClasses: ['5S2', '5S3'],
-        targetAudience: 'Semua Murid 5S2 & 5S3 (Calon PSV)',
-        sarananMasa: 'Isnin 30 Nov 2026 (Petang Selepas Peperiksaan Sejarah)',
-        slotKelas: '03:30 – 05:30 Petang (Calon Bukan Islam / Bukan Tasawwur)',
-        namaKelas: 'Bengkel Eksplorasi Media & Skema Olahan Warna PSV Kertas 2',
-        guruCadangan: 'Guru Panitia PSV',
-        lokasi: 'Bilik Seni Visual SEMEKAR',
-        fokus: 'Pemilihan tema soalan melukis yang keluar, gubahan perspektif, teknik tona warna basah/kering & persediaan kertas lukisan.',
-        catatanPengurusan: 'Calon 5S1 BEBAS dari sebarang peperiksaan pada hari ini! Ambil peluang adakan kelas Biologi/Fizik untuk 5S1 pada waktu pagi.'
+        tarikh: '2026-11-15', hari: 'Ahad', fasa: 'FASA_1', statusExam: false, examNote: 'Hari Ahad (Pagi Hingga Tengah Hari Sahaja)',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: '5S1: Taklimat Akhir SOP Ujian Amali Sains Bersama Ketua Makmal', target: '5S1 Sahaja', classes: ['5S1'], teacher: 'En. Mohd Riduwan', room: 'Makmal Fizik' },
+          { time: '08:30 – 10:30 PG', title: '5S2: Bengkel Kajian Kes Perniagaan Bahagian C (16 Markah)', target: '5S2 (Perniagaan)', classes: ['5S2'], teacher: 'Cikgu Perniagaan', room: 'Bilik Perniagaan' },
+          { time: '08:30 – 10:30 PG', title: '5S3: Bengkel Melakar Perspektif & Komposisi PSV Kertas 2', target: '5S3 Sahaja', classes: ['5S3'], teacher: 'Guru PSV', room: 'Bilik Seni' },
+          { time: '10:45 – 12:30 TGH', title: 'Ulang Kaji Komsas & Novel BM (Zon Senyap Kendiri Terpimpin)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Guru Bertugas', room: 'Perpustakaan' }
+        ]
+      },
+
+      // MINGGU 2: UJIAN AMALI SAINS & GERAK GEMPUR BM (16 NOV - 22 NOV 2026)
+      {
+        tarikh: '2026-11-16', hari: 'Isnin', fasa: 'FASA_2', statusExam: true, examNote: 'EXAM LP: Ujian Amali Sains (Fizik - 4531/3)',
+        examDetails: { time: '08:00 – 12:00 (Sesi Sidang LP)', paper: 'Ujian Amali Fizik (4531/3)', target: 'Semua 5S1', room: 'Makmal Fizik SEMEKAR' },
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: '5S2 & 5S3: Kelas Gerak Gempur Morfologi & Sintaksis BM K2', target: '5S2 & 5S3', classes: ['5S2','5S3'], teacher: 'Pn. Rohana', room: 'Dewan Kuliah T5' },
+          { time: '02:00 – 04:00 PTG', title: 'Semua T5: Pecutan Karangan Bahagian B (Tema Perpaduan & Pendidikan)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Guru Panitia BM', room: 'Dewan Kuliah T5' }
+        ]
       },
       {
-        id: 'spm_bio_niaga',
-        tarikhPaper: '02 Dis 2026',
-        hariPaper: 'Rabu',
-        kertasCode: '4551/1, 4551/2, 3766/1, 3766/2',
-        kertasNama: 'Biologi (K1 & K2) & Perniagaan (K1 & K2)',
-        waktuExam: '08:15 – 09:30 PG (K1) | 10:45 PG – 01:00/01:15 TGH (K2)',
-        targetClasses: ['5S1', '5S2'],
-        targetAudience: 'Sebahagian 5S1 (Biologi) • Sebahagian 5S2 (Perniagaan)',
-        sarananMasa: 'Selasa 01 Dis 2026',
-        slotKelas: '09:00 – 11:30 Pagi (5S1 Biologi) & 02:30 – 05:00 Petang (5S2 Perniagaan)',
-        namaKelas: 'Pecutan Akhir Biologi (Esei Fisiologi) & Teknik Menjawab Bahagian C Perniagaan',
-        guruCadangan: 'Panitia Biologi & Panitia Perniagaan (Cikgu Enal / Guru Perniagaan)',
-        lokasi: 'Makmal Biologi & Bilik Perniagaan',
-        fokus: 'Biologi: Proses respirasi sel, genetik, koordinasi & eksperimen esei. Perniagaan: Format kajian kes Bahagian C (16 markah) & pengiraan nisbah.',
-        catatanPengurusan: 'Calon Asas Kelestarian (5S1/5S2) dan semua calon 5S3 TIADA kertas hari ini — boleh fokus ulangkaji Sains/Fizik esok.'
+        tarikh: '2026-11-17', hari: 'Selasa', fasa: 'FASA_2', statusExam: true, examNote: 'EXAM LP: Ujian Amali Sains (Kimia - 4541/3)',
+        examDetails: { time: '08:00 – 12:00 (Sesi Sidang LP)', paper: 'Ujian Amali Kimia (4541/3)', target: 'Semua 5S1', room: 'Makmal Kimia SEMEKAR' },
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: '5S2 & 5S3: Kem Menjawab Soalan KBAT Sejarah K2 (Iktibar & Dasar Luar)', target: '5S2 & 5S3', classes: ['5S2','5S3'], teacher: 'En. Mohamaad Fadzeli', room: 'Dewan Kuliah T5' },
+          { time: '02:00 – 04:00 PTG', title: 'Semua T5: Latih Tubi Peribahasa & Kesalahan Bahasa BM K2', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Guru BM T5', room: 'Dewan Kuliah T5' }
+        ]
       },
       {
-        id: 'spm_fizik_sains',
-        tarikhPaper: '03 Dis 2026',
-        hariPaper: 'Khamis',
-        kertasCode: '4531/1, 4531/2, 1511/1, 1511/2',
-        kertasNama: 'Fizik (4531) & Sains Teras (1511)',
-        waktuExam: '08:15 – 09:30 PG (K1) | 10:30 PG – 01:00 TGH (K2)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Fizik: Semua Calon 5S1 • Sains Teras: Semua Calon 5S2 & 5S3',
-        sarananMasa: 'Rabu 02 Dis 2026 (Petang)',
-        slotKelas: '02:30 – 05:00 Petang',
-        namaKelas: 'Bengkel 2 Bilik: Formula & Graf Fizik K2 vs Eksperimen & Aplikasi Sains K2',
-        guruCadangan: 'Panitia Fizik & Panitia Sains Teras',
-        lokasi: 'Bilik Seminar (Fizik 5S1) & Dewan Kuliah (Sains 5S2 & 5S3)',
-        fokus: 'Fizik: Pengubahsuaian reka bentuk, hukum fizik & pengiraan Kertas 2. Sains: Teknik mengenal pasti pemboleh ubah & soalan mereka cipta KBAT.',
-        catatanPengurusan: 'Dewan Peperiksaan SPM penuh pada pagi Khamis 3 Disember. Pastikan program Pasca UASA T1-T4 dikawal tanpa bunyi bising.'
+        tarikh: '2026-11-18', hari: 'Rabu', fasa: 'FASA_2', statusExam: true, examNote: 'EXAM LP: Ujian Amali Sains (Biologi - 4551/3)',
+        examDetails: { time: '08:00 – 12:00 (Sesi Sidang LP)', paper: 'Ujian Amali Biologi (4551/3)', target: 'Separuh 5S1 (Calon Biologi)', room: 'Makmal Biologi' },
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: '5S1 (Kelestarian) & 5S2/5S3: Pecutan Asas Kelestarian & Perniagaan K2', target: 'Calon Berkaitan', classes: ['5S1','5S2','5S3'], teacher: 'Guru Panitia', room: 'Bilik Seminar' },
+          { time: '02:00 – 04:00 PTG', title: 'Semua T5: Bedah Watak, Perwatakan & Nilai Novel Silir Daksina / Leftenan Adnan', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia BM', room: 'Dewan Kuliah T5' }
+        ]
       },
       {
-        id: 'spm_bc',
-        tarikhPaper: '08 Dis 2026',
-        hariPaper: 'Selasa',
-        kertasCode: '6351/1, 6351/2',
-        kertasNama: 'Bahasa Cina (Kertas 1 Penulisan & Kertas 2 Pemahaman/Klasik)',
-        waktuExam: '08:15 – 10:00 PG (K1) | 02:30 – 04:45 PTG (K2)',
-        targetClasses: ['5S1', '5S2', '5S3'],
-        targetAudience: 'Calon Mengambil Bahasa Cina (Murid Cina 5S1, 5S2, 5S3)',
-        sarananMasa: 'Isnin 07 Dis 2026',
-        slotKelas: '09:00 – 11:30 Pagi',
-        namaKelas: 'Klinik Penulisan Esei Bahasa Cina & Penghayatan Puisi Klasik',
-        guruCadangan: 'Guru Bahasa Cina SEMEKAR',
-        lokasi: 'Bilik Bahasa / Bilik Guru Berkenaan',
-        fokus: 'Teknik merangka esei bergred tinggi, soalan prosa moden, teks klasik zaman purba dan puisi Dinasti Tang/Song.',
-        catatanPengurusan: 'Calon terlibat adalah kelompok kecil (calon minoriti Cina). Peperiksaan boleh diadakan di bilik khas/peperiksaan kecil.'
+        tarikh: '2026-11-19', hari: 'Khamis', fasa: 'FASA_2', statusExam: false, examNote: 'Hari Maraton Percubaan Bahasa Melayu',
+        sessions: [
+          { time: '08:00 – 10:30 PG', title: 'Simulasi Penuh Bahasa Melayu Kertas 1 (Esei 100 Markah Masa Tepat)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Pn. Rohana & Guru BM', room: 'Bilik Seminar T5' },
+          { time: '11:00 – 01:30 TGH', title: 'Simulasi Penuh Bahasa Melayu Kertas 2 (Tatabahasa, Petikan & Rumusan)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia BM', room: 'Bilik Seminar T5' },
+          { time: '02:30 – 04:00 PTG', title: 'Latihan Audio Terakhir BM Kertas 4 (Ujian Mendengar)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Pn. Norul Hafidzah', room: 'Pusat Sumber' }
+        ]
       },
       {
-        id: 'spm_kelestarian',
-        tarikhPaper: '09 Dis 2026',
-        hariPaper: 'Rabu',
-        kertasCode: '3768/1',
-        kertasNama: 'Asas Kelestarian (Kertas 1)',
-        waktuExam: '02:30 – 05:00 Petang',
-        targetClasses: ['5S1', '5S2'],
-        targetAudience: 'Separuh 5S1 (Bukan Biologi) & Separuh 5S2 (Bukan Perniagaan)',
-        sarananMasa: 'Selasa 08 Dis & Rabu 09 Dis 2026 (Pagi)',
-        slotKelas: '09:00 – 11:30 Pagi (Rabu 9 Dis sebelum paper petang)',
-        namaKelas: 'Pecutan Asas Kelestarian: Teknologi Hijau & Pengurusan Ekosistem Lestari',
-        guruCadangan: 'Guru Panitia Asas Kelestarian / RBT',
-        lokasi: 'Bengkel RBT / Bilik Seminar',
-        fokus: 'Konsep 5R, audit sisa, tenaga boleh baharu, kitaran hayat produk dan soalan reka bentuk penyelesaian alam sekitar.',
-        catatanPengurusan: 'Kertas bermula petang (2:30 ptg), murid ada masa cukup untuk sesi bimbingan pagi pada hari yang sama.'
+        tarikh: '2026-11-20', hari: 'Jumaat', fasa: 'FASA_2', statusExam: false, examNote: 'Hari Jumaat: Sentuhan Akhir BM & Motivasi',
+        sessions: [
+          { time: '08:00 – 10:15 PG', title: 'Sentuhan Akhir Bahasa Melayu: 10 Pantang Larang Semasa Menjawab BM SPM', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Pn. Rohana (GKMP Bahasa)', room: 'Dewan Kuliah T5' },
+          { time: '10:30 – 11:45 PG', title: 'Majlis Restu Ilmu & Solat Hajat / Bacaan Yasin & Doa Calon SPM', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Pentadbir & Kaunselor', room: 'Surau / Dewan' },
+          { time: '12:00 – 02:30 PTG', title: 'REHAT PANJANG / SOLAT JUMAAT', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Masjid' },
+          { time: '02:30 – 04:00 PTG', title: 'Semakan Meja Peperiksaan, Angka Giliran & Kad Pengenalan di Dewan SPM', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Setiausaha Peperiksaan', room: 'Dewan Semekar' }
+        ]
       },
       {
-        id: 'spm_kimia',
-        tarikhPaper: '15 Dis 2026',
-        hariPaper: 'Selasa',
-        kertasCode: '4541/1, 4541/2',
-        kertasNama: 'Kimia (Kertas 1 Objektif & Kertas 2 Subjektif)',
-        waktuExam: '08:15 – 09:30 PG (K1) | 10:45 PG – 01:15 TGH (K2)',
-        targetClasses: ['5S1'],
-        targetAudience: 'Semua Calon 5S1 (Sains Tulen)',
-        sarananMasa: 'Jumaat 11 Dis & Isnin 14 Dis 2026 (Jurang Rehat Panjang)',
-        slotKelas: '09:00 – 12:00 Tengah Hari (Isnin 14 Disember)',
-        namaKelas: 'Kem Kuasai Kimia SPM K2: Mol, Asid Bes, Kimia Karbon & Redoks',
-        guruCadangan: 'Panitia Kimia SEMEKAR',
-        lokasi: 'Makmal Kimia & Bilik Seminar',
-        fokus: 'Persamaan kimia seimbang, stoikiometri, ujian kation/anion, siri homolog hidrokarbon dan sel elektrokimia.',
-        catatanPengurusan: 'Jurang masa dari 10 hingga 14 Disember amat panjang. Manfaatkan sekurang-kurangnya 2 sesi klinik intensif untuk 5S1.'
+        tarikh: '2026-11-21', hari: 'Sabtu', fasa: 'FASA_2', statusExam: false, examNote: 'Hari Sabtu: Persediaan Mental Menjelang Paper BM',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: 'Klinik Skema Jawapan BM: Kata Kunci Rumusan & Esei Cemerlang', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Guru BM T5', room: 'Dewan Kuliah T5' },
+          { time: '10:45 – 12:30 TGH', title: 'Sesi Soal Jawab Santai & Rehat Mental Calon', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Guru Kaunseling', room: 'Dewan Kuliah T5' }
+        ]
       },
       {
-        id: 'spm_addmath',
-        tarikhPaper: '17 Dis 2026',
-        hariPaper: 'Khamis',
-        kertasCode: '3472/1, 3472/2',
-        kertasNama: 'Matematik Tambahan (Kertas 1 & Kertas 2) - Kertas Penutup SPM',
-        waktuExam: '08:15 – 10:15 PG (K1) | 02:30 – 05:00 PTG (K2)',
-        targetClasses: ['5S1'],
-        targetAudience: 'Semua Calon 5S1 (Sains Tulen)',
-        sarananMasa: 'Rabu 16 Dis 2026 (Sehari Suntuk Sebelum Kertas Terakhir)',
-        slotKelas: '09:00 Pagi – 01:00 Tengah Hari & 02:30 – 04:30 Petang',
-        namaKelas: 'Klinik Gerak Gempur Add Math: Formula & Topik Sasaran Bahagian B/C',
-        guruCadangan: 'Guru Panitia Matematik Tambahan',
-        lokasi: 'Bilik Seminar SEMEKAR',
-        fokus: 'Kalkulus (Pembezaan/Pengamiran), Fungsi Kuadratik, Hukum Linear, Penyelesaian Segi Tiga dan Nombor Indeks.',
-        catatanPengurusan: 'Kertas terakhir SPM 2026. Murid 5S2 dan 5S3 telah selesai menduduki semua kertas mereka lebih awal.'
+        tarikh: '2026-11-22', hari: 'Ahad', fasa: 'FASA_2', statusExam: false, examNote: 'Hari Ahad: Rehat Tenang & Persediaan Alat Tulis',
+        sessions: [
+          { time: '08:30 – 11:30 PG', title: 'Sesi Bacaan Ringkas Formula BM & BI (Sesi Terbuka di PSS)', target: 'Pilihan Calon', classes: ['5S1','5S2','5S3'], teacher: 'Guru Perpustakaan', room: 'Pusat Sumber' },
+          { time: '11:30 TGH ke atas', title: 'Rehat di Rumah & Tidur Awal Menjelang Peperiksaan Bertulis Esok', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Di Rumah Masing-Masing' }
+        ]
+      },
+
+      // MINGGU 3: MINGGU PEPERIKSAAN BERTULIS 1 (23 NOV - 29 NOV 2026)
+      {
+        tarikh: '2026-11-23', hari: 'Isnin', fasa: 'FASA_3', statusExam: true, examNote: 'EXAM SPM: Bahasa Melayu (Kertas 4, 1 & 2)',
+        examDetails: { time: '09:00–09:30 (K4) | 10:45–12:45 (K1) | 02:30–05:00 (K2)', paper: 'Bahasa Melayu (1103/4, 1103/1, 1103/2)', target: 'Semua Calon T5 (5S1, 5S2, 5S3)', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '05:15 – 06:15 PTG', title: 'Taklimat Santai BI: Listening Hacks Paper 4 & Reading Paper 1 Esok', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia BI', room: 'Dewan Kuliah T5' }
+        ]
+      },
+      {
+        tarikh: '2026-11-24', hari: 'Selasa', fasa: 'FASA_3', statusExam: true, examNote: 'EXAM SPM: Bahasa Inggeris (Kertas 4, 1 & 2)',
+        examDetails: { time: '09:00–09:40 (K4) | 11:00–12:30 (K1) | 02:30–04:00 (K2)', paper: 'Bahasa Inggeris (1119/4, 1119/1, 1119/2)', target: 'Semua Calon T5 (5S1, 5S2, 5S3)', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '04:30 – 06:00 PTG', title: 'Klinik Kilat P. Islam (Hukum Fiqh & Akidah) & Pendidikan Moral (Situasi KBAT)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Ustazah / Guru Moral', room: 'Surau / Bilik Tayang' }
+        ]
+      },
+      {
+        tarikh: '2026-11-25', hari: 'Rabu', fasa: 'FASA_3', statusExam: true, examNote: 'EXAM SPM: Pendidikan Islam / Moral (Pagi Sahaja)',
+        examDetails: { time: '08:15 – 10:45 Pagi (2 Jam 30 Minit)', paper: 'Pendidikan Islam (1223) / Pendidikan Moral (1225)', target: 'Semua Calon T5', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '11:30 – 01:30 TGH', title: 'SESI EMAS MATEMATIK BAHAGIAN 1: Graf Gerakan, Cukai, Insurans & Kewangan', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'En. Mohd Riduwan', room: 'Dewan Kuliah T5' },
+          { time: '02:30 – 04:30 PTG', title: 'SESI EMAS MATEMATIK BAHAGIAN 2: Pelan & Dongakan, Kebarangkalian & Matriks', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Guru Panitia Matematik', room: 'Dewan Kuliah T5' }
+        ]
+      },
+      {
+        tarikh: '2026-11-26', hari: 'Khamis', fasa: 'FASA_3', statusExam: true, examNote: 'EXAM SPM: Matematik (Kertas 1 & Kertas 2)',
+        examDetails: { time: '08:15–09:45 (K1) | 10:45–01:15 (K2)', paper: 'Matematik (1449/1 & 1449/2)', target: 'Semua Calon T5', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '02:30 – 04:00 PTG', title: 'Rehat & Taklimat Awal Pelan Ulang Kaji Sejarah SPM (Kertas Isnin Depan)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'En. Mohamaad Fadzeli', room: 'Dewan Kuliah T5' }
+        ]
+      },
+      {
+        tarikh: '2026-11-27', hari: 'Jumaat', fasa: 'FASA_3', statusExam: false, examNote: 'Hari Jumaat: Kem Bedah Fakta Sejarah Siri 1',
+        sessions: [
+          { time: '08:00 – 10:15 PG', title: 'Kem Sejarah SPM Siri 1: Bedah Fokus Tingkatan 4 (Bab 1–5 Sistem Pentadbiran & Kemerdekaan)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'En. Mohamaad Fadzeli', room: 'Dewan Kuliah T5' },
+          { time: '10:30 – 11:45 PG', title: 'Latih Tubi Soalan Struktur Sejarah Kertas 2 Bahagian A', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia Sejarah', room: 'Dewan Kuliah T5' },
+          { time: '12:00 – 02:30 PTG', title: 'REHAT PANJANG / SOLAT JUMAAT', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Masjid' },
+          { time: '02:30 – 04:00 PTG', title: '5S1 & 5S2 (Islam): Tasawwur Islam Siri 1 / 5S3: Latihan Sketsa PSV', target: 'Mengikut Elektif', classes: ['5S1','5S2','5S3'], teacher: 'Guru Subjek', room: 'Surau / Bilik Seni' }
+        ]
+      },
+      {
+        tarikh: '2026-11-28', hari: 'Sabtu', fasa: 'FASA_3', statusExam: false, examNote: 'Hari Sabtu: Kem Bedah Fakta Sejarah Siri 2',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: 'Kem Sejarah SPM Siri 2: Bedah Fokus Tingkatan 5 (Bab 1–6 Pembinaan Negara & Persekutuan)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'En. Mohamaad Fadzeli', room: 'Dewan Kuliah T5' },
+          { time: '10:45 – 12:30 TGH', title: 'Teknik Menjawab Esei Sejarah K2 Bahagian B & Menjana Idea KBAT 8 Markah', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia Sejarah', room: 'Dewan Kuliah T5' }
+        ]
+      },
+      {
+        tarikh: '2026-11-29', hari: 'Ahad', fasa: 'FASA_3', statusExam: false, examNote: 'Hari Ahad: Ramalan Sejarah & Tasawwur',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: 'Gerak Gempur Akhir Sejarah Kertas 1 (Objektif 40 Soalan Pantas Analisis Trend)', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia Sejarah', room: 'Dewan Kuliah T5' },
+          { time: '10:45 – 12:30 TGH', title: 'Klinik Tasawwur Islam Siri 2 (Calon Islam 5S1 & 5S2) / 5S3: Teknik Warna PSV', target: 'Mengikut Elektif', classes: ['5S1','5S2','5S3'], teacher: 'Ustaz / Guru PSV', room: 'Surau / Bilik Seni' }
+        ]
+      },
+
+      // MINGGU 4: SEJARAH, PSV, BIO/PERNIAGAAN, FIZIK/SAINS (30 NOV - 06 DIS 2026)
+      {
+        tarikh: '2026-11-30', hari: 'Isnin', fasa: 'FASA_4', statusExam: true, examNote: 'EXAM SPM: Sejarah (Pagi) & Tasawwur Islam (Petang)',
+        examDetails: { time: '08:15–09:15 (Sej K1) | 10:30–01:00 (Sej K2) | 02:30–05:00 (Tasawwur)', paper: 'Sejarah (1249/1, 1249/2) & Tasawwur Islam (5226)', target: 'Sejarah: Semua T5 | Tasawwur: Calon Islam 5S1 & 5S2', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '02:30 – 04:30 PTG', title: '5S2 & 5S3: Bengkel Persediaan Media Campuran & Warna PSV Kertas 2 Melukis', target: 'Semua 5S2 & 5S3 (Bukan Tasawwur)', classes: ['5S2','5S3'], teacher: 'Panitia PSV', room: 'Bilik Seni Visual' },
+          { time: '02:30 – 04:30 PTG', title: '5S1: Ulang Kaji Kendiri Esei Fisiologi Biologi (Calon Bio Bukan Tasawwur)', target: '5S1 (Bio)', classes: ['5S1'], teacher: 'Panitia Biologi', room: 'Makmal Bio' }
+        ]
+      },
+      {
+        tarikh: '2026-12-01', hari: 'Selasa', fasa: 'FASA_4', statusExam: true, examNote: 'EXAM SPM: Pendidikan Seni Visual (Melukis & Teori)',
+        examDetails: { time: '08:15–11:15 (K2 Melukis) | 12:00–01:00 (K1 Teori)', paper: 'Pendidikan Seni Visual (2611/2 & 2611/1)', target: 'Semua Calon 5S2 & 5S3', room: 'Dewan / Bilik PSV' },
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: '5S1 (Tiada Exam Hari Ini): Pecutan Esei Biologi (Calon Bio) / Fizik K2 (Calon Non-Bio)', target: '5S1 Sahaja', classes: ['5S1'], teacher: 'Panitia Fizik & Bio', room: 'Bilik Seminar T5' },
+          { time: '02:00 – 04:00 PTG', title: '5S2 (Calon Perniagaan): Klinik Menjawab Kertas 2 Bahagian A & B Perniagaan', target: '5S2 (Perniagaan)', classes: ['5S2'], teacher: 'Cikgu Perniagaan', room: 'Bilik Perniagaan' }
+        ]
+      },
+      {
+        tarikh: '2026-12-02', hari: 'Rabu', fasa: 'FASA_4', statusExam: true, examNote: 'EXAM SPM: Biologi & Perniagaan (Pagi)',
+        examDetails: { time: '08:15–09:30 (K1) | 10:45–01:00/01:15 (K2)', paper: 'Biologi (4551) & Perniagaan (3766)', target: 'Separuh 5S1 (Bio) & Separuh 5S2 (Perniagaan)', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '08:30 – 12:00 TGH', title: 'Calon Tiada Paper (Asas Kelestarian 5S1/5S2 & 5S3): Pecutan Fizik & Sains Teras K2', target: 'Calon Berkaitan', classes: ['5S1','5S2','5S3'], teacher: 'Guru Panitia', room: 'Dewan Kuliah T5' },
+          { time: '02:30 – 04:30 PTG', title: 'SEMUA 5S1: Pecutan Formula Fizik K2 | SEMUA 5S2 & 5S3: Pecutan Eksperimen Sains K2', target: 'Semua T5', classes: ['5S1','5S2','5S3'], teacher: 'Panitia Fizik & Sains', room: 'Dewan Kuliah / Seminar' }
+        ]
+      },
+      {
+        tarikh: '2026-12-03', hari: 'Khamis', fasa: 'FASA_4', statusExam: true, examNote: 'EXAM SPM: Fizik (5S1) & Sains Teras (5S2, 5S3)',
+        examDetails: { time: '08:15–09:30 (K1) | 10:30–01:00 (K2)', paper: 'Fizik (4531) & Sains Teras (1511)', target: 'Fizik: Semua 5S1 | Sains: Semua 5S2 & 5S3', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '02:30 – 04:00 PTG', title: 'Calon Bahasa Cina (5S1, 5S2, 5S3): Taklimat Format Penulisan & Komsas BC', target: 'Calon Bahasa Cina', classes: ['5S1','5S2','5S3'], teacher: 'Guru Bahasa Cina', room: 'Bilik Bahasa' },
+          { time: '02:30 – 04:00 PTG', title: '5S1 (Bukan BC): Rehat & Semakan Awal Modul Asas Kelestarian / Kimia', target: '5S1 (Bukan BC)', classes: ['5S1'], teacher: 'Guru Panitia', room: 'Makmal Kimia' }
+        ]
+      },
+      {
+        tarikh: '2026-12-04', hari: 'Jumaat', fasa: 'FASA_4', statusExam: false, examNote: 'Hari Terakhir Persekolahan 2026 (Tiada Paper SPM)',
+        sessions: [
+          { time: '08:00 – 10:15 PG', title: '5S1 & 5S2 (Calon Asas Kelestarian): Bengkel Modul Teknologi Hijau & Tenaga', target: 'Calon Kelestarian', classes: ['5S1','5S2'], teacher: 'Guru Kelestarian', room: 'Bengkel RBT' },
+          { time: '08:00 – 10:15 PG', title: 'Calon Bahasa Cina: Klinik Karangan Respons Terbuka BC Kertas 1', target: 'Calon Cina', classes: ['5S1','5S2','5S3'], teacher: 'Guru Bahasa Cina', room: 'Bilik Bahasa' },
+          { time: '10:30 – 11:45 PG', title: '5S1 (Semua): Bengkel Kimia Siri 1 - Stoikiometri & Pengiraan Mol', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '12:00 – 02:30 PTG', title: 'REHAT PANJANG / SOLAT JUMAAT', target: 'Semua T5', classes: ['5S1','5S2','5S3'], room: 'Masjid' },
+          { time: '02:30 – 04:00 PTG', title: '5S1: Matematik Tambahan - Sesi Soal Jawab Fungsi & Kuadratik', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar' }
+        ]
+      },
+      {
+        tarikh: '2026-12-05', hari: 'Sabtu', fasa: 'FASA_4', statusExam: false, examNote: 'Hari Sabtu: Fasa Cuti Persekolahan (Bimbingan SPM Berterusan)',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: 'Calon Bahasa Cina: Latih Tubi Puisi Klasik Dinasti Tang & Prosa Purba', target: 'Calon BC', classes: ['5S1','5S2','5S3'], teacher: 'Guru Bahasa Cina', room: 'Bilik Bahasa' },
+          { time: '08:30 – 10:30 PG', title: '5S1 (Semua): Kimia Kertas 2 - Asid, Bes, Garam & Analisis Kation/Anion', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '10:45 – 12:30 TGH', title: '5S1 & 5S2 (Kelestarian): Latih Tubi 5R, Kitaran Hayat & Audit Sisa', target: 'Calon Kelestarian', classes: ['5S1','5S2'], teacher: 'Guru Kelestarian', room: 'Bengkel RBT' }
+        ]
+      },
+      {
+        tarikh: '2026-12-06', hari: 'Ahad', fasa: 'FASA_4', statusExam: false, examNote: 'Hari Ahad: Pecutan Bahasa Cina & Kimia',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: 'Calon Bahasa Cina: Simulasi Penuh Kertas 1 Penulisan Esei', target: 'Calon BC', classes: ['5S1','5S2','5S3'], teacher: 'Guru Bahasa Cina', room: 'Bilik Bahasa' },
+          { time: '08:30 – 10:30 PG', title: '5S1 (Semua): Kimia Kertas 2 - Siri Homolog & Sebatian Karbon', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '10:45 – 12:30 TGH', title: '5S1 (Semua): Add Math - Kalkulus (Pembezaan & Pengamiran Skor)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar' }
+        ]
+      },
+
+      // MINGGU 5: BAHASA CINA & ASAS KELESTARIAN (07 DIS - 13 DIS 2026)
+      {
+        tarikh: '2026-12-07', hari: 'Isnin', fasa: 'FASA_5', statusExam: false, examNote: 'Pra-Peperiksaan Bahasa Cina',
+        sessions: [
+          { time: '08:30 – 11:30 PG', title: 'Calon Bahasa Cina: Sentuhan Akhir Guru Bahasa Cina SPM', target: 'Calon BC', classes: ['5S1','5S2','5S3'], teacher: 'Guru Bahasa Cina', room: 'Bilik Bahasa' },
+          { time: '08:30 – 11:30 PG', title: '5S1 (Semua): Bengkel Kimia Redoks, Sel Elektrolisis & Sel Kimia', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '01:30 – 03:30 PTG', title: '5S1 & 5S2 (Kelestarian): Bengkel Skor Kertas 1 Asas Kelestarian', target: 'Calon Kelestarian', classes: ['5S1','5S2'], teacher: 'Guru Kelestarian', room: 'Bengkel RBT' }
+        ]
+      },
+      {
+        tarikh: '2026-12-08', hari: 'Selasa', fasa: 'FASA_5', statusExam: true, examNote: 'EXAM SPM: Bahasa Cina (Kertas 1 & 2)',
+        examDetails: { time: '08:15–10:00 (K1) | 02:30–04:45 (K2)', paper: 'Bahasa Cina (6351/1 & 6351/2)', target: 'Calon Cina (5S1, 5S2, 5S3)', room: 'Bilik Peperiksaan Khas' },
+        sessions: [
+          { time: '08:30 – 11:30 PG', title: '5S1 & 5S2 (Kelestarian): Pecutan Akhir Pagi Sebelum Kertas Esok', target: 'Calon Kelestarian', classes: ['5S1','5S2'], teacher: 'Guru Kelestarian', room: 'Bilik Seminar' },
+          { time: '08:30 – 11:30 PG', title: '5S1 (Non-Kelestarian): Bengkel Add Math (Hukum Linear & Vektor)', target: '5S1 (Non-Kelestarian)', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Makmal Komputer' }
+        ]
+      },
+      {
+        tarikh: '2026-12-09', hari: 'Rabu', fasa: 'FASA_5', statusExam: true, examNote: 'EXAM SPM: Asas Kelestarian (Petang Sahaja)',
+        examDetails: { time: '02:30 – 05:00 Petang (Kertas 1)', paper: 'Asas Kelestarian (3768/1)', target: 'Separuh 5S1 & Separuh 5S2', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '09:00 – 11:30 PG', title: 'Pecutan Pagi Hari Peperiksaan: Soalan Ramalan Asas Kelestarian', target: 'Calon Kelestarian', classes: ['5S1','5S2'], teacher: 'Guru Kelestarian', room: 'Bilik Seminar' },
+          { time: '09:00 – 11:30 PG', title: '5S1 (Bukan Kelestarian): Bengkel Kimia Termokimia & Haba Tindak Balas', target: '5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' }
+        ]
+      },
+      {
+        tarikh: '2026-12-10', hari: 'Khamis', fasa: 'FASA_5', statusExam: false, examNote: 'Fasa Pecutan Kimia & Matematik Tambahan (5S1 Sahaja)',
+        sessions: [
+          { time: '08:30 – 11:30 PG', title: '5S1: Kimia Kertas 2 Bahagian B & C (Soalan Esei Eksperimen & Analisis)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '01:30 – 03:30 PTG', title: '5S1: Add Math - Pengaturcaraan Linear & Kinematik Gerakan', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar' }
+        ]
+      },
+      {
+        tarikh: '2026-12-11', hari: 'Jumaat', fasa: 'FASA_5', statusExam: false, examNote: 'Hari Jumaat: Gerak Gempur Kimia Kertas 1',
+        sessions: [
+          { time: '08:00 – 10:15 PG', title: '5S1: Latih Tubi 40 Soalan Pantas Kimia Kertas 1 (Objektif Skor Tinggi)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '10:30 – 11:45 PG', title: '5S1: Add Math - Trigonometri & Penyelesaian Segi Tiga', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar' },
+          { time: '12:00 – 02:30 PTG', title: 'REHAT PANJANG / SOLAT JUMAAT', target: 'Semua T5', classes: ['5S1'], room: 'Masjid' },
+          { time: '02:30 – 04:00 PTG', title: '5S1: Klinik Kesilapan Lazim Formula Kimia SPM', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Kimia', room: 'Makmal Kimia' }
+        ]
+      },
+      {
+        tarikh: '2026-12-12', hari: 'Sabtu', fasa: 'FASA_5', statusExam: false, examNote: 'Hari Sabtu: Kem Kimia Pecutan Akhir (Pagi Sahaja)',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: '5S1: Bedah Soalan Percubaan Negeri SBP & MRSM Kimia Kertas 2', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '10:45 – 12:30 TGH', title: '5S1: Latih Tubi Ujian Kualitatif Gas & Mendakan Garam Kimia', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' }
+        ]
+      },
+      {
+        tarikh: '2026-12-13', hari: 'Ahad', fasa: 'FASA_5', statusExam: false, examNote: 'Hari Ahad: Add Math & Rehat Pra-Kimia',
+        sessions: [
+          { time: '08:30 – 10:30 PG', title: '5S1: Add Math - Taburan Kebarangkalian (Binomial & Normal)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar' },
+          { time: '10:45 – 12:30 TGH', title: '5S1: Sesi Semakan Poket Nota Kimia (Ringkas & Padat)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Kimia', room: 'Perpustakaan' }
+        ]
+      },
+
+      // MINGGU 6: KIMIA & PENUTUP MATEMATIK TAMBAHAN (14 DIS - 17 DIS 2026)
+      {
+        tarikh: '2026-12-14', hari: 'Isnin', fasa: 'FASA_6', statusExam: false, examNote: 'Sehari Sebelum Peperiksaan Kimia',
+        sessions: [
+          { time: '08:30 – 11:30 PG', title: '5S1: Sentuhan Akhir Guru Kimia SPM: Semakan Skema & Istilah Saintifik Tepat', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Panitia Kimia', room: 'Makmal Kimia' },
+          { time: '01:30 – 03:00 PTG', title: '5S1: Sesi Santai & Rehat Mental Menjelang Peperiksaan Kimia Esok', target: 'Semua 5S1', classes: ['5S1'], room: 'Dewan Kuliah T5' }
+        ]
+      },
+      {
+        tarikh: '2026-12-15', hari: 'Selasa', fasa: 'FASA_6', statusExam: true, examNote: 'EXAM SPM: Kimia (Kertas 1 & 2)',
+        examDetails: { time: '08:15–09:30 (K1) | 10:45–01:15 (K2)', paper: 'Kimia (4541/1 & 4541/2)', target: 'Semua Calon 5S1 (Sains Tulen)', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '02:30 – 04:30 PTG', title: '5S1: Taklimat Peperiksaan Add Math K1 & K2 serta Semakan Buku Rumus', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Dewan Kuliah T5' }
+        ]
+      },
+      {
+        tarikh: '2026-12-16', hari: 'Rabu', fasa: 'FASA_6', statusExam: false, examNote: 'Sehari Suntuk Pecutan Terakhir Matematik Tambahan',
+        sessions: [
+          { time: '08:30 – 11:30 PG', title: '5S1: Maraton Add Math Bahagian A (Kertas 1 & Kertas 2: Topik Wajib Skor)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar T5' },
+          { time: '01:30 – 03:30 PTG', title: '5S1: Bengkel Formula & Kalkulator Pintar Add Math (Tips Jimat Masa)', target: 'Semua 5S1', classes: ['5S1'], teacher: 'Guru Add Math', room: 'Bilik Seminar T5' }
+        ]
+      },
+      {
+        tarikh: '2026-12-17', hari: 'Khamis', fasa: 'FASA_6', statusExam: true, examNote: 'EXAM SPM: Matematik Tambahan (Kertas Penutup SPM 2026)',
+        examDetails: { time: '08:15–10:15 (K1) | 02:30–05:00 (K2)', paper: 'Matematik Tambahan (3472/1 & 3472/2)', target: 'Semua Calon 5S1 (Sains Tulen)', room: 'Dewan Peperiksaan Semekar' },
+        sessions: [
+          { time: '05:00 PTG', title: 'ALHAMDULILLAH! PEPERIKSAAN SPM 2026 SEMEKAR SELESAI SEPENUHNYA', target: 'Semua Warga SEMEKAR', classes: ['5S1','5S2','5S3'], room: 'Dataran Semekar' }
+        ]
       }
     ];
 
@@ -1176,17 +1256,17 @@
       '2026-11-11': { tarikh: '2026-11-11', hari: 'Rabu', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
       '2026-11-12': { tarikh: '2026-11-12', hari: 'Khamis', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
       '2026-11-13': { tarikh: '2026-11-13', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
-      '2026-11-16': { tarikh: '2026-11-16', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
-      '2026-11-17': { tarikh: '2026-11-17', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
-      '2026-11-18': { tarikh: '2026-11-18', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: '' },
+      '2026-11-16': { tarikh: '2026-11-16', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Ujian Amali Fizik (Dewan/Makmal)' },
+      '2026-11-17': { tarikh: '2026-11-17', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Ujian Amali Kimia (Dewan/Makmal)' },
+      '2026-11-18': { tarikh: '2026-11-18', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: 'SPM: Ujian Amali Biologi (Dewan/Makmal)' },
       '2026-11-19': { tarikh: '2026-11-19', hari: 'Khamis', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
       '2026-11-20': { tarikh: '2026-11-20', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
-      '2026-11-23': { tarikh: '2026-11-23', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Kertas Bahasa Melayu (Zon Senyap Dewan)' },
-      '2026-11-24': { tarikh: '2026-11-24', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Kertas Bahasa Inggeris (Dewan Peperiksaan)' },
+      '2026-11-23': { tarikh: '2026-11-23', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Bahasa Melayu (Zon Senyap Dewan Semekar)' },
+      '2026-11-24': { tarikh: '2026-11-24', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Bahasa Inggeris (Dewan Peperiksaan)' },
       '2026-11-25': { tarikh: '2026-11-25', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: 'SPM: Pend. Islam & Pend. Moral' },
-      '2026-11-26': { tarikh: '2026-11-26', hari: 'Khamis', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Kertas Matematik K1 & K2' },
+      '2026-11-26': { tarikh: '2026-11-26', hari: 'Khamis', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Matematik K1 & K2' },
       '2026-11-27': { tarikh: '2026-11-27', hari: 'Jumaat', cutiForms: [], adaForms: ALL_FORMS, catatan: '' },
-      '2026-11-30': { tarikh: '2026-11-30', hari: 'Isnin', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: 'SPM: Kertas Sejarah K1 & K2' },
+      '2026-11-30': { tarikh: '2026-11-30', hari: 'Isnin', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: 'SPM: Sejarah K1 & K2' },
       '2026-12-01': { tarikh: '2026-12-01', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Pendidikan Seni Visual (Melukis)' },
       '2026-12-02': { tarikh: '2026-12-02', hari: 'Rabu', cutiForms: ['Tingkatan 3', 'Tingkatan 4'], adaForms: ['Tingkatan 1', 'Tingkatan 2'], catatan: 'SPM: Biologi & Perniagaan' },
       '2026-12-03': { tarikh: '2026-12-03', hari: 'Khamis', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: 'SPM: Fizik & Sains Teras' },
@@ -1303,7 +1383,7 @@
       const cutiArr = dayAtt && dayAtt.cutiForms ? dayAtt.cutiForms : [];
 
       let hadirLabel = '';
-      if (adaArr.length === 4) hadirLabel = 'SEMUA (T1-T4)';
+      if (adaArr.length === 4) hadirLabel = 'SEMUA (T1–T4)';
       else if (adaArr.length === 0) hadirLabel = 'TIADA';
       else hadirLabel = adaArr.map(f => f.replace('Tingkatan ', 'T')).join(', ');
 
@@ -1505,7 +1585,6 @@
         }
       });
 
-      // Sembunyikan panel statistik & panduan harian PUasa apabila berada di tab SPM
       const statsSec = document.getElementById('statsSection');
       const guideSec = document.getElementById('quickGuideAlert');
       if (view === 'spm') {
@@ -1535,7 +1614,7 @@
       if (currentView === 'month') renderMonthCalendar();
       else if (currentView === 'week') renderWeeklyTimetable();
       else if (currentView === 'day') renderDailyAgenda();
-      else if (currentView === 'spm') renderSpmRecommendations();
+      else if (currentView === 'spm') renderSpmDailyGrid();
       else if (currentView === 'print') renderPrintHub();
       if (window.lucide) lucide.createIcons();
     }
@@ -1546,98 +1625,172 @@
       ['ALL', '5S1', '5S2', '5S3'].forEach(c => {
         const btn = document.getElementById(`spmFilter${c}`);
         if (btn) {
-          if (c === targetClass) btn.className = 'px-2.5 py-1 rounded bg-indigo-600 text-white shadow-2xs font-bold';
-          else btn.className = 'px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-semibold';
+          if (c === targetClass) btn.className = 'flex-1 py-1 text-center rounded bg-indigo-600 text-white shadow-2xs font-bold';
+          else btn.className = 'flex-1 py-1 text-center rounded text-slate-600 hover:text-slate-900';
         }
       });
-      renderSpmRecommendations();
+      renderSpmDailyGrid();
     }
 
-    // 4. PAPARAN KHAS: SARANAN KELAS BIMBINGAN SPM 2026
-    function renderSpmRecommendations() {
-      const container = document.getElementById('spmRecommendationsContainer');
+    // 4. PAPARAN KHAS: JADUAL HARIAN KOTAK-KOTAK SPM TINGKATAN 5
+    function renderSpmDailyGrid() {
+      const container = document.getElementById('spmDailyGridContainer');
       if (!container) return;
       container.innerHTML = '';
 
-      let list = [...SPM_2026_MASTER_PLAN];
-      if (currentSpmFilter !== 'ALL') {
-        list = list.filter(item => item.targetClasses.includes(currentSpmFilter));
+      const weekFmt = document.getElementById('spmWeekFilter') ? document.getElementById('spmWeekFilter').value : 'ALL';
+      const searchQ = document.getElementById('spmSearchInput') ? document.getElementById('spmSearchInput').value.trim().toLowerCase() : '';
+
+      let filteredDays = [...SPM_DAILY_SCHEDULE];
+
+      if (weekFmt !== 'ALL') {
+        filteredDays = filteredDays.filter(d => d.fasa === weekFmt);
       }
 
-      list.forEach((item, idx) => {
-        const card = document.createElement('div');
-        card.className = 'bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm hover:border-indigo-300 transition space-y-3';
-        
-        const badgesHtml = item.targetClasses.map(c => {
-          if (c === '5S1') return '<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-[10px]">5S1</span>';
-          if (c === '5S2') return '<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">5S2</span>';
-          return '<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">5S3</span>';
-        }).join(' ');
+      if (currentSpmFilter !== 'ALL') {
+        filteredDays = filteredDays.filter(d => {
+          if (d.examDetails && d.examDetails.target && d.examDetails.target.includes(currentSpmFilter)) return true;
+          return d.sessions.some(s => s.classes && s.classes.includes(currentSpmFilter));
+        });
+      }
 
-        card.innerHTML = `
-          <div class="flex flex-col md:flex-row md:items-start justify-between gap-3 border-b border-slate-100 pb-3">
-            <div class="space-y-1">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="px-2.5 py-0.5 bg-slate-900 text-white rounded-md text-xs font-mono font-bold">${item.tarikhPaper} (${item.hariPaper})</span>
-                <span class="px-2 py-0.5 bg-rose-100 text-rose-800 rounded font-bold text-[11px]">${item.kertasCode}</span>
-                <div class="flex items-center gap-1">${badgesHtml}</div>
-              </div>
-              <h3 class="text-sm sm:text-base font-black text-slate-900">${item.kertasNama}</h3>
-              <p class="text-xs text-slate-500 font-medium">Waktu Peperiksaan Sebenar: <span class="text-slate-800 font-bold font-mono">${item.waktuExam}</span></p>
-            </div>
-            
-            <div class="bg-indigo-50/80 border border-indigo-200 rounded-xl p-2.5 text-xs text-indigo-900 md:w-72 flex-shrink-0 space-y-0.5">
-              <span class="text-[10px] font-bold text-indigo-600 uppercase block tracking-wider">Sasaran Calon SEMEKAR</span>
-              <p class="font-bold text-[11px] leading-tight">${item.targetAudience}</p>
-            </div>
+      if (searchQ) {
+        filteredDays = filteredDays.filter(d => {
+          const inNote = (d.examNote || '').toLowerCase().includes(searchQ);
+          const inExam = d.examDetails ? (d.examDetails.paper || '').toLowerCase().includes(searchQ) : false;
+          const inSessions = d.sessions.some(s => 
+            (s.title || '').toLowerCase().includes(searchQ) || 
+            (s.teacher || '').toLowerCase().includes(searchQ) || 
+            (s.room || '').toLowerCase().includes(searchQ)
+          );
+          return inNote || inExam || inSessions;
+        });
+      }
+
+      if (filteredDays.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-300">
+            <i data-lucide="calendar-x" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i>
+            <p class="text-xs font-semibold">Tiada jadual SPM dijumpai untuk padanan penapis ini.</p>
           </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
 
-          <!-- KOTAK SARANAN KELAS BIMBINGAN / PECUTAN SEBELUM KERTAS -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 pt-1 text-xs">
-            <div class="lg:col-span-8 bg-amber-50/60 border border-amber-200 rounded-xl p-3.5 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-black uppercase text-amber-900 flex items-center gap-1.5">
-                  <i data-lucide="zap" class="w-4 h-4 text-amber-600"></i>
-                  Saranan Kelas Pecutan & Sentuhan Akhir
-                </span>
-                <span class="px-2 py-0.5 bg-amber-200/80 text-amber-900 rounded font-mono text-[10px] font-bold">${item.sarananMasa}</span>
-              </div>
-              
-              <div class="space-y-1">
-                <h4 class="font-bold text-slate-900 text-xs sm:text-sm text-indigo-950">${item.namaKelas}</h4>
-                <p class="text-slate-600 text-[11px]"><strong class="text-slate-700">Fokus & Pengisian:</strong> ${item.fokus}</p>
-              </div>
+      filteredDays.forEach(day => {
+        const isWeekend = day.hari === 'Sabtu' || day.hari === 'Ahad';
+        const isFriday = day.hari === 'Jumaat';
+        
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl border transition flex flex-col justify-between space-y-3 ${
+          day.statusExam 
+            ? 'bg-rose-50/40 border-rose-200 hover:border-rose-400 shadow-2xs' 
+            : isWeekend 
+              ? 'bg-amber-50/30 border-amber-200 hover:border-amber-400' 
+              : 'bg-white border-slate-200 hover:border-indigo-400 shadow-xs'
+        }`;
 
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 border-t border-amber-200/60 text-[11px] text-slate-600">
-                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-500"></i> Cadangan Waktu: <strong class="text-slate-800">${item.slotKelas}</strong></span>
-                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> Lokasi: <strong class="text-slate-800">${item.lokasi}</strong></span>
-                <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5 text-emerald-600"></i> Guru: <strong class="text-slate-800">${item.guruCadangan}</strong></span>
+        // Bahagian Kepala Kotak
+        let headHtml = `
+          <div class="border-b border-slate-100 pb-2.5">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-black text-sm text-slate-900">${day.hari}</span>
+                <span class="font-mono text-xs text-slate-500">${day.tarikh}</span>
               </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
+                day.statusExam ? 'bg-rose-600 text-white animate-pulse' : (isWeekend ? 'bg-amber-600 text-white' : 'bg-indigo-100 text-indigo-800')
+              }">
+                ${day.statusExam ? 'HARI PEPERIKSAAN' : (isWeekend ? 'HUJUNG MINGGU' : (isFriday ? 'JUMAAT (PAGI/PTG)' : 'KELAS PECUTAN'))}
+              </span>
             </div>
-
-            <div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1.5 flex flex-col justify-between">
-              <div>
-                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1">
-                  <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-rose-500"></i>
-                  Kawalan & Pertimbangan Pentadbiran
-                </span>
-                <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">${item.catatanPengurusan}</p>
-              </div>
-
-              <div class="pt-2 border-t border-slate-200 flex items-center justify-between">
-                <span class="text-[10px] font-semibold text-slate-400">Status Persediaan:</span>
-                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">Diselaraskan</span>
-              </div>
+            <div class="text-[11px] font-medium text-slate-600 mt-1 flex items-center gap-1.5">
+              <i data-lucide="${day.statusExam ? 'alert-circle' : 'calendar'}" class="w-3.5 h-3.5 ${day.statusExam ? 'text-rose-600' : 'text-slate-400'}"></i>
+              <span>${escapeHtml(day.examNote)}</span>
             </div>
           </div>
         `;
+
+        // Kotak Khas Jika Ada Kertas Peperiksaan Sebenar
+        let examHtml = '';
+        if (day.statusExam && day.examDetails) {
+          examHtml = `
+            <div class="p-3 rounded-xl bg-rose-100/70 border border-rose-300 text-rose-950 space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-black uppercase tracking-wider text-rose-900 flex items-center gap-1">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-rose-700"></i>
+                  KERTAS SPM LP
+                </span>
+                <span class="font-mono font-bold text-rose-800">${escapeHtml(day.examDetails.time)}</span>
+              </div>
+              <div class="font-black text-xs sm:text-sm text-rose-950">${escapeHtml(day.examDetails.paper)}</div>
+              <div class="text-[10px] flex items-center justify-between pt-1 border-t border-rose-200/80 text-rose-800">
+                <span>Sasaran: <strong>${escapeHtml(day.examDetails.target)}</strong></span>
+                <span>Lokasi: <strong>${escapeHtml(day.examDetails.room)}</strong></span>
+              </div>
+            </div>
+          `;
+        }
+
+        // Senarai Sesi Kelas Bimbingan / Pecutan
+        let sessionsHtml = '<div class="space-y-2 flex-grow">';
+        let validSessions = day.sessions;
+        if (currentSpmFilter !== 'ALL') {
+          validSessions = validSessions.filter(s => !s.classes || s.classes.includes(currentSpmFilter));
+        }
+
+        if (validSessions.length > 0) {
+          validSessions.forEach(ses => {
+            const isSpecialTime = ses.title.includes('SOLAT') || ses.title.includes('REHAT');
+            const classBadges = (ses.classes || []).map(c => {
+              if (c === '5S1') return '<span class="px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-800 font-bold text-[9px]">5S1</span>';
+              if (c === '5S2') return '<span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold text-[9px]">5S2</span>';
+              return '<span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold text-[9px]">5S3</span>';
+            }).join(' ');
+
+            sessionsHtml += `
+              <div class="p-2.5 rounded-xl border ${
+                isSpecialTime 
+                  ? 'bg-slate-100 border-slate-200 text-slate-600 text-center text-[10px] font-bold py-1.5' 
+                  : 'bg-white border-slate-200 hover:border-indigo-300 text-slate-800 space-y-1'
+              }">
+                ${!isSpecialTime ? `
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 flex items-center gap-1">
+                      <i data-lucide="clock" class="w-3 h-3 text-indigo-500"></i>
+                      ${escapeHtml(ses.time)}
+                    </span>
+                    <div class="flex items-center gap-1">${classBadges}</div>
+                  </div>
+                  <div class="font-bold text-[11px] text-slate-900 leading-snug">${escapeHtml(ses.title)}</div>
+                  <div class="flex flex-wrap items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100">
+                    <span>${ses.teacher ? `Guru: <strong class="text-slate-700">${escapeHtml(ses.teacher)}</strong>` : `Sasaran: <strong>${escapeHtml(ses.target)}</strong>`}</span>
+                    <span>${ses.room ? `<strong class="text-slate-600">${escapeHtml(ses.room)}</strong>` : ''}</span>
+                  </div>
+                ` : `
+                  <span>☕ ${escapeHtml(ses.title)} (${escapeHtml(ses.time)})</span>
+                `}
+              </div>
+            `;
+          });
+        } else {
+          sessionsHtml += `
+            <div class="text-[11px] text-slate-400 italic py-3 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+              Tiada kelas bimbingan bagi kelas terpilih pada hari ini.
+            </div>
+          `;
+        }
+        sessionsHtml += '</div>';
+
+        card.innerHTML = headHtml + examHtml + sessionsHtml;
         container.appendChild(card);
       });
 
       if (window.lucide) lucide.createIcons();
     }
 
-    // 1. PAPARAN MOD BULANAN
+    // 1. PAPARAN MOD BULANAN (T1–T4)
     function renderMonthCalendar() {
       const container = document.getElementById('calendarMonthContainer');
       if (!container) return;
@@ -1653,7 +1806,7 @@
       renderList.forEach(monthSection => {
         const mWrapper = document.createElement('div');
         mWrapper.className = 'space-y-4';
-        mWrapper.innerHTML = `<h2 class="text-sm font-black uppercase tracking-wider text-slate-700 border-b border-slate-300 pb-1.5">${monthSection.name}</h2>`;
+        mWrapper.innerHTML = `<h2 class="text-sm font-black uppercase tracking-wider text-slate-700 border-b border-slate-300 pb-1.5">${monthSection.name} (Pasca UASA T1–T4)</h2>`;
 
         monthSection.weeks.forEach(w => {
           const wBox = document.createElement('div');
@@ -1779,7 +1932,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // 2. PAPARAN MOD MINGGUAN
+    // 2. PAPARAN MOD MINGGUAN (T1–T4)
     function renderWeeklyTimetable() {
       const container = document.getElementById('weeklyTimetableContainer');
       if (!container) return;
@@ -1838,7 +1991,7 @@
             <tr class="bg-amber-100/90 text-amber-950 font-black text-center border-y-2 border-amber-300">
               <td class="p-2 font-mono text-[11px]">10:00 – 10:30</td>
               <td colspan="${targetWeek.hariList.length}" class="p-2 tracking-widest uppercase text-xs">
-                ☕ REHAT KEKAL SEMUA TINGKATAN (30 MINIT)
+                ☕ REHAT KEKAL T1–T4 (30 MINIT)
               </td>
             </tr>
           `;
@@ -1898,7 +2051,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // 3. PAPARAN MOD HARIAN
+    // 3. PAPARAN MOD HARIAN (T1–T4)
     function renderDailyAgenda() {
       const container = document.getElementById('dailyAgendaContainer');
       if (!container) return;
@@ -1919,7 +2072,7 @@
               <h2 class="text-base font-black text-slate-900">${formattedDate}</h2>
               <span class="px-2.5 py-0.5 rounded text-xs font-bold ${theme.badgeBg} ${theme.badgeText}">${bidang}</span>
             </div>
-            <p class="text-xs text-slate-500 mt-0.5">Minggu ${getMingguFromTarikh(dt)} • 13 Slot Aktiviti (30 Minit)</p>
+            <p class="text-xs text-slate-500 mt-0.5">Minggu ${getMingguFromTarikh(dt)} • 13 Slot Pasca UASA T1–T4 (30 Minit)</p>
           </div>
           <div class="flex items-center gap-2">
             <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-lg text-xs font-bold">Hadir: ${attTags.hadirText}</span>
@@ -1942,7 +2095,7 @@
         if (sId === '1030') {
           html += `
             <div class="p-3 bg-amber-100 text-amber-950 font-black text-center text-xs tracking-wider border-y border-amber-300">
-              ☕ 10:00 – 10:30 PAGI: WAKTU REHAT KEKAL (30 MINIT)
+              ☕ 10:00 – 10:30 PAGI: WAKTU REHAT KEKAL T1–T4 (30 MINIT)
             </div>
           `;
         }
@@ -1995,38 +2148,35 @@
         <div class="text-center space-y-1 pb-4 border-b-2 border-slate-900">
           <h1 class="text-lg font-black uppercase text-slate-900 tracking-wide">SMK KAMARUL ARIFFIN, LABIS, JOHOR</h1>
           <h2 class="text-sm font-bold text-slate-700">DOKUMEN PENGURUSAN AKADEMIK & PROGRAM PASCA UASA / SPM 2026</h2>
-          <p class="text-xs text-slate-500">Tempoh: 02 November – 17 Disember 2026</p>
+          <p class="text-xs text-slate-500">Portal: puasa.semekar.com • Tempoh: 02 November – 17 Disember 2026</p>
         </div>
       `;
 
-      if (fmt === 'SPM_PLAN') {
+      if (fmt === 'SPM_DAILY') {
         html += `
           <div class="space-y-4 py-2">
-            <h3 class="text-sm font-bold text-slate-900 uppercase">Jadual Pelan Saranan Kelas Bimbingan & Pecutan SPM 2026</h3>
+            <div class="p-3 bg-slate-100 rounded border border-slate-300 text-xs">
+              <strong>Ketetapan Khas:</strong> Murid Tingkatan 5 (5S1, 5S2, 5S3) TIDAK TERLIBAT dalam aktiviti Pasca UASA. Jadual di bawah ialah Rekod Harian Peperiksaan & Kelas Pecutan SPM T5.
+            </div>
             <table class="w-full border-collapse border border-slate-400 text-left text-[11px]">
               <thead class="bg-slate-100 font-bold">
                 <tr>
-                  <th class="border p-2 w-28">Tarikh Paper</th>
-                  <th class="border p-2">Kertas SPM</th>
-                  <th class="border p-2 w-28">Sasaran Calon</th>
-                  <th class="border p-2">Saranan Slot & Modul Pecutan</th>
-                  <th class="border p-2 w-32">Lokasi & Guru</th>
+                  <th class="border p-2 w-24">Tarikh & Hari</th>
+                  <th class="border p-2 w-32">Status Exam LP</th>
+                  <th class="border p-2">Jadual Sesi & Kelas Pecutan Terperinci</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-300">
         `;
-        SPM_2026_MASTER_PLAN.forEach(p => {
+        SPM_DAILY_SCHEDULE.forEach(d => {
+          let sessText = d.sessions.map(s => `• [${s.time}] ${s.title} (${s.classes ? s.classes.join('/') : s.target})`).join('<br>');
           html += `
             <tr>
-              <td class="border p-2 font-mono align-top">${p.tarikhPaper}<br><span class="text-slate-500">${p.hariPaper}</span></td>
-              <td class="border p-2 align-top"><strong>${p.kertasNama}</strong><br><span class="font-mono text-slate-600 text-[10px]">${p.kertasCode} (${p.waktuExam})</span></td>
-              <td class="border p-2 font-bold align-top text-indigo-900">${p.targetClasses.join(', ')}<br><span class="text-[10px] font-normal text-slate-600">${p.targetAudience}</span></td>
-              <td class="border p-2 align-top">
-                <span class="font-bold text-indigo-900">${p.namaKelas}</span><br>
-                <span class="font-mono text-amber-800 font-semibold text-[10px]">${p.sarananMasa} (${p.slotKelas})</span><br>
-                <span class="text-slate-600 text-[10px]">${p.fokus}</span>
+              <td class="border p-2 font-mono align-top"><strong>${d.hari}</strong><br>${d.tarikh}</td>
+              <td class="border p-2 align-top text-[10px]">
+                ${d.statusExam ? `<strong class="text-rose-700">${d.examDetails.paper}</strong><br><span class="font-mono">${d.examDetails.time}</span>` : `<span class="text-slate-500">${d.examNote}</span>`}
               </td>
-              <td class="border p-2 align-top text-[10px]">${p.lokasi}<br><span class="text-slate-500 font-semibold">${p.guruCadangan}</span></td>
+              <td class="border p-2 align-top text-[10px] leading-relaxed">${sessText}</td>
             </tr>
           `;
         });
@@ -2040,11 +2190,11 @@
             <div class="flex justify-between font-bold border-b pb-1">
               <span>Tarikh: ${dt}</span>
               <span>Bidang: ${dayFieldConfig[dt] || '-'}</span>
-              <span>Hadir: ${attTags.hadirText}</span>
+              <span>Hadir (T1–T4): ${attTags.hadirText}</span>
             </div>
             <table class="w-full border-collapse border border-slate-400 text-left text-xs">
               <thead class="bg-slate-100">
-                <tr><th class="border p-1.5 w-24">Masa</th><th class="border p-1.5">Aktiviti</th><th class="border p-1.5">Guru In-Charge</th><th class="border p-1.5">Lokasi</th><th class="border p-1.5">Catatan</th></tr>
+                <tr><th class="border p-1.5 w-24">Masa</th><th class="border p-1.5">Aktiviti T1–T4</th><th class="border p-1.5">Guru In-Charge</th><th class="border p-1.5">Lokasi</th><th class="border p-1.5">Catatan</th></tr>
               </thead>
               <tbody>
         `;
@@ -2084,7 +2234,7 @@
 
       document.getElementById('drawerDateTitle').textContent = `Jadual Slot: ${formattedDate}`;
       const dayBidang = dayFieldConfig[cleanDt] || 'Belum Ditentukan';
-      document.getElementById('drawerDateSubtitle').textContent = `Bidang: ${dayBidang} • Waktu: 07:30 PG hingga 02:30 PTG`;
+      document.getElementById('drawerDateSubtitle').textContent = `Bidang: ${dayBidang} • Waktu: 07:30 PG hingga 02:30 PTG (T1–T4)`;
 
       const dayAtt = dayAttendanceMap[cleanDt] || { adaForms: ALL_FORMS, cutiForms: [] };
       const tags = formatAttendanceTags(dayAtt);
@@ -2194,7 +2344,7 @@
       showToast('Catatan harian berjaya disimpan.');
     }
 
-    // PENGURUSAN CUTI TINGKATAN
+    // PENGURUSAN CUTI TINGKATAN (T1–T4 SAHAJA)
     function openDayAttendanceModal(tarikh) {
       isUserEditing = true;
       const cleanDt = cleanDate(tarikh);
@@ -2280,7 +2430,7 @@
       closeDayAttendanceModal();
       saveToLocalStorage(true);
       renderCurrentView();
-      showToast('Ketetapan cuti tingkatan disimpan.');
+      showToast('Ketetapan cuti tingkatan T1–T4 disimpan.');
     }
 
     // PENGURUSAN BIDANG HARIAN
@@ -2414,7 +2564,7 @@
       renderSelectedTeacherChips();
     }
 
-    // PENGISIAN MODAL AKTIVITI
+    // PENGISIAN MODAL AKTIVITI PASCA UASA
     function handleStartTimeChange() {
       const startId = document.getElementById('modalWaktuMula').value;
       document.getElementById('modalWaktuTamat').value = getNextSlotEndTime(startId);
@@ -2801,7 +2951,7 @@
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
         pulse.className = 'hidden';
         title.textContent = 'Data Sedia Digunakan';
-        subtitle.textContent = 'Data cuti murid dipulihkan sepenuhnya';
+        subtitle.textContent = 'Data cuti murid T1–T4 dipulihkan';
         label.textContent = 'Sedia';
         label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       } else {
