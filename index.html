@@ -37,7 +37,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- BAR STATUS PENYEGERAKAN REAL-TIME -->
+  <!-- STATUS PENYEGERAKAN REAL-TIME -->
   <header class="bg-slate-900 text-white border-b border-slate-800 no-print sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-xs gap-2">
       <div class="flex items-center gap-2.5">
@@ -51,7 +51,7 @@
       </div>
       <div class="flex items-center gap-2">
         <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700">Terselaras</span>
-        <button onclick="syncFromGoogleSheet(true)" id="btnSync" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-indigo-300 rounded border border-slate-700 font-semibold text-[11px] flex items-center gap-1 transition" title="Muat turun data terkini sekiranya guru lain mengisi">
+        <button onclick="syncFromGoogleSheet(true)" id="btnSync" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-indigo-300 rounded border border-slate-700 font-semibold text-[11px] flex items-center gap-1 transition">
           <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="syncIcon"></i>
           <span>Muat Semula</span>
         </button>
@@ -62,7 +62,7 @@
     </div>
   </header>
 
-  <!-- KEPALA HALAMAN UTAMA & TOGOL PAPARAN -->
+  <!-- KEPALA HALAMAN & TOGOL PAPARAN -->
   <div class="bg-white border-b border-slate-200 shadow-sm no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
@@ -387,6 +387,59 @@
     </div>
   </div>
 
+  <!-- MODAL HARIAN: PECAHAN 13 SLOT (30 MINIT) -->
+  <div id="dayDrawerModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-4xl my-6 overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
+            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold" id="drawerDateTitle">Jadual Slot Harian</h3>
+            <p class="text-[11px] text-slate-400" id="drawerDateSubtitle">Program Pasca UASA SEMEKAR • 07:30 PG hingga 02:30 PTG</p>
+          </div>
+        </div>
+        <button onclick="closeDayDrawer()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-grow custom-scroll">
+        <div class="bg-indigo-50/80 p-3 rounded-xl border border-indigo-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-slate-700">Tingkatan Hadir:</span>
+              <span id="drawerFormsPresent" class="font-extrabold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">Semua Hadir (T1, T2, T3, T4)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-slate-700">Bercuti:</span>
+              <span id="drawerFormsHoliday" class="font-bold text-rose-800 bg-rose-100 px-2.5 py-0.5 rounded-full">Tiada</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="openDayAttendanceModalFromDrawer()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-100 text-indigo-700 rounded-lg font-bold border border-indigo-200 shadow-xs transition">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+              <span>Urus Cuti Tingkatan</span>
+            </button>
+            <button onclick="openRangeActivityModal(null, currentDrawerDate)" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-xs transition">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>+ Isi Aktiviti Mengikut Waktu</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2" id="drawerSlotList"></div>
+      </div>
+
+      <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
+        <button onclick="closeDayDrawer()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold rounded-lg transition">
+          Tutup Paparan
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL PENYUNTINGAN AKTIVITI (DEFAULT 30 MINIT & BERBILANG GURU) -->
   <div id="activityModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
@@ -587,12 +640,11 @@
     const CONFIG = {
       SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec',
       STORAGE_KEY: 'PUASA_SEMEKAR_2026_PERMANENT',
-      STREAM_INTERVAL: 30000 // Polling santai setiap 30 saat untuk keselamatan kuota Google
+      STREAM_INTERVAL: 30000 // Polling 30s untuk elak sekatan kuota
     };
 
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
 
-    // SENARAI NAMA GURU & STAF SMK KAMARUL ARIFFIN (SEMEKAR)
     const TEACHER_LIST = [
       "En. Abd Hadi bin Adman (Pengetua)",
       "En. Masnon bin Amat (GPK 1)",
@@ -633,7 +685,7 @@
       { id: '0830', label: '08:30 – 09:00 PG', startMin: 510, endMin: 540 },
       { id: '0900', label: '09:00 – 09:30 PG', startMin: 540, endMin: 570 },
       { id: '0930', label: '09:30 – 10:00 PG', startMin: 570, endMin: 600 },
-      // REHAT KEKAL 10:00 - 10:30 (600 - 630 min)
+      // REHAT 10:00 - 10:30 (600 - 630 min)
       { id: '1030', label: '10:30 – 11:00 PG', startMin: 630, endMin: 660 },
       { id: '1100', label: '11:00 – 11:30 PG', startMin: 660, endMin: 690 },
       { id: '1130', label: '11:30 – 12:00 TGH', startMin: 690, endMin: 720 },
@@ -644,7 +696,22 @@
       { id: '1400', label: '02:00 – 02:30 PTG', startMin: 840, endMin: 870 }
     ];
 
-    // PEMBAHAGIAN SAKSAMA MENGIKUT HARI (23 HARI)
+    const END_TIME_MAP = {
+      '0730': '0800', '0800': '0830', '0830': '0900', '0900': '0930', '0930': '1000',
+      '1030': '1100', '1100': '1130', '1130': '1200', '1200': '1230', '1230': '1300',
+      '1300': '1330', '1330': '1400', '1400': '1430'
+    };
+
+    function timeValToMinutes(tStr) {
+      const map = {
+        '0730': 450, '0800': 480, '0830': 510, '0900': 540, '0930': 570, '1000': 600,
+        '1030': 630, '1100': 660, '1130': 690, '1200': 720, '1230': 750, '1300': 780,
+        '1330': 810, '1400': 840, '1430': 870
+      };
+      return map[tStr] || 480;
+    }
+
+    // AGIHAN HARI (23 HARI PERSEKOLAHAN)
     let dayFieldConfig = {
       '2026-11-02': 'Bahasa',
       '2026-11-03': 'Bahasa',
@@ -671,7 +738,7 @@
       '2026-12-04': 'Teknik & Vokasional'
     };
 
-    // DATA ASAS CUTI TINGKATAN (DISELAMATKAN DARI GOOGLE SHEET ANDA)
+    // DATA ASAS CUTI TINGKATAN (DIPULIHKAN PENUH)
     const RECOVERED_ATTENDANCE = {
       '2026-11-02': { tarikh: '2026-11-02', hari: 'Isnin', cutiForms: ['Tingkatan 1', 'Tingkatan 2'], adaForms: ['Tingkatan 3', 'Tingkatan 4'], catatan: '' },
       '2026-11-03': { tarikh: '2026-11-03', hari: 'Selasa', cutiForms: ['Tingkatan 1', 'Tingkatan 3'], adaForms: ['Tingkatan 2', 'Tingkatan 4'], catatan: '' },
@@ -702,6 +769,7 @@
 
     let activeMonthFilter = 'ALL';
     let currentView = 'month';
+    let currentDrawerDate = '2026-11-02';
 
     const NOVEMBER_WEEKS = [
       {
@@ -779,27 +847,19 @@
       if (!raw) return '';
       let s = raw.toString().trim();
       if (s.startsWith("'")) s = s.substring(1);
-      if (s.includes('T')) return s.split('T')[0];
+      if (s.includes('T')) {
+        try {
+          const d = new Date(s);
+          const myTime = new Date(d.getTime() + (8 * 3600 * 1000));
+          return myTime.toISOString().split('T')[0];
+        } catch(e) {}
+        return s.split('T')[0];
+      }
       return s;
     }
 
     function getNextSlotEndTime(startId) {
-      const mapNext = {
-        '0730': '0800',
-        '0800': '0830',
-        '0830': '0900',
-        '0900': '0930',
-        '0930': '1000',
-        '1030': '1100',
-        '1100': '1130',
-        '1130': '1200',
-        '1200': '1230',
-        '1230': '1300',
-        '1300': '1330',
-        '1330': '1400',
-        '1400': '1430'
-      };
-      return mapNext[startId] || '0800';
+      return END_TIME_MAP[startId] || '0800';
     }
 
     function getMingguFromTarikh(tarikh) {
@@ -822,7 +882,6 @@
     function initEmptyStructure() {
       const initial = {};
 
-      // Masukkan pemulihan data cuti ke dayAttendanceMap jika masih kosong
       Object.keys(RECOVERED_ATTENDANCE).forEach(d => {
         if (!dayAttendanceMap[d]) {
           dayAttendanceMap[d] = { ...RECOVERED_ATTENDANCE[d] };
@@ -873,7 +932,6 @@
     }
 
     function loadSavedData() {
-      // 1. Muatkan data tempatan
       dayAttendanceMap = { ...RECOVERED_ATTENDANCE };
 
       const cachedDayAtt = localStorage.getItem(CONFIG.STORAGE_KEY + '_DAY_ATT');
@@ -905,8 +963,6 @@
       populateDateDropdown();
       renderCurrentView();
       updateStatistics();
-
-      // Mulakan status bersedia
       updateSyncStatusUI('ready');
     }
 
@@ -947,15 +1003,12 @@
       lucide.createIcons();
     }
 
-    // ==========================================
-    // AUTO-SAVE KE GOOGLE SHEET
-    // ==========================================
     function triggerInstantPush() {
       updateSyncStatusUI('saving');
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
         streamPushToSheet();
-      }, 600);
+      }, 500);
     }
 
     async function streamPushToSheet() {
@@ -993,7 +1046,7 @@
       };
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 saat timeout
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
 
       try {
         const response = await fetch(CONFIG.SCRIPT_URL, {
@@ -1017,9 +1070,6 @@
       }
     }
 
-    // ==========================================
-    // MUAT TURUN / PENYEMAKAN DATA DARI SHEET
-    // ==========================================
     async function syncFromGoogleSheet(isManual = false) {
       if (isUserEditing) return;
 
@@ -1032,7 +1082,7 @@
       }
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
 
       try {
         const res = await fetch(CONFIG.SCRIPT_URL + '?action=read&t=' + Date.now(), { signal: controller.signal });
@@ -1043,7 +1093,6 @@
         if (json.status === 'success') {
           let hasChange = false;
 
-          // 1. Terima Cuti Harian
           if (json.attendance && Array.isArray(json.attendance) && json.attendance.length > 0) {
             json.attendance.forEach(item => {
               const dt = cleanDate(item.tarikh);
@@ -1063,7 +1112,6 @@
             });
           }
 
-          // 2. Terima Slot Aktiviti
           if (json.slots && Array.isArray(json.slots)) {
             json.slots.forEach(item => {
               const dt = cleanDate(item.tarikh);
@@ -1082,7 +1130,6 @@
             });
           }
 
-          // 3. Terima Tetapan Bidang Harian
           if (json.dayFields && typeof json.dayFields === 'object') {
             Object.keys(json.dayFields).forEach(k => {
               const dt = cleanDate(k);
@@ -1151,14 +1198,8 @@
       }
     }
 
-    // ==========================================
-    // STATISTIK KIRAAN MENGIKUT HARI (23 HARI)
-    // ==========================================
     function updateStatistics() {
-      let daysBahasa = 0;
-      let daysSains = 0;
-      let daysKemas = 0;
-      let daysTvet = 0;
+      let daysBahasa = 0, daysSains = 0, daysKemas = 0, daysTvet = 0;
 
       const allActiveDays = [
         ...NOVEMBER_WEEKS.flatMap(w => w.hariList.filter(d => d.active && !d.cuti)),
@@ -1192,10 +1233,7 @@
       }
 
       let totalFilled = 0;
-      let countBahasaFilled = 0;
-      let countSainsFilled = 0;
-      let countKemasFilled = 0;
-      let countTvetFilled = 0;
+      let countBahasaFilled = 0, countSainsFilled = 0, countKemasFilled = 0, countTvetFilled = 0;
 
       Object.values(activitiesMap).forEach(slot => {
         if (slot.isCuti || slot.bidang === 'Cuti') return;
@@ -1225,7 +1263,7 @@
     }
 
     // ==========================================
-    // 1. PAPARAN BULANAN
+    // 1. PAPARAN BULANAN (MONTH VIEW)
     // ==========================================
     function setMonthFilter(month) {
       activeMonthFilter = month;
@@ -1379,6 +1417,7 @@
 
       return `
         <div class="calendar-box group bg-white hover:bg-slate-50 transition p-2.5 min-h-[175px] flex flex-col justify-between border-b sm:border-b-0 border-r border-slate-200 shadow-xs hover:shadow-md">
+          <!-- KEPALA KOTAK: TARIKH, BUTANG ISI & URUS CUTI -->
           <div class="flex items-start justify-between border-b border-slate-100 pb-1.5">
             <div>
               <span class="text-lg font-black text-slate-900 leading-none">${day.dayNum}</span>
@@ -1388,12 +1427,21 @@
               </span>
             </div>
 
-            <button onclick="event.stopPropagation(); openDayAttendanceModal('${dt}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${textCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200'} border transition flex items-center gap-1">
-              <i data-lucide="users" class="w-3 h-3"></i>
-              <span>${textCuti ? 'Cuti: ' + textCuti : 'Urus Cuti'}</span>
-            </button>
+            <div class="flex items-center gap-1">
+              <!-- BUTANG PANTAS ISI AKTIVITI UNTUK TARIKH INI -->
+              <button onclick="event.stopPropagation(); openRangeActivityModal('0730', '${dt}')" title="Isi aktiviti pada tarikh ini" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition flex items-center gap-1 shadow-xs">
+                <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                <span>+ Isi</span>
+              </button>
+
+              <button onclick="event.stopPropagation(); openDayAttendanceModal('${dt}')" title="Tetapkan Tingkatan Cuti Sehari Penuh" class="px-2 py-0.5 rounded-md text-[10px] font-bold ${textCuti ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'} border transition flex items-center gap-1">
+                <i data-lucide="users" class="w-3 h-3"></i>
+                <span>${textCuti ? 'Cuti: ' + textCuti : 'Cuti'}</span>
+              </button>
+            </div>
           </div>
 
+          <!-- JALUR MINI 13 SLOT -->
           <div onclick="openDayDrawer('${dt}')" class="my-1.5 space-y-1 cursor-pointer">
             <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
               <span>07:30 PG</span>
@@ -1409,7 +1457,8 @@
             </div>
           </div>
 
-          <div onclick="openDayDrawer('${dt}')" class="flex-grow space-y-1 my-1 cursor-pointer">
+          <!-- SENARAI RINGKAS AKTIVITI HARIAN (KLIK UNTUK ISI / LIHAT) -->
+          <div onclick="openRangeActivityModal('0730', '${dt}')" class="flex-grow space-y-1 my-1 cursor-pointer">
             ${activitiesList.length > 0 ? activitiesList.slice(0, 2).map(act => {
               return `
                 <div class="p-1 rounded bg-slate-50 border ${theme.border} text-[10px] leading-tight">
@@ -1418,8 +1467,8 @@
                 </div>
               `;
             }).join('') : `
-              <div class="h-10 flex items-center justify-center text-center text-[10px] text-slate-400 border border-dashed border-slate-200 rounded-lg group-hover:border-indigo-300">
-                <span>+ Klik untuk isi aktiviti</span>
+              <div class="h-10 flex items-center justify-center text-center text-[10px] text-slate-500 bg-indigo-50/40 border border-dashed border-indigo-200 rounded-lg group-hover:bg-indigo-50 transition">
+                <span class="font-bold text-indigo-700 flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> Klik untuk isi</span>
               </div>
             `}
             ${activitiesList.length > 2 ? `<div class="text-[9px] font-bold text-indigo-600 text-center">+ ${activitiesList.length - 2} lagi aktiviti</div>` : ''}
@@ -1434,7 +1483,7 @@
     }
 
     // ==========================================
-    // 2. PAPARAN MINGGUAN
+    // 2. PAPARAN MINGGUAN (WEEKLY TIMETABLE)
     // ==========================================
     function renderWeeklyTimetable() {
       const container = document.getElementById('weeklyTimetableContainer');
@@ -1493,12 +1542,10 @@
             <tbody class="divide-y divide-slate-200">
       `;
 
-      // Sebelum Rehat
       TIME_SLOTS.slice(0, 5).forEach(slot => {
         html += renderWeeklyRow(weekObj, slot);
       });
 
-      // Jalur Rehat
       html += `
         <tr class="bg-amber-100/90 text-amber-950 font-black border-y-2 border-amber-300 text-center">
           <td class="py-2 px-3 border-r border-amber-200 text-xs">10:00 – 10:30 PG</td>
@@ -1508,7 +1555,6 @@
         </tr>
       `;
 
-      // Selepas Rehat
       TIME_SLOTS.slice(5).forEach(slot => {
         html += renderWeeklyRow(weekObj, slot);
       });
@@ -1575,7 +1621,7 @@
     }
 
     // ==========================================
-    // 3. PAPARAN HARIAN
+    // 3. PAPARAN HARIAN (DAILY AGENDA)
     // ==========================================
     function populateDateDropdown() {
       const select = document.getElementById('selectDateDropdown');
@@ -1874,16 +1920,8 @@
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
 
-      const startSlot = TIME_SLOTS.find(s => s.id === startId);
-      const startMin = startSlot ? startSlot.startMin : 450;
-
-      let endMin = 480;
-      if (endId === '1000') endMin = 600;
-      else if (endId === '1430') endMin = 870;
-      else {
-        const endSlot = TIME_SLOTS.find(s => s.id === endId);
-        endMin = endSlot ? endSlot.startMin : 480;
-      }
+      const startMin = timeValToMinutes(startId);
+      const endMin = timeValToMinutes(endId);
 
       const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
       const count = affectedSlots.length;
@@ -1898,16 +1936,30 @@
 
     function openRangeActivityModal(initialSlotId, forcedDate = null) {
       isUserEditing = true;
-      const cleanDt = forcedDate || cleanDate(document.getElementById('selectDateDropdown').value || '2026-11-02');
-      if (!cleanDt) return;
+
+      // RESOLVE TARIKH DENGAN TEPAT
+      let cleanDt = '';
+      if (forcedDate) {
+        cleanDt = cleanDate(forcedDate);
+      } else {
+        const drawerDate = document.getElementById('drawerSlotList') ? document.getElementById('drawerSlotList').getAttribute('data-tarikh') : null;
+        if (drawerDate) {
+          cleanDt = cleanDate(drawerDate);
+        } else {
+          const selectDateEl = document.getElementById('selectDateDropdown');
+          cleanDt = selectDateEl ? cleanDate(selectDateEl.value) : '2026-11-02';
+        }
+      }
+
+      if (!cleanDt) cleanDt = '2026-11-02';
 
       const dObj = new Date(cleanDt);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
       document.getElementById('modalTarikhHidden').value = cleanDt;
-      document.getElementById('modalTarikhHari').value = formattedDate;
+      document.getElementById('modalTarikhHari').value = `${cleanDt} (${formattedDate.split(',')[0]})`;
 
-      // DEFAULT HANYA 30 MINIT (07:30 - 08:00 PG ATAU SLOT DIPILIH)
+      // DEFAULT HANYA 30 MINIT (1 SLOT SAHAJA)
       let startId = initialSlotId || '0730';
       document.getElementById('modalWaktuMula').value = startId;
       document.getElementById('modalWaktuTamat').value = getNextSlotEndTime(startId);
@@ -1944,16 +1996,8 @@
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
 
-      const startSlot = TIME_SLOTS.find(s => s.id === startId);
-      const startMin = startSlot ? startSlot.startMin : 450;
-
-      let endMin = 480;
-      if (endId === '1000') endMin = 600;
-      else if (endId === '1430') endMin = 870;
-      else {
-        const endSlot = TIME_SLOTS.find(s => s.id === endId);
-        endMin = endSlot ? endSlot.startMin : 480;
-      }
+      const startMin = timeValToMinutes(startId);
+      const endMin = timeValToMinutes(endId);
 
       if (endMin <= startMin) {
         alert('Sila pastikan Waktu Tamat adalah selepas Waktu Mula.');
@@ -1963,13 +2007,8 @@
       const bidang = document.getElementById('modalBidang').value;
       const aktiviti = document.getElementById('modalAktiviti').value.trim();
       const deskripsi = document.getElementById('modalDeskripsi').value.trim();
-      const guru = currentSelectedTeachers.join(', ');
+      const guru = currentSelectedTeachers.length > 0 ? currentSelectedTeachers.join(', ') : 'Guru Bertugas';
       const lokasi = document.getElementById('modalLokasi').value.trim();
-
-      if (!guru) {
-        alert('Sila pilih atau masukkan sekurang-kurangnya seorang guru in-charge.');
-        return;
-      }
 
       const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
 
@@ -1997,16 +2036,8 @@
       const startId = document.getElementById('modalWaktuMula').value;
       const endId = document.getElementById('modalWaktuTamat').value;
 
-      const startSlot = TIME_SLOTS.find(s => s.id === startId);
-      const startMin = startSlot ? startSlot.startMin : 450;
-
-      let endMin = 480;
-      if (endId === '1000') endMin = 600;
-      else if (endId === '1430') endMin = 870;
-      else {
-        const endSlot = TIME_SLOTS.find(s => s.id === endId);
-        endMin = endSlot ? endSlot.startMin : 480;
-      }
+      const startMin = timeValToMinutes(startId);
+      const endMin = timeValToMinutes(endId);
 
       if (confirm('Kosongkan semua aktiviti bagi slot dalam julat waktu ini?')) {
         const affectedSlots = TIME_SLOTS.filter(s => s.startMin >= startMin && s.endMin <= endMin);
@@ -2129,6 +2160,100 @@
     }
 
     // ==========================================
+    // DAY DRAWER HARIAN
+    // ==========================================
+    function openDayDrawer(tarikh) {
+      const cleanDt = cleanDate(tarikh);
+      currentDrawerDate = cleanDt;
+
+      const dObj = new Date(cleanDt);
+      const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+      
+      document.getElementById('drawerDateTitle').textContent = `Jadual Slot: ${formattedDate}`;
+
+      const listContainer = document.getElementById('drawerSlotList');
+      listContainer.setAttribute('data-tarikh', cleanDt);
+      listContainer.innerHTML = '';
+
+      const dayAtt = dayAttendanceMap[cleanDt] || { cutiForms: [], adaForms: [...ALL_FORMS] };
+      const adaArr = dayAtt.adaForms || ALL_FORMS;
+      const cutiArr = dayAtt.cutiForms || [];
+
+      document.getElementById('drawerFormsPresent').textContent = adaArr.length === 4 ? 'Semua Hadir (T1, T2, T3, T4)' : (adaArr.length > 0 ? adaArr.join(', ') : 'Tiada');
+      document.getElementById('drawerFormsHoliday').textContent = cutiArr.length > 0 ? cutiArr.join(', ') : 'Tiada Pelepasan';
+
+      const slots = TIME_SLOTS.map(s => activitiesMap[`${cleanDt}_slot_${s.id}`] || {});
+
+      slots.forEach((s, idx) => {
+        if (idx === 5) {
+          const rehatDiv = document.createElement('div');
+          rehatDiv.className = 'p-2 bg-amber-100 text-amber-900 border border-amber-300 rounded-xl flex items-center justify-center gap-2 font-bold text-xs shadow-xs';
+          rehatDiv.innerHTML = `<i data-lucide="coffee" class="w-4 h-4 text-amber-800"></i><span>10:00 – 10:30 PG: WAKTU REHAT (KEKAL)</span>`;
+          listContainer.appendChild(rehatDiv);
+        }
+
+        const isFilled = s.aktiviti && s.aktiviti.trim() !== '';
+        const theme = getBidangColorTheme(s.bidang);
+        const slotRow = document.createElement('div');
+
+        if (s.isCuti) {
+          slotRow.className = 'p-3 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs';
+          slotRow.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-rose-700 w-32">${s.masa}</span>
+              <span class="font-extrabold text-rose-900 uppercase">${s.catatanCuti}</span>
+            </div>
+            <button onclick="openRangeActivityModal('${s.slotId}', '${cleanDt}')" class="text-rose-700 underline font-semibold">Pinda</button>
+          `;
+        } else if (!isFilled) {
+          slotRow.className = 'p-2.5 rounded-xl bg-slate-50 border border-dashed border-slate-300 hover:border-indigo-400 flex items-center justify-between text-xs transition cursor-pointer';
+          slotRow.onclick = () => openRangeActivityModal(s.slotId, cleanDt);
+          slotRow.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-slate-600 w-32">${s.masa}</span>
+              <span class="text-slate-400 italic font-medium">+ Kosong (Klik untuk isi waktu ini)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${theme.badgeBg} ${theme.badgeText}">${s.bidang}</span>
+              <span class="p-1 rounded bg-indigo-50 text-indigo-600"><i data-lucide="plus" class="w-3.5 h-3.5"></i></span>
+            </div>
+          `;
+        } else {
+          slotRow.className = `p-3 rounded-xl bg-white border ${theme.border} shadow-xs flex items-center justify-between text-xs`;
+          slotRow.innerHTML = `
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-500 text-[11px]">${s.masa}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${theme.badgeBg} ${theme.badgeText}">${s.bidang}</span>
+              </div>
+              <h4 class="font-bold text-slate-900 text-sm">${s.aktiviti}</h4>
+              <div class="flex items-center gap-3 text-slate-500 text-[11px]">
+                <span class="font-semibold text-indigo-700 flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i> ${s.guru || 'Guru'}</span>
+                ${s.lokasi ? `<span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${s.lokasi}</span>` : ''}
+              </div>
+            </div>
+            <button onclick="openRangeActivityModal('${s.slotId}', '${cleanDt}')" class="p-2 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 transition" title="Edit julat waktu">
+              <i data-lucide="edit-2" class="w-4 h-4"></i>
+            </button>
+          `;
+        }
+
+        listContainer.appendChild(slotRow);
+      });
+
+      lucide.createIcons();
+      document.getElementById('dayDrawerModal').classList.remove('hidden');
+    }
+
+    function closeDayDrawer() {
+      document.getElementById('dayDrawerModal').classList.add('hidden');
+    }
+
+    function openDayAttendanceModalFromDrawer() {
+      if (currentDrawerDate) openDayAttendanceModal(currentDrawerDate);
+    }
+
+    // ==========================================
     // MODAL TETAPAN BIDANG MENGIKUT HARI
     // ==========================================
     function openDayFieldAssignModal() {
@@ -2238,10 +2363,10 @@
       loadSavedData();
       lucide.createIcons();
 
-      // Penstriman polling berkala yang santai (setiap 30 saat)
+      // Semakan berkala santai (30 saat)
       setInterval(() => syncFromGoogleSheet(false), CONFIG.STREAM_INTERVAL);
 
-      // Auto-sync sebaik sahaja pengguna kembali ke tab web (Smart Tab Focus)
+      // Auto-sync semasa tab diaktifkan semula
       window.addEventListener('focus', () => {
         if (!isUserEditing) syncFromGoogleSheet(false);
       });
