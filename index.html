@@ -298,8 +298,70 @@
 
   </main>
 
-  <!-- MODAL KHAS: CATATAN & PERINGATAN HARIAN -->
-  <div id="dayNoteModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  <!-- MODAL HARIAN: PECAHAN 13 SLOT (30 MINIT) [z-50] -->
+  <div id="dayDrawerModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-4xl my-6 overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
+            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold" id="drawerDateTitle">Jadual Slot Harian</h3>
+            <p class="text-[11px] text-slate-400" id="drawerDateSubtitle">Program Pasca UASA SEMEKAR • 07:30 PG hingga 02:30 PTG</p>
+          </div>
+        </div>
+        <button onclick="closeDayDrawer()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-grow custom-scroll">
+        <div class="bg-indigo-50/80 p-3.5 rounded-xl border border-indigo-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg shadow-sm flex items-center gap-2">
+              <i data-lucide="users" class="w-4 h-4 text-emerald-200"></i>
+              <div>
+                <span class="text-[9px] font-bold text-emerald-200 uppercase block leading-none">Murid Hadir (Hari Ini)</span>
+                <span class="text-xs font-black" id="drawerFormsPresent">Semua Hadir (T1, T2, T3, T4)</span>
+              </div>
+            </div>
+
+            <div id="drawerFormsHolidayWrapper" class="px-2.5 py-1 bg-rose-50 border border-rose-200 text-rose-800 rounded-md font-bold text-[11px] flex items-center gap-1.5">
+              <i data-lucide="user-minus" class="w-3.5 h-3.5 text-rose-500"></i>
+              <span>Cuti: <span id="drawerFormsHoliday">Tiada</span></span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="openDayNoteModal(currentDrawerDate)" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg font-bold border border-amber-300 shadow-xs transition">
+              <i data-lucide="pin" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>Catatan SPM / Hari</span>
+            </button>
+            <button onclick="openDayAttendanceModalFromDrawer()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-100 text-indigo-700 rounded-lg font-bold border border-indigo-200 shadow-xs transition">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+              <span>Urus Cuti Tingkatan</span>
+            </button>
+            <button onclick="openRangeActivityModal(null, currentDrawerDate)" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-xs transition">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>+ Isi Aktiviti</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2" id="drawerSlotList"></div>
+      </div>
+
+      <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
+        <button onclick="closeDayDrawer()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold rounded-lg transition">
+          Tutup Paparan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL KHAS: CATATAN & PERINGATAN HARIAN [z-[60] - DI HADAPAN DRAWER] -->
+  <div id="dayNoteModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
       <div class="px-5 py-3.5 bg-amber-600 text-white flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -371,8 +433,8 @@
     </div>
   </div>
 
-  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH -->
-  <div id="dayAttendanceModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH [z-[60] - DI HADAPAN DRAWER] -->
+  <div id="dayAttendanceModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
       <div class="px-5 py-3.5 bg-indigo-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -465,70 +527,8 @@
     </div>
   </div>
 
-  <!-- MODAL HARIAN: PECAHAN 13 SLOT (30 MINIT) -->
-  <div id="dayDrawerModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-4xl my-6 overflow-hidden flex flex-col max-h-[92vh]">
-      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between flex-shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
-            <i data-lucide="calendar-days" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-sm sm:text-base font-bold" id="drawerDateTitle">Jadual Slot Harian</h3>
-            <p class="text-[11px] text-slate-400" id="drawerDateSubtitle">Program Pasca UASA SEMEKAR • 07:30 PG hingga 02:30 PTG</p>
-          </div>
-        </div>
-        <button onclick="closeDayDrawer()" class="text-slate-400 hover:text-white p-1 rounded-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-grow custom-scroll">
-        <div class="bg-indigo-50/80 p-3.5 rounded-xl border border-indigo-200 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div class="flex flex-wrap items-center gap-3">
-            <div class="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg shadow-sm flex items-center gap-2">
-              <i data-lucide="users" class="w-4 h-4 text-emerald-200"></i>
-              <div>
-                <span class="text-[9px] font-bold text-emerald-200 uppercase block leading-none">Murid Hadir (Hari Ini)</span>
-                <span class="text-xs font-black" id="drawerFormsPresent">Semua Hadir (T1, T2, T3, T4)</span>
-              </div>
-            </div>
-
-            <div id="drawerFormsHolidayWrapper" class="px-2.5 py-1 bg-rose-50 border border-rose-200 text-rose-800 rounded-md font-bold text-[11px] flex items-center gap-1.5">
-              <i data-lucide="user-minus" class="w-3.5 h-3.5 text-rose-500"></i>
-              <span>Cuti: <span id="drawerFormsHoliday">Tiada</span></span>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <button onclick="openDayNoteModal(currentDrawerDate)" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg font-bold border border-amber-300 shadow-xs transition">
-              <i data-lucide="pin" class="w-3.5 h-3.5 text-amber-600"></i>
-              <span>Catatan SPM / Hari</span>
-            </button>
-            <button onclick="openDayAttendanceModalFromDrawer()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-100 text-indigo-700 rounded-lg font-bold border border-indigo-200 shadow-xs transition">
-              <i data-lucide="users" class="w-3.5 h-3.5"></i>
-              <span>Urus Cuti Tingkatan</span>
-            </button>
-            <button onclick="openRangeActivityModal(null, currentDrawerDate)" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-xs transition">
-              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-              <span>+ Isi Aktiviti</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="space-y-2" id="drawerSlotList"></div>
-      </div>
-
-      <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
-        <button onclick="closeDayDrawer()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold rounded-lg transition">
-          Tutup Paparan
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL PENYUNTINGAN AKTIVITI (TEXTAREA MULTI-LINE, BERBILANG GURU & CATATAN KHAS) -->
-  <div id="activityModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  <!-- MODAL PENYUNTINGAN AKTIVITI [z-[60] - DI HADAPAN DRAWER] -->
+  <div id="activityModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -669,7 +669,7 @@
           </div>
         </div>
 
-        <!-- RUANG CATATAN / PERINGATAN SLOT (BARU) -->
+        <!-- RUANG CATATAN / PERINGATAN SLOT -->
         <div>
           <label class="block font-semibold text-slate-700 mb-0.5 flex items-center justify-between">
             <span class="flex items-center gap-1.5 text-amber-800">
@@ -698,7 +698,7 @@
     </div>
   </div>
 
-  <!-- MODAL PENETAPAN BIDANG MENGIKUT HARI (AGIHAN 23 HARI) -->
+  <!-- MODAL PENETAPAN BIDANG MENGIKUT HARI [z-50] -->
   <div id="dayFieldAssignModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-2xl my-6 overflow-hidden flex flex-col max-h-[90vh]">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between flex-shrink-0">
@@ -1164,7 +1164,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // 1. PAPARAN MOD BULANAN (SENARAI RINGKAS MASA & AKTIVITI - TIADA JUMLAH BILANGAN)
+    // 1. PAPARAN MOD BULANAN (SENARAI RINGKAS MASA & AKTIVITI)
     function renderMonthCalendar() {
       const container = document.getElementById('calendarMonthContainer');
       if (!container) return;
@@ -1219,7 +1219,6 @@
             if (searchQ) daySlots = daySlots.filter(s => (s.aktiviti && s.aktiviti.toLowerCase().includes(searchQ)) || (s.guru && s.guru.toLowerCase().includes(searchQ)) || (s.lokasi && s.lokasi.toLowerCase().includes(searchQ)));
             daySlots.sort((a, b) => (a.slotIndex || 0) - (b.slotIndex || 0));
 
-            // Satukan slot bersebelahan yang mempunyai aktiviti serupa untuk paparan ringkas
             const groupedActivities = [];
             daySlots.forEach(s => {
               const actName = s.aktiviti.trim();
@@ -1288,7 +1287,7 @@
                 `}
               </div>
 
-              <!-- BUTANG AKSI BAWAH (TIADA KIRAAN JUMLAH AKTIVITI) -->
+              <!-- BUTANG AKSI BAWAH -->
               <div class="pt-2 border-t border-slate-100 flex items-center justify-between mt-2 gap-1 text-[11px]">
                 <button onclick="openDayDrawer('${dt}')" class="px-2 py-1 bg-slate-100 hover:bg-indigo-50 text-indigo-700 rounded-md font-bold transition flex items-center gap-1 text-[10px]">
                   <i data-lucide="calendar-days" class="w-3 h-3"></i>
@@ -2254,7 +2253,7 @@
       if (!toast) {
         toast = document.createElement('div');
         toast.id = 'customToast';
-        toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl text-xs font-medium flex items-center gap-2 border border-slate-700 transition-all duration-300 transform translate-y-10 opacity-0';
+        toast.className = 'fixed bottom-5 right-5 z-[80] bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl text-xs font-medium flex items-center gap-2 border border-slate-700 transition-all duration-300 transform translate-y-10 opacity-0';
         document.body.appendChild(toast);
       }
       toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i><span>${msg}</span>`;
