@@ -22,6 +22,7 @@
             sains: { 50: '#ecfdf5', 100: '#d1fae5', 500: '#10b981', 600: '#059669', 700: '#047857' },
             kemasyarakatan: { 50: '#fffbeb', 100: '#fef3c7', 500: '#f59e0b', 600: '#d97706', 700: '#b45309' },
             tvet: { 50: '#faf5ff', 100: '#f3e8ff', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce' },
+            umum: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e' },
             cuti: { 50: '#fff1f2', 100: '#ffe4e6', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c' }
           }
         }
@@ -116,7 +117,7 @@
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
             Agihan Saksama Mengikut Hari Persekolahan (Jumlah: 23 Hari Aktif)
           </h2>
-          <p class="text-[11px] text-slate-500">Pembahagian 4 bidang dihitung secara saksama mengikut bilangan <strong>HARI persekolahan</strong>.</p>
+          <p class="text-[11px] text-slate-500">Pembahagian 5 bidang (Bahasa, Sains & Matematik, Kemasyarakatan, TVET, Umum) dihitung mengikut bilangan <strong>HARI persekolahan</strong>.</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -127,8 +128,8 @@
         </div>
       </div>
 
-      <!-- KAD 4 BIDANG (KIRAAN HARI) -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+      <!-- KAD 5 BIDANG (KIRAAN HARI) -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
         <div class="p-2.5 bg-blue-50/70 border-t-4 border-blue-600 rounded-xl space-y-0.5">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-black uppercase text-blue-900 flex items-center gap-1.5">
@@ -176,6 +177,18 @@
           <div class="text-sm font-black text-purple-900" id="countDaysTvet">0 Hari</div>
           <div class="text-[10px] text-purple-700" id="slotsDaysTvet">0 Slot (30 Minit)</div>
         </div>
+
+        <div class="p-2.5 bg-teal-50/70 border-t-4 border-teal-600 rounded-xl space-y-0.5 col-span-2 sm:col-span-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-black uppercase text-teal-900 flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal-600 inline-block"></span>
+              Umum
+            </span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-teal-200 text-teal-900" id="pctDaysUmum">0%</span>
+          </div>
+          <div class="text-sm font-black text-teal-900" id="countDaysUmum">0 Hari</div>
+          <div class="text-[10px] text-teal-700" id="slotsDaysUmum">0 Slot (30 Minit)</div>
+        </div>
       </div>
     </section>
 
@@ -210,6 +223,7 @@
             <option value="Sains & Matematik">Bidang Sains & Matematik</option>
             <option value="Sains Kemasyarakatan">Bidang Sains Kemasyarakatan</option>
             <option value="Teknik & Vokasional">Bidang Teknik & Vokasional</option>
+            <option value="Umum">Bidang Umum</option>
           </select>
           <div class="relative">
             <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400"></i>
@@ -360,7 +374,7 @@
     </div>
   </div>
 
-  <!-- MODAL KHAS: CATATAN & PERINGATAN HARIAN [z-[60] - DI HADAPAN DRAWER] -->
+  <!-- MODAL KHAS: CATATAN & PERINGATAN HARIAN [z-[60]] -->
   <div id="dayNoteModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
       <div class="px-5 py-3.5 bg-amber-600 text-white flex items-center justify-between">
@@ -433,7 +447,7 @@
     </div>
   </div>
 
-  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH [z-[60] - DI HADAPAN DRAWER] -->
+  <!-- MODAL KHAS: TETAPAN CUTI TINGKATAN SEHARI PENUH [z-[60]] -->
   <div id="dayAttendanceModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
       <div class="px-5 py-3.5 bg-indigo-900 text-white flex items-center justify-between">
@@ -527,7 +541,7 @@
     </div>
   </div>
 
-  <!-- MODAL PENYUNTINGAN AKTIVITI [z-[60] - DI HADAPAN DRAWER] -->
+  <!-- MODAL PENYUNTINGAN AKTIVITI [z-[60]] -->
   <div id="activityModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
@@ -559,6 +573,7 @@
               <option value="Sains & Matematik" class="text-emerald-600">Bidang Sains & Matematik</option>
               <option value="Sains Kemasyarakatan" class="text-amber-600">Bidang Sains Kemasyarakatan</option>
               <option value="Teknik & Vokasional" class="text-purple-600">Bidang Teknik & Vokasional</option>
+              <option value="Umum" class="text-teal-600">Bidang Umum</option>
               <option value="Slot Khas Rasmi" class="text-indigo-600">Slot Khas Rasmi</option>
               <option value="Cuti" class="text-rose-600">Cuti Perayaan / Am</option>
             </select>
@@ -706,7 +721,7 @@
           <i data-lucide="sliders" class="w-5 h-5 text-indigo-400"></i>
           <div>
             <h3 class="text-sm sm:text-base font-bold">Tetapkan Bidang Mengikut Hari (23 Hari Persekolahan)</h3>
-            <p class="text-[11px] text-slate-400">Agihan sama rata 4 bidang mengikut kiraan hari persekolahan</p>
+            <p class="text-[11px] text-slate-400">Agihan mengikut kiraan hari persekolahan (5 Bidang)</p>
           </div>
         </div>
         <button onclick="closeDayFieldAssignModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
@@ -716,7 +731,7 @@
 
       <div class="p-5 space-y-3 overflow-y-auto custom-scroll flex-grow text-xs">
         <p class="text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-          Tentukan bidang bagi setiap hari persekolahan aktif (~5-6 hari bagi setiap bidang).
+          Tentukan bidang bagi setiap hari persekolahan aktif (Bahasa, Sains & Matematik, Kemasyarakatan, TVET atau Umum).
         </p>
         <div class="divide-y divide-slate-200 border border-slate-200 rounded-xl overflow-hidden" id="dayFieldAssignList"></div>
       </div>
@@ -1079,7 +1094,7 @@
     }
 
     function updateStatistics() {
-      let bCount = 0, sCount = 0, kCount = 0, tCount = 0;
+      let bCount = 0, sCount = 0, kCount = 0, tCount = 0, uCount = 0;
       const activeDates = Object.keys(dayFieldConfig);
 
       activeDates.forEach(dt => {
@@ -1088,6 +1103,7 @@
         else if (field === 'Sains & Matematik') sCount++;
         else if (field === 'Sains Kemasyarakatan') kCount++;
         else if (field === 'Teknik & Vokasional') tCount++;
+        else if (field === 'Umum') uCount++;
       });
 
       const totalDays = 23;
@@ -1095,6 +1111,7 @@
       const sPct = ((sCount / totalDays) * 100).toFixed(1) + '%';
       const kPct = ((kCount / totalDays) * 100).toFixed(1) + '%';
       const tPct = ((tCount / totalDays) * 100).toFixed(1) + '%';
+      const uPct = ((uCount / totalDays) * 100).toFixed(1) + '%';
 
       const elBPct = document.getElementById('pctDaysBahasa');
       const elBCount = document.getElementById('countDaysBahasa');
@@ -1123,6 +1140,13 @@
       if (elTPct) elTPct.textContent = tPct;
       if (elTCount) elTCount.textContent = `${tCount} Hari`;
       if (elTSlots) elTSlots.textContent = `${tCount * 13} Slot (30 Minit)`;
+
+      const elUPct = document.getElementById('pctDaysUmum');
+      const elUCount = document.getElementById('countDaysUmum');
+      const elUSlots = document.getElementById('slotsDaysUmum');
+      if (elUPct) elUPct.textContent = uPct;
+      if (elUCount) elUCount.textContent = `${uCount} Hari`;
+      if (elUSlots) elUSlots.textContent = `${uCount * 13} Slot (30 Minit)`;
     }
 
     function switchView(view) {
@@ -1800,6 +1824,7 @@
             <option value="Sains & Matematik" ${currentB === 'Sains & Matematik' ? 'selected' : ''}>Bidang Sains & Matematik</option>
             <option value="Sains Kemasyarakatan" ${currentB === 'Sains Kemasyarakatan' ? 'selected' : ''}>Bidang Sains Kemasyarakatan</option>
             <option value="Teknik & Vokasional" ${currentB === 'Teknik & Vokasional' ? 'selected' : ''}>Bidang Teknik & Vokasional</option>
+            <option value="Umum" ${currentB === 'Umum' ? 'selected' : ''}>Bidang Umum</option>
           </select>
         `;
         listContainer.appendChild(row);
@@ -2059,6 +2084,7 @@
         case 'Sains & Matematik': return { badgeBg: 'bg-emerald-600', badgeText: 'text-white' };
         case 'Sains Kemasyarakatan': return { badgeBg: 'bg-amber-600', badgeText: 'text-white' };
         case 'Teknik & Vokasional': return { badgeBg: 'bg-purple-600', badgeText: 'text-white' };
+        case 'Umum': return { badgeBg: 'bg-teal-600', badgeText: 'text-white' };
         case 'Slot Khas Rasmi': return { badgeBg: 'bg-indigo-600', badgeText: 'text-white' };
         case 'Cuti': return { badgeBg: 'bg-rose-600', badgeText: 'text-white' };
         default: return { badgeBg: 'bg-slate-300', badgeText: 'text-slate-700' };
@@ -2128,7 +2154,6 @@
       const btnSync = document.getElementById('btnSync');
       const syncIcon = document.getElementById('syncIcon');
       
-      // Paparkan status penyegerakan aktif
       if (btnSync) btnSync.disabled = true;
       if (syncIcon) syncIcon.classList.add('animate-spin');
       updateSyncStatusUI('syncing');
@@ -2268,18 +2293,14 @@
       setTimeout(() => { toast.classList.add('translate-y-10', 'opacity-0'); }, 3500);
     }
 
-    // AUTOMATIK: Muat data cache dahulu, kemudian SERTA-MERTA segerak dari Google Sheet
     window.addEventListener('DOMContentLoaded', async () => {
       loadSavedData();
       if (window.lucide) lucide.createIcons();
 
-      // Panggilan terus ke Google Sheet sebaik sahaja aplikasi dibuka
+      // Panggilan terus ke Google Sheet setiap kali web dibuka
       await syncFromGoogleSheet(false);
 
-      // Semakan berkala berterusan setiap 30 saat
       setInterval(() => syncFromGoogleSheet(false), CONFIG.STREAM_INTERVAL);
-
-      // Segerak automatik sekiranya pengguna beralih semula ke tab ini
       window.addEventListener('focus', () => {
         if (!isUserEditing) syncFromGoogleSheet(false);
       });
