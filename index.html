@@ -107,14 +107,14 @@
             <span>Tambah Aktiviti</span>
           </button>
           
-          <button onclick="saveToGoogleSheets()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-all shadow-sm flex items-center gap-1.5" title="Hantar data ke Google Sheet">
+          <button id="btn-sync-now" onclick="saveToGoogleSheets()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-all shadow-sm flex items-center gap-1.5" title="Hantar data ke Google Sheet">
             <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
             <span class="hidden sm:inline">Simpan ke Sheet</span>
           </button>
 
-          <button onclick="fetchFromGoogleSheets()" class="px-3 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5" title="Muat semula dari Google Sheet">
+          <button id="btn-fetch-now" onclick="fetchFromGoogleSheets(false)" class="px-3 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5" title="Muat semula dari Google Sheet">
             <i class="fa-solid fa-rotate text-xs"></i>
-            <span class="hidden sm:inline">Muat Semula</span>
+            <span class="hidden sm:inline">Segerak Sekarang</span>
           </button>
 
           <button onclick="openSettingsModal()" class="px-3 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5" title="Tetapan Google Sheets">
@@ -132,13 +132,19 @@
   </header>
 
   <!-- Banner Pengesahan Google Sheets & LocalStorage Status -->
-  <div id="sync-banner" class="bg-indigo-50 border-b border-indigo-100 text-indigo-900 text-xs px-4 py-1.5 transition-all duration-300 flex items-center justify-between">
-    <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
-      <span class="flex items-center gap-1.5">
-        <span id="sync-status-dot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span id="sync-status-text">Status Data: Disimpan dalam pelayar tempatan (LocalStorage). Siap sedia untuk Google Sheets.</span>
-      </span>
-      <span class="text-indigo-600 hover:underline cursor-pointer font-medium" onclick="openSettingsModal()">Konfigurasi Google Apps Script &rarr;</span>
+  <div id="sync-banner" class="bg-emerald-50 border-b border-emerald-100 text-emerald-950 text-xs px-4 py-2 transition-all duration-300">
+    <div class="max-w-7xl mx-auto w-full flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span id="sync-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="sync-status-text" class="font-medium">Tersambung ke Google Sheet • ID: 13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a id="banner-sheet-link" href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="text-emerald-700 hover:text-emerald-900 font-semibold underline flex items-center gap-1">
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Buka Google Sheet
+        </a>
+        <span class="text-slate-300">|</span>
+        <span class="text-indigo-600 hover:underline cursor-pointer font-medium" onclick="openSettingsModal()">Tetapan API & GAS &rarr;</span>
+      </div>
     </div>
   </div>
 
@@ -538,18 +544,34 @@
       </div>
 
       <div class="p-6 space-y-5 text-xs text-slate-700 max-h-[75vh] overflow-y-auto">
-        <div>
-          <label class="block font-bold text-slate-800 mb-1">Google Apps Script Web App URL</label>
-          <input type="url" id="sheet-api-url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 font-mono text-xs">
-          <p class="text-[11px] text-slate-500 mt-1">Masukkan URL Web App daripada Google Apps Script selepas dideploy sebagai Web App (Access: Anyone).</p>
+        <div class="space-y-3">
+          <div>
+            <label class="block font-bold text-slate-800 mb-1">Google Apps Script Web App URL</label>
+            <input type="url" id="sheet-api-url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 font-mono text-xs">
+            <p class="text-[11px] text-slate-500 mt-1">URL Web App Google Apps Script semasa yang menerima sambungan GET dan POST.</p>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-800 mb-1">Google Sheet ID</label>
+            <div class="flex gap-2">
+              <input type="text" id="sheet-doc-id" placeholder="13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI" class="w-full p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 font-mono text-xs bg-slate-50">
+              <a id="btn-open-sheet-link" href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium rounded-lg text-xs whitespace-nowrap flex items-center gap-1 border border-slate-300">
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Buka Sheet
+              </a>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-1">ID helaian Google di mana data jadual pasca UASA disimpan.</p>
+          </div>
         </div>
 
         <div class="flex items-center gap-2">
           <button onclick="saveSheetSettings()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-xs transition">
-            Simpan Tetapan URL
+            Simpan Konfigurasi
           </button>
           <button onclick="testConnection()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs transition">
             Uji Sambungan
+          </button>
+          <button onclick="resetDefaultConfig()" class="px-3 py-2 text-slate-600 hover:text-slate-900 text-xs ml-auto underline">
+            Kembalikan Nilai Asal
           </button>
         </div>
 
@@ -557,12 +579,12 @@
         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
           <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2">
             <i class="fa-solid fa-book-open text-indigo-600"></i>
-            Langkah Menyediakan Google Sheet (Dalam 2 Minit):
+            Struktur Google Apps Script (Sedia Digunakan):
           </h4>
           <ol class="list-decimal list-inside space-y-1.5 text-slate-600 leading-relaxed">
-            <li>Buka Google Sheets baharu di Google Drive anda. Namakan helaian (cth: <em>Program Pasca UASA 2026</em>).</li>
-            <li>Klik menu <strong>Extensions &gt; Apps Script</strong>. Padam kod sedia ada dan tampal (paste) kod di bawah.</li>
-            <li>Klik <strong>Deploy &gt; New Deployment</strong>, pilih jenis <strong>Web App</strong>. Tetapkan <em>Execute as: Me</em> dan <em>Who has access: Anyone</em>. Salin URL dan tampal di kotak atas.</li>
+            <li>Google Sheet ID sasaran: <code class="font-mono bg-white px-1.5 py-0.5 rounded border border-slate-200 font-bold text-slate-800">13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI</code></li>
+            <li>Pastikan tetapan Deployment di Apps Script: <em>Execute as: Me</em> dan <em>Who has access: Anyone</em>.</li>
+            <li>Kod Apps Script di bawah menyokong pemuatan semula automatik (GET) dan penyimpanan jadual penuh (POST).</li>
           </ol>
         </div>
 
@@ -575,33 +597,52 @@
             </button>
           </div>
           <pre id="apps-script-code" class="bg-slate-900 text-slate-100 p-3 rounded-xl overflow-x-auto text-[11px] font-mono leading-relaxed max-h-48">
-function doGet() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getDataRange().getValues();
-  if (data.length <= 1) {
-    return ContentService.createTextOutput(JSON.stringify([])).setMimeType(ContentService.MimeType.JSON);
+// ID Google Sheet Pasca UASA
+const SPREADSHEET_ID = "13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI";
+
+function getTargetSheet(e) {
+  const targetId = (e && e.parameter && e.parameter.sheetId) ? e.parameter.sheetId : SPREADSHEET_ID;
+  const ss = SpreadsheetApp.openById(targetId);
+  return ss.getActiveSheet();
+}
+
+function doGet(e) {
+  try {
+    const sheet = getTargetSheet(e);
+    const data = sheet.getDataRange().getValues();
+    if (data.length <= 1) {
+      return ContentService.createTextOutput(JSON.stringify([])).setMimeType(ContentService.MimeType.JSON);
+    }
+    const headers = data[0];
+    const rows = data.slice(1);
+    const result = rows.map(r => {
+      let obj = {};
+      headers.forEach((h, i) => obj[h] = r[i]);
+      return obj;
+    });
+    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({ error: err.message })).setMimeType(ContentService.MimeType.JSON);
   }
-  const headers = data[0];
-  const rows = data.slice(1);
-  const result = rows.map(r => {
-    let obj = {};
-    headers.forEach((h, i) => obj[h] = r[i]);
-    return obj;
-  });
-  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
   try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    const contents = JSON.parse(e.postData.contents);
+    const parsed = JSON.parse(e.postData.contents);
+    const sheetId = (parsed && parsed.sheetId) ? parsed.sheetId : SPREADSHEET_ID;
+    const items = (parsed && Array.isArray(parsed.data)) ? parsed.data : (Array.isArray(parsed) ? parsed : []);
+    
+    const ss = SpreadsheetApp.openById(sheetId);
+    const sheet = ss.getActiveSheet();
     sheet.clear();
-    if (!contents || contents.length === 0) {
+
+    if (!items || items.length === 0) {
       return ContentService.createTextOutput("KOSONG").setMimeType(ContentService.MimeType.TEXT);
     }
-    const headers = Object.keys(contents[0]);
+
+    const headers = Object.keys(items[0]);
     sheet.appendRow(headers);
-    contents.forEach(item => {
+    items.forEach(item => {
       const row = headers.map(h => item[h] !== undefined ? item[h] : "");
       sheet.appendRow(row);
     });
@@ -649,9 +690,14 @@ function doPost(e) {
   <!-- JAVASCRIPT: Logik Aplikasi, Praset Data & Pengagihan 4 Bidang           -->
   <!-- ======================================================================= -->
   <script>
+    // Konfigurasi Rasmi Google Apps Script & Google Sheet ID
+    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec';
+    const DEFAULT_SHEET_ID = '13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI';
+
     // Kunci simpanan setempat (LocalStorage)
     const STORAGE_KEY = 'pasca_uasa_slots_v2026';
     const SETTINGS_KEY = 'pasca_uasa_settings_url';
+    const SHEET_ID_KEY = 'pasca_uasa_sheet_id';
 
     // State Aplikasi
     let slots = [];
@@ -960,6 +1006,8 @@ function doPost(e) {
       initSettings();
       renderSchedule();
       updateAnalytics();
+      // Auto-fetch data dari Google Sheet sebaik halaman dimuatkan
+      fetchFromGoogleSheets(true);
     });
 
     // Muat data dari LocalStorage atau default
@@ -983,13 +1031,32 @@ function doPost(e) {
     }
 
     function initSettings() {
-      const savedUrl = localStorage.getItem(SETTINGS_KEY);
-      if (savedUrl) {
-        document.getElementById('sheet-api-url').value = savedUrl;
-        updateSyncBannerStatus(true, 'Disambungkan ke Google Sheets: ' + shortenUrl(savedUrl));
-      } else {
-        updateSyncBannerStatus(false, 'Status Data: Disimpan dalam pelayar tempatan (LocalStorage). Masukkan URL Apps Script untuk Auto-Sync Google Sheet.');
+      let savedUrl = localStorage.getItem(SETTINGS_KEY);
+      let savedSheetId = localStorage.getItem(SHEET_ID_KEY);
+
+      if (!savedUrl) {
+        savedUrl = DEFAULT_GAS_URL;
+        localStorage.setItem(SETTINGS_KEY, DEFAULT_GAS_URL);
       }
+      if (!savedSheetId) {
+        savedSheetId = DEFAULT_SHEET_ID;
+        localStorage.setItem(SHEET_ID_KEY, DEFAULT_SHEET_ID);
+      }
+
+      document.getElementById('sheet-api-url').value = savedUrl;
+      const sheetIdInput = document.getElementById('sheet-doc-id');
+      if (sheetIdInput) sheetIdInput.value = savedSheetId;
+
+      updateSyncBannerStatus(true, `Tersambung ke Google Sheet • ID: ${savedSheetId}`);
+    }
+
+    function resetDefaultConfig() {
+      localStorage.setItem(SETTINGS_KEY, DEFAULT_GAS_URL);
+      localStorage.setItem(SHEET_ID_KEY, DEFAULT_SHEET_ID);
+      document.getElementById('sheet-api-url').value = DEFAULT_GAS_URL;
+      document.getElementById('sheet-doc-id').value = DEFAULT_SHEET_ID;
+      updateSyncBannerStatus(true, `Konfigurasi dikembalikan ke Google Sheet asal (${DEFAULT_SHEET_ID.substring(0, 10)}...)`);
+      showToast('Konfigurasi asal telah dipulihkan!', 'success');
     }
 
     function shortenUrl(url) {
@@ -1001,9 +1068,9 @@ function doPost(e) {
       const dot = document.getElementById('sync-status-dot');
       const textEl = document.getElementById('sync-status-text');
       if (isCloud) {
-        dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+        dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
       } else {
-        dot.className = "w-2 h-2 rounded-full bg-amber-500";
+        dot.className = "w-2.5 h-2.5 rounded-full bg-amber-500";
       }
       textEl.textContent = text;
     }
@@ -1518,95 +1585,123 @@ function doPost(e) {
     // INTEGRASI GOOGLE SHEETS & LOCALSTORAGE
     // =========================================================================
     function saveSheetSettings() {
-      const url = document.getElementById('sheet-api-url').value.trim();
+      const url = document.getElementById('sheet-api-url').value.trim() || DEFAULT_GAS_URL;
+      const sheetId = document.getElementById('sheet-doc-id').value.trim() || DEFAULT_SHEET_ID;
+
       localStorage.setItem(SETTINGS_KEY, url);
-      if (url) {
-        updateSyncBannerStatus(true, 'Disambungkan ke Google Sheets: ' + shortenUrl(url));
-        showToast('URL Google Apps Script disimpan!', 'success');
-      } else {
-        updateSyncBannerStatus(false, 'Data disimpan di pelayar tempatan (LocalStorage).');
-        showToast('URL dikosongkan. Mod simpanan tempatan diaktifkan.', 'info');
-      }
+      localStorage.setItem(SHEET_ID_KEY, sheetId);
+
+      // Kemaskini pautan buka sheet
+      const openBtn = document.getElementById('btn-open-sheet-link');
+      if (openBtn) openBtn.href = `https://docs.google.com/spreadsheets/d/${sheetId}/edit`;
+      const bannerLink = document.getElementById('banner-sheet-link');
+      if (bannerLink) bannerLink.href = `https://docs.google.com/spreadsheets/d/${sheetId}/edit`;
+
+      updateSyncBannerStatus(true, `Tersambung ke Google Sheet • ID: ${sheetId}`);
+      showToast('Konfigurasi Google Sheet & Web App berjaya disimpan!', 'success');
       closeSettingsModal();
     }
 
     async function testConnection() {
-      const url = document.getElementById('sheet-api-url').value.trim();
-      if (!url) {
-        showToast('Sila masukkan URL Apps Script dahulu.', 'warning');
-        return;
-      }
+      const url = document.getElementById('sheet-api-url').value.trim() || DEFAULT_GAS_URL;
+      const sheetId = document.getElementById('sheet-doc-id').value.trim() || DEFAULT_SHEET_ID;
 
-      showToast('Menguji sambungan...', 'info');
+      showToast('Menguji sambungan ke Google Sheet...', 'info');
       try {
-        const res = await fetch(url + '?action=test');
+        const queryUrl = url + (url.includes('?') ? '&' : '?') + 'sheetId=' + encodeURIComponent(sheetId) + '&action=test&t=' + Date.now();
+        const res = await fetch(queryUrl);
         if (res.ok) {
-          showToast('Sambungan berjaya! Google Sheets aktif.', 'success');
+          showToast('Sambungan berjaya! Google Sheet sedia menerima data.', 'success');
         } else {
-          showToast('Respon diterima tetapi status ralat (' + res.status + ').', 'warning');
+          showToast('Menerima status HTTP ' + res.status + '. Sila semak kebenaran Web App.', 'warning');
         }
       } catch (err) {
-        showToast('Gagal berhubung: Semak izin (Who has access: Anyone).', 'error');
+        showToast('Gagal berhubung: Semak sambungan internet dan izin Apps Script (Anyone).', 'error');
       }
     }
 
     async function saveToGoogleSheets() {
-      const url = localStorage.getItem(SETTINGS_KEY) || document.getElementById('sheet-api-url').value.trim();
-      if (!url) {
-        showToast('Sila tetapkan URL Google Sheet dahulu di menu Tetapan.', 'warning');
-        openSettingsModal();
-        return;
-      }
+      const url = localStorage.getItem(SETTINGS_KEY) || DEFAULT_GAS_URL;
+      const sheetId = localStorage.getItem(SHEET_ID_KEY) || DEFAULT_SHEET_ID;
 
-      showToast('Sedang menghantar rekod ke Google Sheets...', 'info');
+      const syncBtn = document.getElementById('btn-sync-now');
+      if (syncBtn) {
+        syncBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i> <span class="hidden sm:inline">Menyimpan...</span>';
+        syncBtn.disabled = true;
+      }
+      showToast('Sedang menghantar jadual ke Google Sheets...', 'info');
 
       try {
-        // Hantar POST payload
-        const response = await fetch(url, {
+        await fetch(url, {
           method: 'POST',
-          mode: 'no-cors', // Penting untuk Google Apps Script web app
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(slots)
+          body: JSON.stringify({
+            sheetId: sheetId,
+            data: slots
+          })
         });
 
-        // Dalam mode no-cors, kita anggap berjaya jika tiada network exception
-        showToast('Semua slot berjaya dimuat naik ke Google Sheet!', 'success');
-        updateSyncBannerStatus(true, 'Data disegerakkan ke Google Sheets pada ' + new Date().toLocaleTimeString());
+        const timeStr = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+        updateSyncBannerStatus(true, `Tersambung ke Google Sheet • Disegerak pada jam ${timeStr}`);
+        showToast('Semua slot aktiviti berjaya disimpan ke Google Sheet!', 'success');
       } catch (error) {
         console.error("Ralat simpan ke Sheet:", error);
-        showToast('Ralat menyambung ke Google Sheet. Data kekal selamat di storan tempatan.', 'error');
+        showToast('Ralat menyambung ke Google Sheet. Data kekal selamat dalam pelayar (LocalStorage).', 'warning');
+      } finally {
+        if (syncBtn) {
+          syncBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-xs"></i> <span class="hidden sm:inline">Simpan ke Sheet</span>';
+          syncBtn.disabled = false;
+        }
       }
     }
 
-    async function fetchFromGoogleSheets() {
-      const url = localStorage.getItem(SETTINGS_KEY) || document.getElementById('sheet-api-url').value.trim();
-      if (!url) {
-        showToast('Sila masukkan URL Google Sheet terlebih dahulu.', 'warning');
-        openSettingsModal();
-        return;
+    async function fetchFromGoogleSheets(isSilent = false) {
+      const url = localStorage.getItem(SETTINGS_KEY) || DEFAULT_GAS_URL;
+      const sheetId = localStorage.getItem(SHEET_ID_KEY) || DEFAULT_SHEET_ID;
+
+      const fetchBtn = document.getElementById('btn-fetch-now');
+      if (fetchBtn && !isSilent) {
+        fetchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i> <span class="hidden sm:inline">Menyegerak...</span>';
+        fetchBtn.disabled = true;
       }
 
-      showToast('Memuat turun data dari Google Sheet...', 'info');
+      if (!isSilent) showToast('Memuat turun data dari Google Sheet...', 'info');
 
       try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Status respon ' + response.status);
+        const queryUrl = url + (url.includes('?') ? '&' : '?') + 'sheetId=' + encodeURIComponent(sheetId) + '&t=' + Date.now();
+        const response = await fetch(queryUrl);
+        if (!response.ok) throw new Error('Status respon: ' + response.status);
         const data = await response.json();
 
-        if (Array.isArray(data) && data.length > 0) {
-          slots = data;
+        const records = Array.isArray(data) ? data : (data.records || data.data || []);
+        if (Array.isArray(records) && records.length > 0) {
+          slots = records;
           saveToLocalStorage();
           renderSchedule();
           updateAnalytics();
-          showToast(`Berjaya! ${data.length} slot aktiviti dimuat turun dari Google Sheet.`, 'success');
+          const timeStr = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+          updateSyncBannerStatus(true, `Tersambung ke Google Sheet • Disegerak pada jam ${timeStr}`);
+          if (!isSilent) {
+            showToast(`Berjaya! ${records.length} slot aktiviti dimuat turun dari Google Sheet.`, 'success');
+          }
         } else {
-          showToast('Helaian Google masih kosong. Gunakan "Simpan ke Sheet" untuk menghantar data pertama.', 'info');
+          if (!isSilent) {
+            showToast('Helaian Google masih kosong. Klik "Simpan ke Sheet" untuk menghantar data pertama.', 'info');
+          }
         }
       } catch (err) {
-        console.error("Ralat muat turun:", err);
-        showToast('Gagal memuat turun data dari Google Sheet: ' + err.message, 'error');
+        console.warn("Maklumat fetch Google Sheet:", err);
+        if (!isSilent) {
+          showToast('Google Sheet sedang bersedia atau di luar talian. Menggunakan data tempatan.', 'info');
+        }
+      } finally {
+        if (fetchBtn && !isSilent) {
+          fetchBtn.innerHTML = '<i class="fa-solid fa-rotate text-xs"></i> <span class="hidden sm:inline">Segerak Sekarang</span>';
+          fetchBtn.disabled = false;
+        }
       }
     }
 
