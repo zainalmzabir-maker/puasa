@@ -46,12 +46,12 @@
         </span>
         <span class="font-bold text-slate-100" id="syncStatusTitle">Simpan Automatik Aktif</span>
         <span class="text-slate-400 hidden sm:inline">•</span>
-        <span id="syncStatusSubtitle" class="text-slate-300">Semua perubahan disimpan terus ke Google Sheet</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Setiap perubahan disimpan terus ke Sheet</span>
       </div>
       <div class="flex items-center gap-3">
         <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700">Tersimpan: Baru sahaja</span>
         <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-300 hover:text-white font-medium transition">
-          <span>Buka Sheet</span>
+          <span>Buka Google Sheet</span>
           <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
         </a>
       </div>
@@ -70,7 +70,7 @@
             <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa</h1>
             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">SEMEKAR 2026</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Auto-Simpan Google Sheet Aktif</p>
+          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Cuti Tingkatan Sehari Penuh</p>
         </div>
       </div>
 
@@ -80,7 +80,7 @@
           <span>Tetapkan Bidang Blok</span>
         </button>
 
-        <button onclick="syncFromGoogleSheet()" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition" title="Muat turun data terkini sekiranya guru lain mengemas kini helaian">
+        <button onclick="syncFromGoogleSheet()" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition" title="Muat turun data terkini dari Google Sheet">
           <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="syncIcon"></i>
           <span>Muat Semula</span>
         </button>
@@ -103,7 +103,7 @@
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
             Rumusan Pengisian Program (273 Slot Aktif • Tepat 25% Setiap Bidang)
           </h2>
-          <p class="text-[11px] text-slate-500">Sebarang pengisian slot atau cuti tingkatan akan terus disimpan ke Google Sheet secara automatik.</p>
+          <p class="text-[11px] text-slate-500">Cuti murid diuruskan secara sehari penuh. Sebarang kemas kini terus disimpan ke Google Sheet.</p>
         </div>
 
         <div class="flex items-center gap-2 text-xs font-semibold">
@@ -209,8 +209,8 @@
         <span><strong>Kalendar Berkotak (Isnin – Jumaat):</strong> Rehat 10:00 – 10:30 PG Kekal • 13 Slot 30 Minit Setiap Hari</span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-indigo-700 font-bold">⚡ Simpan Terus:</span>
-        <span class="text-slate-500">Data dihantar secara automatik ke Google Sheet sebaik sahaja anda klik Simpan.</span>
+        <span class="text-indigo-700 font-bold">⚡ Auto-Simpan Aktif:</span>
+        <span class="text-slate-500">Data cuti dan aktiviti dihantar ke Google Sheet serentak secara automatik.</span>
       </div>
     </div>
 
@@ -313,7 +313,7 @@
           <button type="button" onclick="closeDayAttendanceModal()" class="px-3.5 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
           <button type="button" onclick="saveDayAttendance()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md flex items-center gap-1.5">
             <i data-lucide="check" class="w-3.5 h-3.5"></i>
-            <span>Simpan Ketetapan Hari</span>
+            <span>Simpan & Segerak ke Sheet</span>
           </button>
         </div>
       </div>
@@ -607,7 +607,7 @@
     const CONFIG = {
       SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec',
       SHEET_ID: '13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI',
-      STORAGE_KEY: 'PUASA_MONTH_GRID_V8_AUTOSYNC'
+      STORAGE_KEY: 'PUASA_MONTH_GRID_V9_FIXED'
     };
 
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
@@ -638,7 +638,6 @@
 
     let activeMonthFilter = 'ALL';
 
-    // STRUKTUR KALENDAR: NOVEMBER (02–30 NOV) & DISEMBER (01–04 DIS) DIASINGKAN DENGAN TEPAT
     const NOVEMBER_WEEKS = [
       {
         minggu: 1,
@@ -709,6 +708,20 @@
     let dayAttendanceMap = {};
     let autoSaveTimeout = null;
 
+    function getMingguFromTarikh(tarikh) {
+      if (!tarikh) return 1;
+      const d = parseInt(tarikh.split('-')[2], 10);
+      const m = parseInt(tarikh.split('-')[1], 10);
+      if (m === 11) {
+        if (d <= 6) return 1;
+        if (d <= 13) return 2;
+        if (d <= 20) return 3;
+        if (d <= 27) return 4;
+        return 5;
+      }
+      return 5;
+    }
+
     function initEmptyStructure() {
       const initial = {};
       let activeSlotCounter = 0;
@@ -750,6 +763,7 @@
 
           initial[slotKey] = {
             id: slotKey,
+            minggu: getMingguFromTarikh(d.tarikh),
             tarikh: d.tarikh,
             hari: d.hari,
             slotId: slot.id,
@@ -801,27 +815,30 @@
       localStorage.setItem(CONFIG.STORAGE_KEY + '_BLOCKS', JSON.stringify(blockFieldConfig));
       localStorage.setItem(CONFIG.STORAGE_KEY + '_DAY_ATT', JSON.stringify(dayAttendanceMap));
       updateStatistics();
-      // PENCETUS SIMPAN AUTOMATIK TERUS KE SHEET (TANPA BUTANG MANUAL)
       triggerAutoSave();
     }
 
     // ==========================================
-    // SISTEM AUTO-SAVE LATAR BELAKANG KE GOOGLE SHEET
+    // AUTO-SAVE LATAR BELAKANG TERUS KE SHEET
     // ==========================================
     function triggerAutoSave() {
       updateSyncStatusUI('saving');
       if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
       autoSaveTimeout = setTimeout(() => {
         executeBackgroundSaveToSheet();
-      }, 500); // Debounce 500ms
+      }, 500);
     }
 
     async function executeBackgroundSaveToSheet() {
       try {
         const payload = Object.values(activitiesMap).map(s => {
           const dayAtt = dayAttendanceMap[s.tarikh] || { cutiForms: [], adaForms: ALL_FORMS };
+          const cutiString = (dayAtt.cutiForms || []).join(', ');
+          const adaString = (dayAtt.adaForms || []).join(', ');
+
           return {
             id: s.id,
+            minggu: s.minggu || getMingguFromTarikh(s.tarikh),
             tarikh: s.tarikh,
             hari: s.hari,
             masa: s.masa,
@@ -830,8 +847,12 @@
             deskripsi: s.deskripsi,
             guru: s.guru,
             lokasi: s.lokasi,
-            tingkatanCuti: (dayAtt.cutiForms || []).join(', '),
-            tingkatanAda: (dayAtt.adaForms || []).join(', ')
+            // Hantar kedua-dua nama medan supaya serasi dengan semua versi Code.gs
+            tingkatanCuti: cutiString,
+            kelasBercuti: cutiString,
+            tingkatanAda: adaString,
+            sasaran: adaString,
+            status: 'Aktif'
           };
         });
 
@@ -848,7 +869,7 @@
           updateSyncStatusUI('error', result.message);
         }
       } catch (err) {
-        console.warn('Auto-save network error:', err);
+        console.warn('Auto-save network warning:', err);
         updateSyncStatusUI('offline');
       }
     }
@@ -867,14 +888,14 @@
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75';
         title.textContent = 'Menyimpan...';
-        subtitle.textContent = 'Menghantar kemas kini terkini ke Google Sheet';
+        subtitle.textContent = 'Menghantar kemas kini ke Google Sheet';
         label.textContent = 'Menyimpan...';
         label.className = 'text-amber-300 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700';
       } else if (status === 'saved') {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
         title.textContent = 'Tersimpan ke Sheet';
-        subtitle.textContent = 'Semua perubahan terkini telah disegerakkan';
+        subtitle.textContent = 'Semua perubahan telah disegerakkan';
         label.textContent = `Tersimpan: ${timeStr}`;
         label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700';
       } else if (status === 'offline') {
@@ -902,7 +923,6 @@
       renderMonthCalendar();
     }
 
-    // JANA PAPARAN KALENDAR (BULAN NOVEMBER & DISEMBER DIASINGKAN)
     function renderMonthCalendar() {
       const container = document.getElementById('calendarMonthContainer');
       container.innerHTML = '';
@@ -910,7 +930,7 @@
       const selBidang = document.getElementById('filterBidang').value;
       const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
 
-      // 1. PAPARKAN NOVEMBER (02 - 30 NOV)
+      // 1. NOVEMBER (02 - 30 NOV)
       if (activeMonthFilter === 'ALL' || activeMonthFilter === '11') {
         const novCard = document.createElement('div');
         novCard.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden';
@@ -939,7 +959,7 @@
         container.appendChild(novCard);
       }
 
-      // 2. PAPARKAN DISEMBER (01 - 04 DIS)
+      // 2. DISEMBER (01 - 04 DIS)
       if (activeMonthFilter === 'ALL' || activeMonthFilter === '12') {
         const decCard = document.createElement('div');
         decCard.className = 'bg-white rounded-2xl border-2 border-indigo-500/40 shadow-md overflow-hidden';
@@ -1046,7 +1066,6 @@
 
       return `
         <div class="calendar-box group bg-white hover:bg-slate-50 transition p-2.5 min-h-[175px] flex flex-col justify-between border-b sm:border-b-0 border-r border-slate-200 shadow-xs hover:shadow-md">
-          <!-- KEPALA KOTAK: TARIKH & BUTANG URUS CUTI TINGKATAN -->
           <div class="flex items-start justify-between border-b border-slate-100 pb-1.5">
             <div>
               <span class="text-lg font-black text-slate-900 leading-none">${day.dayNum}</span>
@@ -1059,7 +1078,6 @@
             </button>
           </div>
 
-          <!-- JALUR MINI 13 SLOT -->
           <div onclick="openDayDrawer('${day.tarikh}')" class="my-1.5 space-y-1 cursor-pointer">
             <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
               <span>07:30 PG</span>
@@ -1076,7 +1094,6 @@
             </div>
           </div>
 
-          <!-- SENARAI RINGKAS AKTIVITI HARIAN -->
           <div onclick="openDayDrawer('${day.tarikh}')" class="flex-grow space-y-1 my-1 cursor-pointer">
             ${activitiesList.length > 0 ? activitiesList.slice(0, 2).map(act => {
               const theme = getBidangColorTheme(act.bidang);
@@ -1097,7 +1114,6 @@
             ${activitiesList.length > 2 ? `<div class="text-[9px] font-bold text-indigo-600 text-center">+ ${activitiesList.length - 2} lagi aktiviti</div>` : ''}
           </div>
 
-          <!-- STATUS TINGKATAN (ADA VS CUTI) -->
           <div class="pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
             <span class="text-emerald-700 font-bold truncate">Ada: ${textAda}</span>
             ${textCuti ? `<span class="text-rose-600 font-bold truncate ml-1">Cuti: ${textCuti}</span>` : ''}
@@ -1106,7 +1122,6 @@
       `;
     }
 
-    // MODAL CUTI TINGKATAN SEHARI PENUH
     function openDayAttendanceModal(tarikh) {
       const dObj = new Date(tarikh);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
@@ -1213,7 +1228,6 @@
       showToast('Ketetapan cuti tingkatan disimpan & disegerakkan ke Sheet.');
     }
 
-    // BUKA DRAWER PECAHAN 13 SLOT
     function openDayDrawer(tarikh) {
       const dObj = new Date(tarikh);
       const formattedDate = dObj.toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
@@ -1234,7 +1248,6 @@
       const slots = TIME_SLOTS.map(s => activitiesMap[`${tarikh}_slot_${s.id}`]);
 
       slots.forEach((s, idx) => {
-        // WAKTU REHAT KEKAL 10:00 - 10:30 PAGI
         if (idx === 5) {
           const rehatDiv = document.createElement('div');
           rehatDiv.className = 'p-2 bg-amber-100 text-amber-900 border border-amber-300 rounded-xl flex items-center justify-center gap-2 font-bold text-xs shadow-xs';
@@ -1299,7 +1312,6 @@
       document.getElementById('dayDrawerModal').classList.add('hidden');
     }
 
-    // BUKA MODAL JULAT WAKTU
     function openRangeActivityModal(initialSlotId) {
       const tarikh = document.getElementById('drawerSlotList').getAttribute('data-tarikh');
       if (!tarikh) return;
@@ -1367,7 +1379,6 @@
       }
     }
 
-    // SIMPAN FORM KE SEMUA KOTAK SLOT DALAM JULAT WAKTU (AUTO SAVE TRIGGERED)
     function handleFormSubmit(e) {
       e.preventDefault();
       const tarikh = document.getElementById('modalTarikhHidden').value;
@@ -1550,7 +1561,7 @@
       showToast('Tetapan 4 Blok berjaya dikemas kini & disegerakkan!');
     }
 
-    // FUNGSI MUAT SEMULA DARI GOOGLE SHEET (SEKIRANYA ADA KEMASKINI GURU LAIN)
+    // FUNGSI BACA SEMULA DARI GOOGLE SHEET (DENGAN PENYELARASAN DWI-KUNCI)
     async function syncFromGoogleSheet() {
       const btnSync = document.getElementById('btnSync');
       const syncIcon = document.getElementById('syncIcon');
@@ -1564,11 +1575,16 @@
         if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
           json.data.forEach(item => {
             if (item.id && activitiesMap[item.id]) {
-              activitiesMap[item.id] = { ...activitiesMap[item.id], ...item };
+              activitiesMap[item.id] = {
+                ...activitiesMap[item.id],
+                ...item
+              };
             }
 
-            if (item.tarikh && item.tingkatanCuti !== undefined) {
-              const cutiList = item.tingkatanCuti ? item.tingkatanCuti.split(',').map(s => s.trim()).filter(Boolean) : [];
+            // Selesaikan isu data cuti tak lekat: terima tingkatanCuti ATAU kelasBercuti
+            const cutiRaw = item.tingkatanCuti !== undefined ? item.tingkatanCuti : item.kelasBercuti;
+            if (item.tarikh && cutiRaw !== undefined && cutiRaw !== null) {
+              const cutiList = cutiRaw ? cutiRaw.toString().split(',').map(s => s.trim()).filter(Boolean) : [];
               const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
               dayAttendanceMap[item.tarikh] = {
                 tarikh: item.tarikh,
@@ -1578,14 +1594,15 @@
               };
             }
           });
+
           localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(activitiesMap));
           localStorage.setItem(CONFIG.STORAGE_KEY + '_DAY_ATT', JSON.stringify(dayAttendanceMap));
           renderMonthCalendar();
           updateSyncStatusUI('saved');
-          showToast('Data terkini berjaya dimuat turun dari Google Sheet.');
+          showToast('Data Google Sheet berjaya dimuat turun.');
         }
       } catch (err) {
-        console.warn('Gagal memuat turun data:', err);
+        console.warn('Gagal muat turun data:', err);
       } finally {
         btnSync.disabled = false;
         syncIcon.classList.remove('animate-spin');
