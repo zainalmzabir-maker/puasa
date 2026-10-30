@@ -36,7 +36,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- BAR STATUS INTEGRASI & AUTO-SAVE KE GOOGLE SHEET -->
+  <!-- STATUS PENYEGERAKAN GOOGLE SHEET -->
   <header class="bg-slate-900 text-white border-b border-slate-800 no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-xs gap-2">
       <div class="flex items-center gap-2.5">
@@ -46,10 +46,10 @@
         </span>
         <span class="font-bold text-slate-100" id="syncStatusTitle">Penyegerakan Google Sheet</span>
         <span class="text-slate-400 hidden sm:inline">•</span>
-        <span id="syncStatusSubtitle" class="text-slate-300">Data cuti & aktiviti disegerakkan secara langsung</span>
+        <span id="syncStatusSubtitle" class="text-slate-300">Format baris kalis had 50k aksara</span>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="testConnection()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded border border-slate-700 font-medium text-[11px] transition">
+        <button onclick="testConnection()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded border border-slate-700 font-semibold text-[11px] transition">
           ⚡ Uji Sambungan Sheet
         </button>
         <span id="lastSyncLabel" class="text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Tersedia</span>
@@ -72,7 +72,7 @@
             <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa</h1>
             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">SEMEKAR 2026</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Slot 30 Minit (Maksimum 2:30 PTG)</p>
+          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar • 02 Nov – 04 Dis 2026 • Auto-Simpan Aktif</p>
         </div>
       </div>
 
@@ -84,7 +84,7 @@
 
         <button onclick="manualSyncToSheet()" id="btnManualPush" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
           <i data-lucide="cloud-upload" class="w-4 h-4" id="pushIcon"></i>
-          <span>Simpan & Hantar ke Sheet</span>
+          <span>Hantar Terus ke Sheet</span>
         </button>
 
         <button onclick="syncFromGoogleSheet(true)" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition" title="Muat turun data terkini dari Google Sheet">
@@ -209,7 +209,7 @@
       </div>
     </div>
 
-    <!-- WADAH KALENDAR BULANAN (PENGASINGAN BULAN NOVEMBER & DISEMBER) -->
+    <!-- WADAH KALENDAR BULANAN -->
     <div id="calendarMonthContainer" class="space-y-8">
       <!-- Dijana oleh JavaScript -->
     </div>
@@ -334,7 +334,6 @@
       </div>
 
       <div class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-grow custom-scroll">
-        <!-- BAR STATUS TINGKATAN & BUTANG ISI PANTAS -->
         <div class="bg-indigo-50/80 p-3 rounded-xl border border-indigo-200 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div class="flex flex-wrap items-center gap-3">
             <div class="flex items-center gap-1.5">
@@ -358,10 +357,7 @@
           </div>
         </div>
 
-        <!-- SENARAI 13 SLOT 30 MINIT -->
-        <div class="space-y-2" id="drawerSlotList">
-          <!-- Dijana oleh JS -->
-        </div>
+        <div class="space-y-2" id="drawerSlotList"></div>
       </div>
 
       <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end gap-2 flex-shrink-0">
@@ -372,7 +368,7 @@
     </div>
   </div>
 
-  <!-- MODAL PENYUNTINGAN AKTIVITI (JULAT WAKTU) -->
+  <!-- MODAL PENYUNTINGAN AKTIVITI (DENGAN PEMILIHAN JULAT WAKTU) -->
   <div id="activityModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
@@ -391,7 +387,6 @@
       <form id="activityForm" onsubmit="handleFormSubmit(event)" class="p-5 space-y-3.5 text-xs">
         <input type="hidden" id="modalTarikhHidden">
 
-        <!-- INFO TARIKH & BIDANG -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
           <div>
             <label class="block font-semibold text-slate-600 mb-0.5">Tarikh & Hari</label>
@@ -411,7 +406,6 @@
           </div>
         </div>
 
-        <!-- JULAT WAKTU (MULA & TAMAT) -->
         <div class="bg-indigo-50/70 p-3 rounded-xl border border-indigo-200 space-y-2">
           <div class="flex items-center justify-between">
             <span class="font-bold text-slate-800 text-[11px] uppercase flex items-center gap-1.5">
@@ -421,7 +415,6 @@
             <span class="text-[10px] text-slate-500 italic">*Semua kotak dalam julat ini diisi serentak</span>
           </div>
 
-          <!-- PRATETAP PANTAS JULAT -->
           <div class="flex flex-wrap gap-1.5 pt-0.5">
             <button type="button" onclick="setQuickTimeRange('0730', '1000')" class="px-2 py-1 bg-white hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-200 font-medium text-[11px]">
               Sebelum Rehat (07:30 – 10:00 PG)
@@ -437,7 +430,6 @@
             </button>
           </div>
 
-          <!-- DROPDOWN WAKTU MULA & TAMAT -->
           <div class="grid grid-cols-2 gap-3 pt-1">
             <div>
               <label class="block font-bold text-slate-700 mb-0.5">Waktu Mula:</label>
@@ -482,19 +474,16 @@
           </div>
         </div>
 
-        <!-- NAMA AKTIVITI -->
         <div>
           <label class="block font-bold text-slate-700 mb-0.5">Nama Aktiviti / Pengisian <span class="text-rose-500">*</span></label>
           <input type="text" id="modalAktiviti" placeholder="Contoh: Bengkel STEM, Klinik RBT, Modul Celik Bahasa..." class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none" required>
         </div>
 
-        <!-- DESKRIPSI -->
         <div>
           <label class="block font-semibold text-slate-700 mb-0.5">Ringkasan Deskripsi Aktiviti</label>
           <textarea id="modalDeskripsi" rows="2" placeholder="Catatkan fokus pengisian atau peralatan..." class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
         </div>
 
-        <!-- GURU & LOKASI -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div>
             <label class="block font-bold text-slate-700 mb-0.5 flex items-center gap-1">
@@ -782,7 +771,6 @@
     }
 
     function loadSavedData() {
-      // Baca dari LocalStorage sebagai paparan segera
       const cached = localStorage.getItem(CONFIG.STORAGE_KEY);
       const cachedBlocks = localStorage.getItem(CONFIG.STORAGE_KEY + '_BLOCKS');
       const cachedDayAtt = localStorage.getItem(CONFIG.STORAGE_KEY + '_DAY_ATT');
@@ -823,9 +811,6 @@
       }
     }
 
-    // ==========================================
-    // SISTEM AUTO-SAVE & PUSH KE GOOGLE SHEET
-    // ==========================================
     function triggerAutoSave() {
       updateSyncStatusUI('saving');
       if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
@@ -849,37 +834,32 @@
     async function pushDataToGoogleSheet(isManual = false) {
       updateSyncStatusUI('saving');
 
-      // Bina senarai baris yang diisi untuk helaian Jadual_PUasa
-      const rowList = [];
-      Object.values(activitiesMap).forEach(s => {
-        const dayAtt = dayAttendanceMap[s.tarikh] || { cutiForms: [], adaForms: ALL_FORMS };
-        const cutiStr = (dayAtt.cutiForms || []).join(', ');
-        const adaStr = (dayAtt.adaForms || []).join(', ');
+      const slotsPayload = Object.values(activitiesMap).map(s => ({
+        id: s.id,
+        minggu: s.minggu || getMingguFromTarikh(s.tarikh),
+        tarikh: s.tarikh,
+        hari: s.hari,
+        slotId: s.slotId || '',
+        masa: s.masa || '',
+        bidang: s.bidang || '',
+        aktiviti: s.aktiviti || '',
+        guru: s.guru || '',
+        lokasi: s.lokasi || '',
+        deskripsi: s.deskripsi || ''
+      }));
 
-        // Masukkan semua slot atau slot yang ada maklumat/cuti
-        rowList.push({
-          minggu: s.minggu || getMingguFromTarikh(s.tarikh),
-          tarikh: s.tarikh,
-          hari: s.hari,
-          masa: s.masa,
-          bidang: s.bidang,
-          aktiviti: s.aktiviti || (s.isCuti ? s.catatanCuti : ''),
-          guru: s.guru || '',
-          lokasi: s.lokasi || '',
-          tingkatanCuti: cutiStr,
-          tingkatanAda: adaStr,
-          catatan: s.deskripsi || ''
-        });
-      });
+      const attendancePayload = Object.values(dayAttendanceMap).map(a => ({
+        tarikh: a.tarikh,
+        hari: a.hari,
+        cutiForms: a.cutiForms || [],
+        adaForms: a.adaForms || [],
+        catatan: a.catatan || ''
+      }));
 
       const payload = {
-        state: {
-          slots: activitiesMap,
-          attendance: dayAttendanceMap,
-          blocks: blockFieldConfig,
-          lastUpdated: new Date().toISOString()
-        },
-        rows: rowList
+        slots: slotsPayload,
+        attendance: attendancePayload,
+        blocks: blockFieldConfig
       };
 
       try {
@@ -894,14 +874,12 @@
         try {
           result = JSON.parse(rawText);
         } catch(e) {
-          throw new Error('Google Apps Script memulangkan HTML / Login Page. Pastikan deployment disetkan kepada "Anyone".');
+          throw new Error('Google memulangkan halaman HTML. Pastikan tetapan Deployment access "Anyone".');
         }
 
         if (result.status === 'success') {
           updateSyncStatusUI('saved', result.timestamp);
-          if (isManual) {
-            showToast('✅ Berjaya disimpan & disegerakkan ke Google Sheet!');
-          }
+          if (isManual) showToast('✅ Data berjaya dihantar ke Google Sheet!');
         } else {
           updateSyncStatusUI('error', result.message);
           if (isManual) alert('Ralat dari Sheet: ' + result.message);
@@ -909,15 +887,10 @@
       } catch (err) {
         console.error('Push error:', err);
         updateSyncStatusUI('offline', err.message);
-        if (isManual) {
-          alert('Gagal menyambung ke Google Sheet: ' + err.message + '\n\nSila pastikan Web App telah di-Deploy dengan access "Anyone".');
-        }
+        if (isManual) alert('Gagal berhubung ke Google Sheet: ' + err.message);
       }
     }
 
-    // ==========================================
-    // SISTEM PULL (BACA DARI GOOGLE SHEET)
-    // ==========================================
     async function syncFromGoogleSheet(isManual = false) {
       const btnSync = document.getElementById('btnSync');
       const syncIcon = document.getElementById('syncIcon');
@@ -933,22 +906,56 @@
         try {
           json = JSON.parse(rawText);
         } catch(e) {
-          throw new Error('Apps Script tidak memulangkan JSON. Sila semak deployment access "Anyone".');
+          throw new Error('Sila semak Web App access "Anyone".');
         }
 
-        if (json.status === 'success' && json.state && json.state.slots) {
-          // Guna state yang disimpan daripada cell DB_STATE
-          activitiesMap = json.state.slots;
-          if (json.state.attendance) dayAttendanceMap = json.state.attendance;
-          if (json.state.blocks) blockFieldConfig = json.state.blocks;
+        if (json.status === 'success') {
+          let hasIncoming = false;
+
+          // 1. Muatkan Slots
+          if (json.slots && Array.isArray(json.slots) && json.slots.length > 0) {
+            json.slots.forEach(item => {
+              if (item.id && activitiesMap[item.id]) {
+                if (item.aktiviti && item.aktiviti.trim() !== '') {
+                  activitiesMap[item.id] = { ...activitiesMap[item.id], ...item };
+                  hasIncoming = true;
+                }
+              }
+            });
+          }
+
+          // 2. Muatkan Cuti Harian
+          if (json.attendance && Array.isArray(json.attendance) && json.attendance.length > 0) {
+            json.attendance.forEach(item => {
+              if (item.tarikh) {
+                const cutiRaw = item.cutiForms;
+                const cutiList = Array.isArray(cutiRaw) ? cutiRaw : (cutiRaw ? cutiRaw.toString().split(',').map(s => s.trim()).filter(Boolean) : []);
+                const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
+                dayAttendanceMap[item.tarikh] = {
+                  tarikh: item.tarikh,
+                  hari: item.hari || '',
+                  cutiForms: cutiList,
+                  adaForms: adaList,
+                  catatan: item.catatan || ''
+                };
+                hasIncoming = true;
+              }
+            });
+          }
+
+          // 3. Muatkan Blok
+          if (json.blocks && typeof json.blocks === 'object') {
+            blockFieldConfig = { ...blockFieldConfig, ...json.blocks };
+            hasIncoming = true;
+          }
 
           saveToLocalStorage(false);
           renderMonthCalendar();
           updateSyncStatusUI('saved');
-          if (isManual) showToast('Data diselaraskan dari Google Sheet terkini.');
-        } else if (isManual) {
-          showToast('Helaian Sheet masih bersih. Menghantar data tempatan anda ke Sheet...');
-          pushDataToGoogleSheet(false);
+
+          if (isManual) {
+            showToast(hasIncoming ? 'Data diselaraskan dari Google Sheet.' : 'Helaian Sheet masih bersih. Data tempatan selamat.');
+          }
         }
       } catch (err) {
         console.warn('Gagal muat turun:', err);
@@ -962,19 +969,18 @@
       }
     }
 
-    // UJI SAMBUNGAN GOOGLE APPS SCRIPT
     async function testConnection() {
       showToast('Menguji sambungan ke Google Apps Script...');
       try {
         const res = await fetch(CONFIG.SCRIPT_URL + '?action=test&t=' + Date.now());
         const text = await res.text();
         if (text.includes('<!DOCTYPE html>')) {
-          alert('AMARAN KEBENARAN:\n\nGoogle memulangkan halaman Login. Ini bermakna Web App anda BELUM di-setkan kepada "Anyone".\n\nSila ke Apps Script > Deploy > Manage deployments > Edit > Who has access: Anyone.');
+          alert('AMARAN KEBENARAN:\n\nGoogle memulangkan halaman Login. Sila pastikan Deployment disetkan kepada "Anyone".');
         } else {
-          alert('STATUS: TERSAMBUNG DENGAN BAIK!\n\nGoogle Apps Script membalas dengan JSON yang sah. Data boleh disegerakkan.');
+          alert('STATUS: TERSAMBUNG!\n\nGoogle Apps Script membalas dengan JSON yang sah. Data boleh dihantar & dibaca.');
         }
       } catch (err) {
-        alert('RALAT SAMBUNGAN:\n\n' + err.message + '\n\nSila semak sambungan internet anda atau URL Web App.');
+        alert('RALAT SAMBUNGAN:\n\n' + err.message);
       }
     }
 
@@ -999,14 +1005,14 @@
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400';
         pulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75';
         title.textContent = 'Tersimpan ke Google Sheet';
-        subtitle.textContent = 'Semua peranti melihat data yang sama';
+        subtitle.textContent = 'Data cuti & aktiviti disegerakkan';
         label.textContent = `Tersimpan: ${timeStr}`;
         label.className = 'text-emerald-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       } else {
         dot.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500';
         pulse.className = 'hidden';
         title.textContent = 'Belum Masuk ke Sheet';
-        subtitle.textContent = 'Klik butang "Simpan & Hantar ke Sheet"';
+        subtitle.textContent = 'Klik butang "Hantar Terus ke Sheet"';
         label.textContent = 'Ralat Hantar';
         label.className = 'text-rose-400 font-mono text-[11px] bg-slate-800 px-2 py-0.5 rounded border border-slate-700';
       }
@@ -1678,7 +1684,6 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadSavedData();
       lucide.createIcons();
-      // Segerak dari Google Sheet semasa mula dibuka
       setTimeout(() => syncFromGoogleSheet(false), 1200);
     });
   </script>
