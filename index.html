@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Pengurusan Program Pasca UASA</title>
+  <title>PUasa (Program Pasca UASA Semekar 2026)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
@@ -26,26 +26,30 @@
   <style>
     @media print {
       .no-print { display: none !important; }
-      body { background: white !important; font-size: 10pt; }
+      body { background: white !important; font-size: 8pt; }
+      .print-timetable { width: 100% !important; overflow: visible !important; }
     }
+    .custom-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- BAR STATUS INTEGRASI GOOGLE SHEET -->
+  <!-- STATUS INTEGRASI GOOGLE SHEET -->
   <header class="bg-slate-900 text-white border-b border-slate-800 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-xs sm:text-sm gap-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between text-xs gap-2">
       <div class="flex items-center gap-2">
         <span class="relative flex h-2.5 w-2.5">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span class="font-medium text-slate-200">Tersambung ke Google Sheet</span>
+        <span class="font-medium text-slate-200">Tersambung ke Google Sheet SEMEKAR</span>
         <span class="text-slate-400 hidden md:inline">| ID: <span class="font-mono text-slate-300">13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI</span></span>
       </div>
       <div class="flex items-center gap-3">
-        <span id="lastSyncLabel" class="text-slate-400 text-xs">Penyegerakan: Belum disegerak</span>
-        <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-medium transition">
+        <span id="lastSyncLabel" class="text-slate-400">Penyegerakan: Belum disegerak</span>
+        <a href="https://docs.google.com/spreadsheets/d/13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI/edit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-medium">
           <span>Buka Google Sheet</span>
           <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
         </a>
@@ -53,36 +57,39 @@
     </div>
   </header>
 
-  <!-- KEPALA HALAMAN & TINDAKAN UTAMA -->
+  <!-- KEPALA HALAMAN -->
   <div class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md">
-          <i data-lucide="calendar-check" class="w-6 h-6"></i>
+        <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md font-black text-lg tracking-tight">
+          PU
         </div>
         <div>
-          <h1 class="text-lg sm:text-xl font-bold text-slate-900 leading-tight">Pengurusan Program Pasca UASA 2026</h1>
-          <p class="text-xs sm:text-sm text-slate-500">02 Nov – 04 Dis 2026 • 4 Blok Berturut (Tepat 11 Slot Sama Rata) • Tingkatan 1, 2, 3 & 4</p>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg sm:text-xl font-black text-slate-900">PUasa</h1>
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-800">SEMEKAR 2026</span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">Program Pasca UASA Semekar 2026 • 02 Nov – 04 Dis 2026 • Slot 30 Minit (07:30 PG – 02:30 PTG)</p>
         </div>
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
-        <button onclick="openBlockConfigModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs sm:text-sm font-semibold rounded-lg border border-indigo-200 transition">
+        <button onclick="openBlockConfigModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-200 transition">
           <i data-lucide="sliders" class="w-4 h-4"></i>
           <span>Tetapkan Bidang Blok</span>
         </button>
 
-        <button onclick="syncFromGoogleSheet()" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-medium rounded-lg border border-slate-300 transition">
+        <button onclick="syncFromGoogleSheet()" id="btnSync" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg border border-slate-300 transition">
           <i data-lucide="refresh-cw" class="w-4 h-4" id="syncIcon"></i>
           <span>Muat Semula</span>
         </button>
 
-        <button onclick="saveToGoogleSheet()" id="btnSave" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-sm transition">
+        <button onclick="saveToGoogleSheet()" id="btnSave" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition">
           <i data-lucide="cloud-upload" class="w-4 h-4" id="saveIcon"></i>
           <span>Simpan ke Sheet</span>
         </button>
 
-        <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-medium rounded-lg transition">
+        <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded-lg transition">
           <i data-lucide="printer" class="w-4 h-4"></i>
           <span>Cetak</span>
         </button>
@@ -90,80 +97,77 @@
     </div>
   </div>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-grow space-y-6">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-5 w-full flex-grow space-y-5">
 
-    <!-- PANEL STATISTIK 4 BLOK BERTURUT-TURUT SAMA RATA -->
-    <section class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-3">
+    <!-- PANEL STATISTIK 4 BLOK SAMA RATA (25% SETIAP BIDANG) -->
+    <section class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i>
-            Agihan 4 Blok Berturut-Turut (Tepat 11 Slot Sama Rata = 25% Setiap Bidang)
+            Agihan 4 Bidang Berturut-turut (~68 Slot Setiap Blok = 25% Sama Rata)
           </h2>
-          <p class="text-xs text-slate-500">Jumlah: 44 Slot Aktiviti Sama Rata + 2 Slot Khas (Pembukaan & Majlis Penutup) • Bidang boleh ditukar pada bila-bila masa.</p>
+          <p class="text-[11px] text-slate-500">273 Slot Aktif (30 minit setiap slot) • Isnin hingga Jumaat • Rehat 10:00 PG Kekal</p>
         </div>
         <div class="flex items-center gap-2 text-xs font-semibold">
-          <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-200" id="statFilledCount">0 Diisi</span>
-          <span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200" id="statEmptyCount">44 Belum Diisi</span>
-          <span class="px-2.5 py-1 bg-rose-50 text-rose-700 rounded-full border border-rose-200">4 Slot Cuti Deepavali</span>
+          <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full border border-slate-200" id="statFilledCount">0 Diisi</span>
+          <span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full border border-amber-200" id="statEmptyCount">273 Belum Diisi</span>
+          <span class="px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full border border-rose-200">26 Slot Cuti Deepavali</span>
         </div>
       </div>
 
-      <!-- KAD 4 BLOK BERTURUT-TURUT -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-        <!-- BLOK 1 -->
-        <div class="p-3 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock1">
+      <!-- KAD 4 BLOK BIDANG -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+        <div class="p-2.5 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock1">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase text-slate-800">Blok 1 (11 Slot)</span>
-            <span class="text-xs font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700" id="badgeBlock1">25.0%</span>
+            <span class="text-[11px] font-black uppercase text-slate-800">Blok 1 (68 Slot)</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700" id="badgeBlock1">24.9%</span>
           </div>
           <div class="text-xs font-bold text-indigo-700 truncate" id="labelBlock1">Belum Ditentukan</div>
-          <div class="text-[11px] text-slate-500">02 Nov (Slot 2) – 11 Nov</div>
+          <div class="text-[10px] text-slate-500">02 Nov – 09 Nov (Slot Persekolahan)</div>
         </div>
 
-        <!-- BLOK 2 -->
-        <div class="p-3 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock2">
+        <div class="p-2.5 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock2">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase text-slate-800">Blok 2 (11 Slot)</span>
-            <span class="text-xs font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700" id="badgeBlock2">25.0%</span>
+            <span class="text-[11px] font-black uppercase text-slate-800">Blok 2 (68 Slot)</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700" id="badgeBlock2">24.9%</span>
           </div>
           <div class="text-xs font-bold text-indigo-700 truncate" id="labelBlock2">Belum Ditentukan</div>
-          <div class="text-[11px] text-slate-500">12 Nov – 19 Nov (Slot 1)</div>
+          <div class="text-[10px] text-slate-500">12 Nov – 19 Nov</div>
         </div>
 
-        <!-- BLOK 3 -->
-        <div class="p-3 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock3">
+        <div class="p-2.5 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase text-slate-800">Blok 3 (11 Slot)</span>
-            <span class="text-xs font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700" id="badgeBlock3">25.0%</span>
+            <span class="text-[11px] font-black uppercase text-slate-800">Blok 3 (68 Slot)</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700" id="badgeBlock3">24.9%</span>
           </div>
           <div class="text-xs font-bold text-indigo-700 truncate" id="labelBlock3">Belum Ditentukan</div>
-          <div class="text-[11px] text-slate-500">19 Nov (Slot 2) – 26 Nov</div>
+          <div class="text-[10px] text-slate-500">20 Nov – 26 Nov</div>
         </div>
 
-        <!-- BLOK 4 -->
-        <div class="p-3 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock4">
+        <div class="p-2.5 bg-slate-50 border-t-4 border-slate-400 rounded-xl space-y-1" id="cardBlock4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase text-slate-800">Blok 4 (11 Slot)</span>
-            <span class="text-xs font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700" id="badgeBlock4">25.0%</span>
+            <span class="text-[11px] font-black uppercase text-slate-800">Blok 4 (69 Slot)</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700" id="badgeBlock4">25.3%</span>
           </div>
           <div class="text-xs font-bold text-indigo-700 truncate" id="labelBlock4">Belum Ditentukan</div>
-          <div class="text-[11px] text-slate-500">27 Nov – 04 Dis (Slot 1)</div>
+          <div class="text-[10px] text-slate-500">27 Nov – 04 Dis 2026</div>
         </div>
       </div>
     </section>
 
-    <!-- BAR PENAPIS & CARIAN -->
-    <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3 no-print">
-      <div class="flex items-center gap-2">
-        <label for="filterMinggu" class="text-xs font-bold text-slate-700 uppercase">Pilih Minggu:</label>
-        <select id="filterMinggu" onchange="renderCalendar()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium">
-          <option value="ALL">Semua Minggu (Minggu 1 – Minggu 5)</option>
+    <!-- BAR KAWALAN & PENAPIS -->
+    <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2.5 no-print">
+      <!-- PILIHAN MINGGU -->
+      <div class="flex items-center gap-1.5">
+        <label for="filterMinggu" class="text-xs font-bold text-slate-700 uppercase">Minggu:</label>
+        <select id="filterMinggu" onchange="renderTimetable()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg px-2.5 py-1.5 font-medium focus:ring-2 focus:ring-indigo-500">
+          <!-- Opsyen dijana oleh JS -->
         </select>
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
-        <select id="filterBidang" onchange="renderCalendar()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        <select id="filterBidang" onchange="renderTimetable()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500">
           <option value="ALL">Semua Bidang</option>
           <option value="Belum Ditentukan">Belum Ditentukan</option>
           <option value="Bahasa">Bidang Bahasa</option>
@@ -172,61 +176,58 @@
           <option value="Teknik & Vokasional">Bidang Teknik & Vokasional</option>
         </select>
 
-        <select id="filterStatus" onchange="renderCalendar()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        <select id="filterStatus" onchange="renderTimetable()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500">
           <option value="ALL">Semua Status</option>
-          <option value="FILLED">Slot Diisi</option>
-          <option value="EMPTY">Slot Kosong</option>
+          <option value="FILLED">Slot Telah Diisi</option>
+          <option value="EMPTY">Slot Masih Kosong</option>
         </select>
 
         <div class="relative">
-          <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400"></i>
-          <input type="text" id="searchInput" oninput="renderCalendar()" placeholder="Cari guru / aktiviti / tingkatan..." class="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none w-48 sm:w-56">
+          <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2 text-slate-400"></i>
+          <input type="text" id="searchInput" oninput="renderTimetable()" placeholder="Cari guru / aktiviti / tingkatan..." class="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 w-44 sm:w-56">
         </div>
       </div>
     </div>
 
-    <!-- PANDUAN STRUKTUR HARIAN KPM -->
-    <div class="flex flex-wrap items-center justify-between text-xs text-slate-600 bg-indigo-50/70 border border-indigo-100 rounded-xl px-4 py-2.5 gap-2">
+    <!-- PETUNJUK MASA & TINGKATAN -->
+    <div class="flex flex-wrap items-center justify-between text-[11px] text-slate-600 bg-indigo-50/70 border border-indigo-100 rounded-xl px-3 py-2 gap-2">
       <div class="flex items-center gap-2 font-medium">
-        <i data-lucide="clock" class="w-4 h-4 text-indigo-600"></i>
-        <span><strong>Jadual Harian:</strong> Slot 1: 07:30 – 10:00 PG | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong> | Slot 2: 10:30 PG – 01:00 PTG</span>
+        <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-600"></i>
+        <span><strong>Slot Masa 30 Minit:</strong> 07:30 PG hingga 02:30 PTG | <strong class="text-amber-800">10:00 – 10:30 PG (Rehat Kekal)</strong></span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="inline-flex items-center gap-1 text-emerald-700 font-semibold"><i data-lucide="users" class="w-3.5 h-3.5"></i> Tingkatan Ada: Papar Automatik</span>
+        <span class="text-emerald-700 font-bold flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> Tingkatan Ada Dikira Automatik</span>
         <span class="text-slate-400">•</span>
-        <span class="italic text-slate-500">Klik butang (+) untuk mengisi maklumat slot.</span>
+        <span class="italic text-slate-500">Klik mana-mana sel untuk mengisi aktiviti.</span>
       </div>
     </div>
 
-    <!-- PAPARAN KALENDAR (GRID MINGGU 1 HINGGA MINGGU 5 • SEHINGGA 4 DISEMBER 2026) -->
-    <div id="calendarContainer" class="space-y-8">
-      <!-- Dijana secara dinamik oleh JavaScript -->
+    <!-- WADAH JADUAL WAKTU (TIMETABLE GRID 30 MINIT) -->
+    <div id="timetableContainer" class="space-y-6">
+      <!-- Dijana secara dinamik oleh JS -->
     </div>
 
   </main>
 
-  <!-- MODAL PENETAPAN BIDANG MENGIKUT 4 BLOK SECARA PUKAL -->
+  <!-- MODAL PENETAPAN BIDANG MENGIKUT 4 BLOK -->
   <div id="blockConfigModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden">
-      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
-            <i data-lucide="sliders" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold">Tetapkan Bidang Bagi 4 Blok</h3>
-            <p class="text-xs text-slate-400">Tentukan bidang mata pelajaran untuk setiap 11 slot berturut-turut</p>
-          </div>
+      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="sliders" class="w-5 h-5 text-indigo-400"></i>
+          <h3 class="text-sm font-bold">Tetapkan Bidang Bagi 4 Blok (Sama Rata)</h3>
         </div>
-        <button onclick="closeBlockConfigModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+        <button onclick="closeBlockConfigModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div class="p-6 space-y-4 text-xs sm:text-sm">
+      <div class="p-5 space-y-3.5 text-xs">
+        <p class="text-slate-500">Setiap blok merangkumi ~68 slot (30 minit) berturut-turut untuk agihan saksama 25% setiap bidang:</p>
+
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Blok 1 (11 Slot: 02 Nov PTG – 11 Nov)</label>
-          <select id="cfgBlock1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-semibold">
+          <label class="block font-bold text-slate-700 mb-1">Blok 1 (~68 Slot • 02 Nov – 09 Nov)</label>
+          <select id="cfgBlock1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-xs">
             <option value="Belum Ditentukan">Belum Ditentukan</option>
             <option value="Bahasa">Bidang Bahasa</option>
             <option value="Sains & Matematik">Bidang Sains & Matematik</option>
@@ -236,8 +237,8 @@
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Blok 2 (11 Slot: 12 Nov – 19 Nov PG)</label>
-          <select id="cfgBlock2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-semibold">
+          <label class="block font-bold text-slate-700 mb-1">Blok 2 (~68 Slot • 12 Nov – 19 Nov)</label>
+          <select id="cfgBlock2" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-xs">
             <option value="Belum Ditentukan">Belum Ditentukan</option>
             <option value="Bahasa">Bidang Bahasa</option>
             <option value="Sains & Matematik">Bidang Sains & Matematik</option>
@@ -247,8 +248,8 @@
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Blok 3 (11 Slot: 19 Nov PTG – 26 Nov)</label>
-          <select id="cfgBlock3" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-semibold">
+          <label class="block font-bold text-slate-700 mb-1">Blok 3 (~68 Slot • 20 Nov – 26 Nov)</label>
+          <select id="cfgBlock3" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-xs">
             <option value="Belum Ditentukan">Belum Ditentukan</option>
             <option value="Bahasa">Bidang Bahasa</option>
             <option value="Sains & Matematik">Bidang Sains & Matematik</option>
@@ -258,8 +259,8 @@
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Blok 4 (11 Slot: 27 Nov – 04 Dis PG)</label>
-          <select id="cfgBlock4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-semibold">
+          <label class="block font-bold text-slate-700 mb-1">Blok 4 (~69 Slot • 27 Nov – 04 Dis)</label>
+          <select id="cfgBlock4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-xs">
             <option value="Belum Ditentukan">Belum Ditentukan</option>
             <option value="Bahasa">Bidang Bahasa</option>
             <option value="Sains & Matematik">Bidang Sains & Matematik</option>
@@ -268,13 +269,9 @@
           </select>
         </div>
 
-        <div class="pt-4 border-t border-slate-200 flex justify-end gap-2">
-          <button type="button" onclick="closeBlockConfigModal()" class="px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-medium transition">
-            Batal
-          </button>
-          <button type="button" onclick="applyBlockConfiguration()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition">
-            Kemaskini Semua Blok
-          </button>
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
+          <button type="button" onclick="closeBlockConfigModal()" class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
+          <button type="button" onclick="applyBlockConfiguration()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold">Terapkan ke Semua Slot</button>
         </div>
       </div>
     </div>
@@ -282,147 +279,153 @@
 
   <!-- MODAL PENGISIAN & KEMAS KINI SLOT AKTIVITI -->
   <div id="activityModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-2xl my-8 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl my-6 overflow-hidden">
       <!-- HEADER -->
-      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
-            <i data-lucide="edit-3" class="w-5 h-5"></i>
-          </div>
+      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-5 h-5 text-indigo-400"></i>
           <div>
-            <h3 class="text-base sm:text-lg font-bold" id="modalTitle">Pengisian Slot Pasca UASA</h3>
-            <p class="text-xs text-slate-400">Maklumat aktiviti, guru in-charge, dan status kehadiran tingkatan</p>
+            <h3 class="text-sm sm:text-base font-bold" id="modalTitle">Pengisian Slot PUasa 2026</h3>
+            <p class="text-[11px] text-slate-400">Slot 30 Minit • Program Pasca UASA Semekar</p>
           </div>
         </div>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <!-- BORANG PENGISIAN -->
-      <form id="activityForm" onsubmit="handleFormSubmit(event)" class="p-6 space-y-4 text-xs sm:text-sm">
+      <form id="activityForm" onsubmit="handleFormSubmit(event)" class="p-5 space-y-3.5 text-xs">
         <input type="hidden" id="modalSlotId">
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
           <div>
-            <label class="block font-semibold text-slate-600 mb-1">Tarikh & Hari</label>
-            <input type="text" id="modalTarikhHari" readonly class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-700 font-medium cursor-not-allowed">
+            <label class="block font-semibold text-slate-600 mb-0.5">Tarikh & Hari</label>
+            <input type="text" id="modalTarikhHari" readonly class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-slate-700 font-medium cursor-not-allowed">
           </div>
           <div>
-            <label class="block font-semibold text-slate-600 mb-1">Sesi / Slot Masa</label>
-            <select id="modalSesi" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-medium focus:ring-2 focus:ring-indigo-500">
-              <option value="Slot 1 (07:30 - 10:00 PG)">Slot 1 (07:30 - 10:00 PG • Sebelum Rehat)</option>
-              <option value="Slot 2 (10:30 - 01:00 PTG)">Slot 2 (10:30 - 01:00 PTG • Selepas Rehat)</option>
-              <option value="Seharian (07:30 PG - 01:00 PTG)">Seharian (07:30 PG - 01:00 PTG)</option>
-            </select>
+            <label class="block font-semibold text-slate-600 mb-0.5">Masa Slot Mula</label>
+            <input type="text" id="modalSesi" readonly class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-slate-800 font-bold cursor-not-allowed">
           </div>
           <div>
-            <label class="block font-semibold text-slate-600 mb-1">Bidang Mata Pelajaran</label>
-            <select id="modalBidang" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-indigo-500">
+            <label class="block font-semibold text-slate-600 mb-0.5">Bidang Mata Pelajaran</label>
+            <select id="modalBidang" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 font-bold focus:ring-2 focus:ring-indigo-500">
               <option value="Belum Ditentukan" class="text-slate-600">Belum Ditentukan</option>
               <option value="Bahasa" class="text-blue-600">Bidang Bahasa</option>
               <option value="Sains & Matematik" class="text-emerald-600">Bidang Sains & Matematik</option>
               <option value="Sains Kemasyarakatan" class="text-amber-600">Bidang Sains Kemasyarakatan</option>
               <option value="Teknik & Vokasional" class="text-purple-600">Bidang Teknik & Vokasional</option>
-              <option value="Slot Khas Rasmi" class="text-indigo-600">Slot Khas (Pembukaan/Penutupan)</option>
+              <option value="Slot Khas Rasmi" class="text-indigo-600">Slot Khas Rasmi</option>
               <option value="Cuti" class="text-rose-600">Cuti Perayaan / Am</option>
             </select>
           </div>
         </div>
 
-        <!-- RUANG PINTAR TINGKATAN: CUTI VS ADA (AUTOMATIK) -->
-        <div class="bg-indigo-50/60 p-3.5 rounded-xl border border-indigo-100 space-y-2.5">
+        <!-- CIRI LANJUTAN: PANJANGKAN KE SLOT SETERUSNYA (AUTO DURATION) -->
+        <div class="bg-indigo-50/50 p-2.5 rounded-xl border border-indigo-100 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="timer" class="w-4 h-4 text-indigo-600"></i>
+            <span class="font-bold text-slate-800">Tempoh / Panjangkan Aktiviti:</span>
+          </div>
+          <select id="modalDuration" class="bg-white border border-slate-300 rounded-lg px-2 py-1 font-semibold text-indigo-700 focus:ring-2 focus:ring-indigo-500">
+            <option value="1">30 Minit (1 Slot Sahaja)</option>
+            <option value="2">1 Jam (2 Slot Berturutan)</option>
+            <option value="3">1 Jam 30 Minit (3 Slot)</option>
+            <option value="4">2 Jam (4 Slot)</option>
+            <option value="5">2 Jam 30 Minit (5 Slot)</option>
+            <option value="6">3 Jam (6 Slot)</option>
+            <option value="all_day">Seharian (Semua Slot Hari Ini)</option>
+          </select>
+        </div>
+
+        <!-- LOGIK PINTAR TINGKATAN: CUTI VS ADA (AUTOMATIK) -->
+        <div class="bg-indigo-50/60 p-3 rounded-xl border border-indigo-100 space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-800 text-xs uppercase flex items-center gap-1.5">
-              <i data-lucide="check-square" class="w-4 h-4 text-indigo-600"></i>
+            <span class="font-bold text-slate-800 text-[11px] uppercase flex items-center gap-1.5">
+              <i data-lucide="check-square" class="w-3.5 h-3.5 text-indigo-600"></i>
               Tandakan Tingkatan Yang Bercuti / Pelepasan:
             </span>
-            <span class="text-[11px] text-slate-500 italic">Pilih yang bercuti, baki dikira hadir secara automatik</span>
+            <span class="text-[10px] text-slate-500 italic">Pilih yang bercuti, baki dikira hadir</span>
           </div>
 
-          <!-- CHECKBOX T1, T2, T3, T4 -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50">
-              <input type="checkbox" id="chkCutiT1" value="Tingkatan 1" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded focus:ring-rose-500">
+            <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer">
+              <input type="checkbox" id="chkCutiT1" value="Tingkatan 1" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded">
               <span class="font-semibold text-slate-700">Tingkatan 1</span>
             </label>
-            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50">
-              <input type="checkbox" id="chkCutiT2" value="Tingkatan 2" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded focus:ring-rose-500">
+            <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer">
+              <input type="checkbox" id="chkCutiT2" value="Tingkatan 2" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded">
               <span class="font-semibold text-slate-700">Tingkatan 2</span>
             </label>
-            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50">
-              <input type="checkbox" id="chkCutiT3" value="Tingkatan 3" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded focus:ring-rose-500">
+            <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer">
+              <input type="checkbox" id="chkCutiT3" value="Tingkatan 3" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded">
               <span class="font-semibold text-slate-700">Tingkatan 3</span>
             </label>
-            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50">
-              <input type="checkbox" id="chkCutiT4" value="Tingkatan 4" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded focus:ring-rose-500">
+            <label class="flex items-center gap-2 p-1.5 bg-white rounded-lg border border-slate-200 cursor-pointer">
+              <input type="checkbox" id="chkCutiT4" value="Tingkatan 4" onchange="recalculatePresentForms()" class="w-4 h-4 text-rose-600 rounded">
               <span class="font-semibold text-slate-700">Tingkatan 4</span>
             </label>
           </div>
 
-          <!-- PAPARAN AUTOMATIK STATUS TINGKATAN -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-indigo-100 text-xs">
-            <div class="p-2 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-900">
+          <!-- PAPARAN AUTOMATIK -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
+            <div class="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-900">
               <span class="font-bold flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
-                Tingkatan Yang Ada (Automatik):
+                <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i>
+                Tingkatan Ada (Automatik):
               </span>
-              <div id="modalDisplayTingkatanAda" class="font-extrabold text-emerald-700 mt-0.5">Semua Tingkatan Hadir (T1, T2, T3, T4)</div>
+              <div id="modalDisplayTingkatanAda" class="font-extrabold text-emerald-700 mt-0.5">Semua Hadir (T1, T2, T3, T4)</div>
             </div>
 
-            <div class="p-2 bg-rose-50 rounded-lg border border-rose-200 text-rose-900">
+            <div class="p-1.5 bg-rose-50 rounded-lg border border-rose-200 text-rose-900">
               <span class="font-bold flex items-center gap-1">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5 text-rose-600"></i>
-                Tingkatan Yang Bercuti:
+                <i data-lucide="x-circle" class="w-3 h-3 text-rose-600"></i>
+                Tingkatan Bercuti:
               </span>
-              <div id="modalDisplayTingkatanCuti" class="font-bold text-rose-700 mt-0.5">Tiada Pelepasan (Semua Hadir)</div>
+              <div id="modalDisplayTingkatanCuti" class="font-bold text-rose-700 mt-0.5">Tiada Pelepasan</div>
             </div>
           </div>
         </div>
 
         <!-- NAMA AKTIVITI -->
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Nama Aktiviti / Pengisian <span class="text-rose-500">*</span></label>
-          <input type="text" id="modalAktiviti" placeholder="Contoh: Eksplorasi Sains, Amali RBT, Klinik Celik Bahasa..." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none" required>
+          <label class="block font-bold text-slate-700 mb-0.5">Nama Aktiviti / Pengisian <span class="text-rose-500">*</span></label>
+          <input type="text" id="modalAktiviti" placeholder="Contoh: Bengkel STEM, Klinik RBT, Modul Celik Bahasa..." class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none" required>
         </div>
 
         <!-- DESKRIPSI -->
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">Objektif & Ringkasan Pengisian</label>
-          <textarea id="modalDeskripsi" rows="2" placeholder="Catatkan ringkasan program atau keperluan peralatan..." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+          <label class="block font-semibold text-slate-700 mb-0.5">Ringkasan Pengisian & Catatan</label>
+          <textarea id="modalDeskripsi" rows="2" placeholder="Catatkan fokus pembelajaran atau peralatan..." class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
         </div>
 
-        <!-- 2 KOLUM: GURU IN-CHARGE & LOKASI -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- GURU & LOKASI -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div>
-            <label class="block font-bold text-slate-700 mb-1 flex items-center gap-1.5">
-              <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i>
+            <label class="block font-bold text-slate-700 mb-0.5 flex items-center gap-1">
+              <i data-lucide="user-check" class="w-3.5 h-3.5 text-indigo-600"></i>
               Guru In-Charge <span class="text-rose-500">*</span>
             </label>
-            <input type="text" id="modalGuru" placeholder="Nama Guru Bertugas / Penyelaras" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none" required>
+            <input type="text" id="modalGuru" placeholder="Nama Guru Bertugas" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none" required>
           </div>
 
           <div>
-            <label class="block font-semibold text-slate-700 mb-1 flex items-center gap-1.5">
-              <i data-lucide="map-pin" class="w-4 h-4 text-slate-500"></i>
-              Lokasi / Tempat Aktiviti
+            <label class="block font-semibold text-slate-700 mb-0.5 flex items-center gap-1">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500"></i>
+              Lokasi / Tempat
             </label>
-            <input type="text" id="modalLokasi" placeholder="Contoh: Dewan Sekolah / Bilik Media / Kelas" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <input type="text" id="modalLokasi" placeholder="Dewan Semekar / Makmal / Kelas" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
           </div>
         </div>
 
-        <div class="pt-4 border-t border-slate-200 flex items-center justify-between gap-3">
-          <button type="button" onclick="clearModalSlot()" class="px-3 py-2 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-medium border border-rose-200 transition">
-            Kosongkan Semula Slot
+        <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+          <button type="button" onclick="clearModalSlot()" class="px-3 py-1.5 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-medium border border-rose-200 transition">
+            Kosongkan Slot
           </button>
 
           <div class="flex items-center gap-2">
-            <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-medium transition">
-              Batal
-            </button>
-            <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition">
-              Simpan Maklumat
-            </button>
+            <button type="button" onclick="closeModal()" class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg font-medium">Batal</button>
+            <button type="submit" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md">Simpan Maklumat</button>
           </div>
         </div>
       </form>
@@ -433,12 +436,30 @@
     const CONFIG = {
       SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw2aUalYjhaVadUEdECqI3kYFcky3k_A11m7IaFvlGiadtDiMx2K3S11-jadl0ETfoQLg/exec',
       SHEET_ID: '13alfShrdwcgj1R5eRs9wjtbBvDRzQEj0O5tcK1jB1BI',
-      STORAGE_KEY: 'PASCA_UASA_EQUAL_BLOCKS_V3'
+      STORAGE_KEY: 'PUASA_SEMEKAR_30MIN_V4'
     };
 
     const ALL_FORMS = ['Tingkatan 1', 'Tingkatan 2', 'Tingkatan 3', 'Tingkatan 4'];
 
-    // KONFIGURASI BIDANG BAGI 4 BLOK BERTURUT
+    // SENARAI 13 SLOT 30 MINIT SETIAP HARI (07:30 PG – 02:30 PTG)
+    // REHAT KEKAL 10:00 – 10:30 PG (DISISIPKAN SECARA KHAS)
+    const TIME_SLOTS = [
+      { id: '0730', label: '07:30 – 08:00 PG', type: 'sebelum' },
+      { id: '0800', label: '08:00 – 08:30 PG', type: 'sebelum' },
+      { id: '0830', label: '08:30 – 09:00 PG', type: 'sebelum' },
+      { id: '0900', label: '09:00 – 09:30 PG', type: 'sebelum' },
+      { id: '0930', label: '09:30 – 10:00 PG', type: 'sebelum' },
+      // REHAT 10:00 - 10:30 PG
+      { id: '1030', label: '10:30 – 11:00 PG', type: 'selepas' },
+      { id: '1100', label: '11:00 – 11:30 PG', type: 'selepas' },
+      { id: '1130', label: '11:30 – 12:00 TGH', type: 'selepas' },
+      { id: '1200', label: '12:00 – 12:30 TGH', type: 'selepas' },
+      { id: '1230', label: '12:30 – 01:00 PTG', type: 'selepas' },
+      { id: '1300', label: '01:00 – 01:30 PTG', type: 'selepas' },
+      { id: '1330', label: '01:30 – 02:00 PTG', type: 'selepas' },
+      { id: '1400', label: '02:00 – 02:30 PTG', type: 'selepas' }
+    ];
+
     let blockFieldConfig = {
       1: 'Belum Ditentukan',
       2: 'Belum Ditentukan',
@@ -446,130 +467,118 @@
       4: 'Belum Ditentukan'
     };
 
-    // SENARAI 5 MINGGU BERMULA 02 NOV HINGGA 04 DIS 2026
+    // STRUKTUR 5 MINGGU PERSEKOLAHAN (02 NOV – 04 DIS 2026)
     const WEEKS_DATA = [
       {
         minggu: 1,
         label: 'Minggu 1: 02 Nov – 06 Nov 2026',
         hariList: [
-          { tarikh: '2026-11-02', hari: 'Isnin', cuti: false, catatanCuti: '', slot1Block: 0, slot2Block: 1, s1Khas: 'Slot Pembukaan & Taklimat Pasca UASA' },
-          { tarikh: '2026-11-03', hari: 'Selasa', cuti: false, catatanCuti: '', slot1Block: 1, slot2Block: 1 },
-          { tarikh: '2026-11-04', hari: 'Rabu', cuti: false, catatanCuti: '', slot1Block: 1, slot2Block: 1 },
-          { tarikh: '2026-11-05', hari: 'Khamis', cuti: false, catatanCuti: '', slot1Block: 1, slot2Block: 1 },
-          { tarikh: '2026-11-06', hari: 'Jumaat', cuti: false, catatanCuti: '', slot1Block: 1, slot2Block: 1 }
+          { tarikh: '2026-11-02', hari: 'Isnin', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-03', hari: 'Selasa', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-04', hari: 'Rabu', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-05', hari: 'Khamis', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-06', hari: 'Jumaat', cuti: false, catatanCuti: '' }
         ]
       },
       {
         minggu: 2,
         label: 'Minggu 2: 09 Nov – 13 Nov 2026 (Cuti Deepavali)',
         hariList: [
-          { tarikh: '2026-11-09', hari: 'Isnin', cuti: true, catatanCuti: 'Hari Kelepasan Am Deepavali', slot1Block: 0, slot2Block: 0 },
-          { tarikh: '2026-11-10', hari: 'Selasa', cuti: true, catatanCuti: 'Tambahan Cuti Perayaan KPM Deepavali', slot1Block: 0, slot2Block: 0 },
-          { tarikh: '2026-11-11', hari: 'Rabu', cuti: false, catatanCuti: '', slot1Block: 1, slot2Block: 1 },
-          { tarikh: '2026-11-12', hari: 'Khamis', cuti: false, catatanCuti: '', slot1Block: 2, slot2Block: 2 },
-          { tarikh: '2026-11-13', hari: 'Jumaat', cuti: false, catatanCuti: '', slot1Block: 2, slot2Block: 2 }
+          { tarikh: '2026-11-09', hari: 'Isnin', cuti: true, catatanCuti: 'Hari Kelepasan Am Deepavali' },
+          { tarikh: '2026-11-10', hari: 'Selasa', cuti: true, catatanCuti: 'Tambahan Cuti Perayaan KPM Deepavali' },
+          { tarikh: '2026-11-11', hari: 'Rabu', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-12', hari: 'Khamis', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-13', hari: 'Jumaat', cuti: false, catatanCuti: '' }
         ]
       },
       {
         minggu: 3,
         label: 'Minggu 3: 16 Nov – 20 Nov 2026',
         hariList: [
-          { tarikh: '2026-11-16', hari: 'Isnin', cuti: false, catatanCuti: '', slot1Block: 2, slot2Block: 2 },
-          { tarikh: '2026-11-17', hari: 'Selasa', cuti: false, catatanCuti: '', slot1Block: 2, slot2Block: 2 },
-          { tarikh: '2026-11-18', hari: 'Rabu', cuti: false, catatanCuti: '', slot1Block: 2, slot2Block: 2 },
-          { tarikh: '2026-11-19', hari: 'Khamis', cuti: false, catatanCuti: '', slot1Block: 2, slot2Block: 3 },
-          { tarikh: '2026-11-20', hari: 'Jumaat', cuti: false, catatanCuti: '', slot1Block: 3, slot2Block: 3 }
+          { tarikh: '2026-11-16', hari: 'Isnin', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-17', hari: 'Selasa', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-18', hari: 'Rabu', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-19', hari: 'Khamis', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-20', hari: 'Jumaat', cuti: false, catatanCuti: '' }
         ]
       },
       {
         minggu: 4,
         label: 'Minggu 4: 23 Nov – 27 Nov 2026',
         hariList: [
-          { tarikh: '2026-11-23', hari: 'Isnin', cuti: false, catatanCuti: '', slot1Block: 3, slot2Block: 3 },
-          { tarikh: '2026-11-24', hari: 'Selasa', cuti: false, catatanCuti: '', slot1Block: 3, slot2Block: 3 },
-          { tarikh: '2026-11-25', hari: 'Rabu', cuti: false, catatanCuti: '', slot1Block: 3, slot2Block: 3 },
-          { tarikh: '2026-11-26', hari: 'Khamis', cuti: false, catatanCuti: '', slot1Block: 3, slot2Block: 3 },
-          { tarikh: '2026-11-27', hari: 'Jumaat', cuti: false, catatanCuti: '', slot1Block: 4, slot2Block: 4 }
+          { tarikh: '2026-11-23', hari: 'Isnin', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-24', hari: 'Selasa', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-25', hari: 'Rabu', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-26', hari: 'Khamis', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-11-27', hari: 'Jumaat', cuti: false, catatanCuti: '' }
         ]
       },
       {
         minggu: 5,
-        label: 'Minggu 5: 30 Nov – 04 Dis 2026 (Penutup Sesi Persekolahan)',
+        label: 'Minggu 5: 30 Nov – 04 Dis 2026 (Hari Terakhir Persekolahan)',
         hariList: [
-          { tarikh: '2026-11-30', hari: 'Isnin', cuti: false, catatanCuti: '', slot1Block: 4, slot2Block: 4 },
-          { tarikh: '2026-12-01', hari: 'Selasa', cuti: false, catatanCuti: '', slot1Block: 4, slot2Block: 4 },
-          { tarikh: '2026-12-02', hari: 'Rabu', cuti: false, catatanCuti: '', slot1Block: 4, slot2Block: 4 },
-          { tarikh: '2026-12-03', hari: 'Khamis', cuti: false, catatanCuti: '', slot1Block: 4, slot2Block: 4 },
-          { tarikh: '2026-12-04', hari: 'Jumaat (Hari Terakhir)', cuti: false, catatanCuti: '', slot1Block: 4, slot2Block: 0, s2Khas: 'Majlis Penutupan & Pengemasan Kelas 2026' }
+          { tarikh: '2026-11-30', hari: 'Isnin', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-12-01', hari: 'Selasa', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-12-02', hari: 'Rabu', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-12-03', hari: 'Khamis', cuti: false, catatanCuti: '' },
+          { tarikh: '2026-12-04', hari: 'Jumaat', cuti: false, catatanCuti: 'Hari Terakhir Persekolahan 2026' }
         ]
       }
     ];
 
     let activitiesMap = {};
 
+    // KIRAAN & INISIALISASI 4 BLOK SAMA RATA (273 SLOT SEKOLAH AKTIF / 4 = ~68 SLOT SETIAP BLOK)
     function initEmptyStructure() {
       const initial = {};
+      let activeSlotCounter = 0;
+
       WEEKS_DATA.forEach(w => {
         w.hariList.forEach(d => {
-          // Slot 1
-          const s1Key = `${d.tarikh}_slot1`;
-          let bidang1 = 'Belum Ditentukan';
-          let aktiviti1 = '';
-          if (d.cuti) {
-            bidang1 = 'Cuti';
-            aktiviti1 = d.catatanCuti;
-          } else if (d.s1Khas) {
-            bidang1 = 'Slot Khas Rasmi';
-            aktiviti1 = d.s1Khas;
-          }
+          TIME_SLOTS.forEach((slot, sIdx) => {
+            const slotKey = `${d.tarikh}_slot_${slot.id}`;
+            let blockNum = 0;
+            let defaultBidang = 'Belum Ditentukan';
+            let defaultAktiviti = '';
 
-          initial[s1Key] = {
-            id: s1Key,
-            minggu: w.minggu,
-            tarikh: d.tarikh,
-            hari: d.hari,
-            masa: 'Slot 1 (07:30 - 10:00 PG)',
-            blockNo: d.slot1Block,
-            bidang: bidang1,
-            aktiviti: aktiviti1,
-            deskripsi: '',
-            guru: '',
-            lokasi: '',
-            tingkatanCuti: [],
-            tingkatanAda: [...ALL_FORMS],
-            isCuti: d.cuti,
-            catatanCuti: d.catatanCuti
-          };
+            if (d.cuti) {
+              defaultBidang = 'Cuti';
+              defaultAktiviti = d.catatanCuti;
+            } else {
+              activeSlotCounter++;
+              // Bahagi saksama 273 slot kepada 4 blok berturut-turut:
+              // Blok 1: 1 - 68 (68 slot)
+              // Blok 2: 69 - 136 (68 slot)
+              // Blok 3: 137 - 204 (68 slot)
+              // Blok 4: 205 - 273 (69 slot)
+              if (activeSlotCounter <= 68) blockNum = 1;
+              else if (activeSlotCounter <= 136) blockNum = 2;
+              else if (activeSlotCounter <= 204) blockNum = 3;
+              else blockNum = 4;
 
-          // Slot 2
-          const s2Key = `${d.tarikh}_slot2`;
-          let bidang2 = 'Belum Ditentukan';
-          let aktiviti2 = '';
-          if (d.cuti) {
-            bidang2 = 'Cuti';
-            aktiviti2 = d.catatanCuti;
-          } else if (d.s2Khas) {
-            bidang2 = 'Slot Khas Rasmi';
-            aktiviti2 = d.s2Khas;
-          }
+              defaultBidang = blockFieldConfig[blockNum] || 'Belum Ditentukan';
+            }
 
-          initial[s2Key] = {
-            id: s2Key,
-            minggu: w.minggu,
-            tarikh: d.tarikh,
-            hari: d.hari,
-            masa: 'Slot 2 (10:30 - 01:00 PTG)',
-            blockNo: d.slot2Block,
-            bidang: bidang2,
-            aktiviti: aktiviti2,
-            deskripsi: '',
-            guru: '',
-            lokasi: '',
-            tingkatanCuti: [],
-            tingkatanAda: [...ALL_FORMS],
-            isCuti: d.cuti,
-            catatanCuti: d.catatanCuti
-          };
+            initial[slotKey] = {
+              id: slotKey,
+              minggu: w.minggu,
+              tarikh: d.tarikh,
+              hari: d.hari,
+              slotId: slot.id,
+              slotIndex: sIdx,
+              masa: slot.label,
+              blockNo: blockNum,
+              bidang: defaultBidang,
+              aktiviti: defaultAktiviti,
+              deskripsi: '',
+              guru: '',
+              lokasi: '',
+              tingkatanCuti: [],
+              tingkatanAda: [...ALL_FORMS],
+              isCuti: d.cuti,
+              catatanCuti: d.catatanCuti
+            };
+          });
         });
       });
       return initial;
@@ -594,7 +603,7 @@
       }
 
       populateWeekDropdown();
-      renderCalendar();
+      renderTimetable();
       updateStatistics();
     }
 
@@ -606,7 +615,7 @@
 
     function populateWeekDropdown() {
       const select = document.getElementById('filterMinggu');
-      select.innerHTML = '<option value="ALL">Semua Minggu (Minggu 1 – Minggu 5)</option>';
+      select.innerHTML = '<option value="ALL">Semua Minggu (Keseluruhan Jadual)</option>';
       WEEKS_DATA.forEach(w => {
         const opt = document.createElement('option');
         opt.value = w.minggu;
@@ -615,8 +624,9 @@
       });
     }
 
-    function renderCalendar() {
-      const container = document.getElementById('calendarContainer');
+    // PAPARAN JADUAL WAKTU (GRID 5 HARI SEKOLAH • ISNIN HINGGA JUMAAT)
+    function renderTimetable() {
+      const container = document.getElementById('timetableContainer');
       container.innerHTML = '';
 
       const selMinggu = document.getElementById('filterMinggu').value;
@@ -628,25 +638,67 @@
 
       filteredWeeks.forEach(w => {
         const weekCard = document.createElement('div');
-        weekCard.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden';
+        weekCard.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden print-timetable';
 
-        weekCard.innerHTML = `
+        let timetableHTML = `
           <div class="px-5 py-3 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <span class="px-2.5 py-0.5 rounded-full bg-indigo-600 text-white text-xs font-black uppercase tracking-wider">Minggu ${w.minggu}</span>
               <h3 class="font-bold text-sm sm:text-base">${w.label}</h3>
             </div>
             <span class="text-xs font-medium text-slate-300 bg-slate-800 px-3 py-1 rounded-lg border border-slate-700">
-              Isnin hingga Jumaat • Rehat 10:00 PG
+              Isnin hingga Jumaat • Slot 30 Minit (07:30 – 14:30)
             </span>
           </div>
 
-          <!-- GRID 5 KOLUM ISNIN - JUMAAT -->
-          <div class="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-slate-200 bg-slate-50/40">
-            ${w.hariList.map(d => renderDayColumn(d, selBidang, selStatus, searchQuery)).join('')}
+          <!-- JADUAL WAKTU MEJA (RESPONSIF KEMAS) -->
+          <div class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left border-collapse min-w-[760px]">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-extrabold border-b border-slate-200">
+                  <th class="py-2.5 px-3 w-28 text-center border-r border-slate-200">Masa (30 Minit)</th>
+                  ${w.hariList.map(d => {
+                    const dObj = new Date(d.tarikh);
+                    const formattedDate = dObj.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short' });
+                    return `
+                      <th class="py-2.5 px-3 border-r border-slate-200 text-center ${d.cuti ? 'bg-rose-50 text-rose-900' : ''}">
+                        <div class="font-black">${d.hari}</div>
+                        <div class="text-[10px] font-semibold text-slate-500">${formattedDate} ${d.cuti ? '(Cuti)' : ''}</div>
+                      </th>
+                    `;
+                  }).join('')}
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-xs">
+        `;
+
+        // 1. SLOT SEBELUM REHAT (5 SLOT: 07:30 - 10:00)
+        TIME_SLOTS.slice(0, 5).forEach(slot => {
+          timetableHTML += renderTableRow(w, slot, selBidang, selStatus, searchQuery);
+        });
+
+        // 2. JALUR WAKTU REHAT (10:00 - 10:30 PAGI)
+        timetableHTML += `
+          <tr class="bg-amber-100/90 text-amber-950 font-bold border-y-2 border-amber-300 text-center">
+            <td class="py-2 px-3 border-r border-amber-200 text-xs font-black">10:00 – 10:30 PG</td>
+            <td colspan="5" class="py-2 px-3 tracking-widest uppercase text-xs">
+              <span class="inline-flex items-center gap-1.5"><i data-lucide="coffee" class="w-4 h-4 text-amber-800"></i> WAKTU REHAT (KEKAL JAM 10.00 PAGI)</span>
+            </td>
+          </tr>
+        `;
+
+        // 3. SLOT SELEPAS REHAT (8 SLOT: 10:30 - 14:30)
+        TIME_SLOTS.slice(5).forEach(slot => {
+          timetableHTML += renderTableRow(w, slot, selBidang, selStatus, searchQuery);
+        });
+
+        timetableHTML += `
+              </tbody>
+            </table>
           </div>
         `;
 
+        weekCard.innerHTML = timetableHTML;
         container.appendChild(weekCard);
       });
 
@@ -654,142 +706,77 @@
       updateStatistics();
     }
 
-    function renderDayColumn(dayInfo, selBidang, selStatus, searchQuery) {
-      const s1Key = `${dayInfo.tarikh}_slot1`;
-      const s2Key = `${dayInfo.tarikh}_slot2`;
-      const slot1 = activitiesMap[s1Key] || {};
-      const slot2 = activitiesMap[s2Key] || {};
-
-      const dObj = new Date(dayInfo.tarikh);
-      const tarikhFormat = dObj.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short' });
-
-      const match1 = isSlotMatched(slot1, selBidang, selStatus, searchQuery);
-      const match2 = isSlotMatched(slot2, selBidang, selStatus, searchQuery);
-
-      const isCuti = dayInfo.cuti;
-
-      return `
-        <div class="p-3 sm:p-3.5 flex flex-col justify-between space-y-3 min-h-[360px]">
-          <!-- KEPALA HARI -->
-          <div class="border-b pb-2 ${isCuti ? 'bg-rose-100 text-rose-900' : 'bg-slate-100 text-slate-800'} -m-3 sm:-m-3.5 mb-2 p-2.5 px-3 flex items-center justify-between">
-            <div>
-              <span class="text-xs font-black tracking-wide uppercase">${dayInfo.hari}</span>
-              <span class="text-xs ml-1 font-semibold ${isCuti ? 'text-rose-600' : 'text-slate-500'}">${tarikhFormat}</span>
-            </div>
-            ${isCuti ? `
-              <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-rose-600 text-white">Cuti</span>
-            ` : `
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white border border-slate-300 text-slate-700">Persekolahan</span>
-            `}
-          </div>
-
-          <!-- KANDUNGAN HARI -->
-          ${isCuti ? `
-            <div class="my-auto p-4 bg-rose-50 border border-dashed border-rose-300 rounded-xl text-center space-y-2">
-              <div class="p-2 bg-rose-100 text-rose-600 rounded-full w-9 h-9 flex items-center justify-center mx-auto">
-                <i data-lucide="umbrella" class="w-5 h-5"></i>
-              </div>
-              <h4 class="text-xs font-bold text-rose-800 uppercase">${dayInfo.catatanCuti}</h4>
-              <p class="text-[11px] text-rose-600">Tiada sesi aktiviti akademik.</p>
-              <button onclick="openEditModal('${s1Key}')" class="text-[11px] font-semibold text-rose-700 underline">Kemas kini</button>
-            </div>
-          ` : `
-            <div class="space-y-2.5 flex-grow">
-              <!-- SLOT 1 -->
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-[11px] font-semibold text-slate-500 px-0.5">
-                  <span>Slot 1: 07:30 – 10:00 PG</span>
-                  <span class="text-[10px] text-indigo-600 font-bold">Sebelum Rehat</span>
-                </div>
-                ${renderSlotCard(slot1, s1Key, match1)}
-              </div>
-
-              <!-- REHAT 10.00 PAGI KEKAL -->
-              <div class="bg-amber-100/80 border border-dashed border-amber-300 text-amber-900 rounded-lg py-1 px-2 flex items-center justify-center gap-1.5 text-[11px] font-bold">
-                <i data-lucide="coffee" class="w-3.5 h-3.5 text-amber-700"></i>
-                <span>10:00 – 10:30 PG: REHAT</span>
-              </div>
-
-              <!-- SLOT 2 -->
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-[11px] font-semibold text-slate-500 px-0.5">
-                  <span>Slot 2: 10:30 – 01:00 PTG</span>
-                  <span class="text-[10px] text-indigo-600 font-bold">Selepas Rehat</span>
-                </div>
-                ${renderSlotCard(slot2, s2Key, match2)}
-              </div>
-            </div>
-          `}
-        </div>
+    function renderTableRow(week, slot, selBidang, selStatus, searchQuery) {
+      let rowHTML = `
+        <tr class="hover:bg-slate-50/50 transition">
+          <td class="py-1.5 px-2.5 text-center font-bold text-slate-600 bg-slate-50/80 border-r border-slate-200 text-[11px] whitespace-nowrap">
+            ${slot.label}
+          </td>
       `;
-    }
 
-    function renderSlotCard(slot, slotKey, isMatched) {
-      if (!isMatched) {
-        return `<div class="p-2 text-center text-xs text-slate-400 bg-slate-100 rounded-lg italic">Disembunyikan</div>`;
-      }
+      week.hariList.forEach(day => {
+        const slotKey = `${day.tarikh}_slot_${slot.id}`;
+        const slotData = activitiesMap[slotKey] || {};
 
-      const hasContent = slot.aktiviti && slot.aktiviti.trim() !== '';
-      const theme = getBidangColorTheme(slot.bidang);
-      const tingkatanAdaText = formatTingkatanList(slot.tingkatanAda);
-      const tingkatanCutiText = (slot.tingkatanCuti && slot.tingkatanCuti.length > 0)
-        ? slot.tingkatanCuti.map(t => t.replace('Tingkatan ', 'T')).join(', ')
-        : 'Tiada';
+        if (day.cuti) {
+          rowHTML += `
+            <td class="py-1 px-1.5 border-r border-slate-200 bg-rose-50/50 text-center align-middle">
+              <span class="text-[10px] font-bold text-rose-700 uppercase">${day.catatanCuti}</span>
+            </td>
+          `;
+          return;
+        }
 
-      if (!hasContent) {
-        // RUANG KOSONG (BERSIH DARI DUMMY)
-        return `
-          <div onclick="openEditModal('${slotKey}')" class="group cursor-pointer p-2.5 bg-white hover:bg-slate-50 rounded-xl border border-dashed border-slate-300 hover:border-indigo-400 transition flex flex-col justify-between min-h-[92px] shadow-xs">
-            <div class="flex items-center justify-between w-full">
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${theme.badgeBg} ${theme.badgeText}">${slot.bidang || 'Belum Ditentukan'}</span>
-              <span class="text-[10px] text-slate-400">${slot.blockNo > 0 ? 'Blok ' + slot.blockNo : ''}</span>
-            </div>
-            <div class="py-1 text-center">
-              <span class="text-xs font-semibold text-slate-500 group-hover:text-indigo-700 flex items-center justify-center gap-1">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                <span>Kosong (Klik Isi)</span>
-              </span>
-            </div>
-            <!-- STATUS TINGKATAN AUTOMATIK -->
-            <div class="pt-1 border-t border-slate-100 flex items-center justify-between text-[10px]">
-              <span class="text-emerald-700 font-bold truncate">Ada: ${tingkatanAdaText}</span>
-              ${tingkatanCutiText !== 'Tiada' ? `<span class="text-rose-600 font-semibold truncate ml-1">Cuti: ${tingkatanCutiText}</span>` : ''}
-            </div>
-          </div>
-        `;
-      }
+        const isMatched = isSlotMatched(slotData, selBidang, selStatus, searchQuery);
+        const hasContent = slotData.aktiviti && slotData.aktiviti.trim() !== '';
+        const theme = getBidangColorTheme(slotData.bidang);
 
-      return `
-        <div class="p-2.5 bg-white rounded-xl border ${theme.border} shadow-xs hover:shadow-md transition space-y-1.5 relative">
-          <div class="flex items-start justify-between gap-1">
-            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${theme.badgeBg} ${theme.badgeText} truncate max-w-[140px]">${slot.bidang}</span>
-            <button onclick="openEditModal('${slotKey}')" class="text-slate-400 hover:text-indigo-600 p-0.5">
-              <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
+        const tingkatanAda = formatTingkatanList(slotData.tingkatanAda);
+        const tingkatanCuti = (slotData.tingkatanCuti && slotData.tingkatanCuti.length > 0)
+          ? slotData.tingkatanCuti.map(t => t.replace('Tingkatan ', 'T')).join(',')
+          : '';
 
-          <h5 class="text-xs font-bold text-slate-900 leading-snug line-clamp-2">${slot.aktiviti}</h5>
+        if (!isMatched) {
+          rowHTML += `<td class="py-1 px-1.5 border-r border-slate-200 bg-slate-50 text-slate-300 text-center text-[10px] italic">Ditapis</td>`;
+        } else if (!hasContent) {
+          rowHTML += `
+            <td onclick="openEditModal('${slotKey}')" class="py-1 px-1.5 border-r border-slate-200 cursor-pointer hover:bg-indigo-50/40 group transition align-top">
+              <div class="h-full min-h-[48px] rounded-lg border border-dashed border-slate-300 group-hover:border-indigo-400 p-1 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-bold px-1 py-0.2 rounded ${theme.badgeBg} ${theme.badgeText}">${slotData.bidang}</span>
+                  <span class="text-[9px] text-slate-400 opacity-0 group-hover:opacity-100"><i data-lucide="plus" class="w-3 h-3"></i></span>
+                </div>
+                <div class="text-[9px] font-medium text-emerald-700 truncate">Ada: ${tingkatanAda}</div>
+              </div>
+            </td>
+          `;
+        } else {
+          rowHTML += `
+            <td onclick="openEditModal('${slotKey}')" class="py-1 px-1.5 border-r border-slate-200 cursor-pointer hover:bg-slate-100 transition align-top">
+              <div class="h-full min-h-[48px] rounded-lg border ${theme.border} bg-white p-1.5 shadow-xs space-y-0.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-bold px-1.5 py-0.2 rounded ${theme.badgeBg} ${theme.badgeText} truncate max-w-[100px]">${slotData.bidang}</span>
+                  ${tingkatanCuti ? `<span class="text-[9px] font-bold text-rose-600 bg-rose-50 px-1 rounded">Cuti: ${tingkatanCuti}</span>` : ''}
+                </div>
+                <div class="text-[11px] font-bold text-slate-900 leading-tight line-clamp-1">${slotData.aktiviti}</div>
+                <div class="flex items-center justify-between text-[10px] text-slate-600">
+                  <span class="font-semibold text-indigo-700 truncate">${slotData.guru || 'Guru'}</span>
+                  <span class="text-emerald-700 font-bold truncate">Ada: ${tingkatanAda}</span>
+                </div>
+              </div>
+            </td>
+          `;
+        }
+      });
 
-          <div class="text-[11px] pt-1 border-t border-slate-100 space-y-0.5 text-slate-600">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-indigo-700 truncate">${slot.guru || 'Guru belum dinamakan'}</span>
-              ${slot.lokasi ? `<span class="text-[10px] text-slate-400 truncate">${slot.lokasi}</span>` : ''}
-            </div>
-
-            <!-- STATUS TINGKATAN: CUTI VS ADA (AUTOMATIK) -->
-            <div class="flex items-center justify-between text-[10px] pt-0.5">
-              <span class="text-emerald-700 font-extrabold truncate">Ada: ${tingkatanAdaText}</span>
-              ${tingkatanCutiText !== 'Tiada' ? `<span class="text-rose-600 font-bold truncate ml-1">Cuti: ${tingkatanCutiText}</span>` : ''}
-            </div>
-          </div>
-        </div>
-      `;
+      rowHTML += `</tr>`;
+      return rowHTML;
     }
 
     function formatTingkatanList(list) {
       if (!list || list.length === 0) return 'Tiada';
-      if (list.length === 4) return 'Semua (T1-T4)';
-      return list.map(t => t.replace('Tingkatan ', 'T')).join(', ');
+      if (list.length === 4) return 'T1-T4';
+      return list.map(t => t.replace('Tingkatan ', 'T')).join(',');
     }
 
     function isSlotMatched(slot, selBidang, selStatus, query) {
@@ -828,7 +815,6 @@
       let totalFilled = 0;
       let totalEmpty = 0;
 
-      // Kemaskini label 4 blok
       for (let b = 1; b <= 4; b++) {
         const val = blockFieldConfig[b] || 'Belum Ditentukan';
         const labelEl = document.getElementById(`labelBlock${b}`);
@@ -837,7 +823,7 @@
 
         if (cardEl) {
           const theme = getBidangColorTheme(val);
-          cardEl.className = `p-3 rounded-xl space-y-1 border-t-4 ${theme.border} ${theme.cardBg}`;
+          cardEl.className = `p-2.5 rounded-xl space-y-1 border-t-4 ${theme.border} ${theme.cardBg}`;
         }
       }
 
@@ -852,19 +838,19 @@
       document.getElementById('statEmptyCount').textContent = `${totalEmpty} Slot Belum Diisi`;
     }
 
-    // MODAL PENGISIAN SLOT
+    // MODAL PENGISIAN SLOT DENGAN PILIHAN TEMPOH LANJUTAN
     function openEditModal(slotKey) {
       const slot = activitiesMap[slotKey] || {};
       document.getElementById('modalSlotId').value = slotKey;
       document.getElementById('modalTarikhHari').value = `${slot.hari || ''}, ${slot.tarikh || ''}`;
-      document.getElementById('modalSesi').value = slot.masa || 'Slot 1 (07:30 - 10:00 PG)';
+      document.getElementById('modalSesi').value = slot.masa || '';
       document.getElementById('modalBidang').value = slot.bidang || 'Belum Ditentukan';
+      document.getElementById('modalDuration').value = '1';
       document.getElementById('modalAktiviti').value = slot.aktiviti || '';
       document.getElementById('modalDeskripsi').value = slot.deskripsi || '';
       document.getElementById('modalGuru').value = slot.guru || '';
       document.getElementById('modalLokasi').value = slot.lokasi || '';
 
-      // Set Checkbox Tingkatan Bercuti
       const cutiList = slot.tingkatanCuti || [];
       document.getElementById('chkCutiT1').checked = cutiList.includes('Tingkatan 1');
       document.getElementById('chkCutiT2').checked = cutiList.includes('Tingkatan 2');
@@ -881,7 +867,6 @@
       document.getElementById('activityModal').classList.add('hidden');
     }
 
-    // PENGIRAAN AUTOMATIK TINGKATAN YANG ADA VS CUTI
     function recalculatePresentForms() {
       const cutiList = [];
       if (document.getElementById('chkCutiT1').checked) cutiList.push('Tingkatan 1');
@@ -895,9 +880,9 @@
       const displayCuti = document.getElementById('modalDisplayTingkatanCuti');
 
       if (adaList.length === 4) {
-        displayAda.textContent = 'Semua Tingkatan Hadir (Tingkatan 1, 2, 3, 4)';
+        displayAda.textContent = 'Semua Hadir (Tingkatan 1, 2, 3, 4)';
       } else if (adaList.length === 0) {
-        displayAda.textContent = 'Tiada (Semua Tingkatan Bercuti)';
+        displayAda.textContent = 'Tiada (Semua Bercuti)';
       } else {
         displayAda.textContent = adaList.join(', ');
       }
@@ -909,32 +894,65 @@
       }
     }
 
+    // SIMPAN FORM DENGAN SOKONGAN PANJANGKAN TEMPOH (MULTI-SLOT AUTO FILL)
     function handleFormSubmit(e) {
       e.preventDefault();
       const slotKey = document.getElementById('modalSlotId').value;
       if (!slotKey || !activitiesMap[slotKey]) return;
+
+      const baseSlot = activitiesMap[slotKey];
+      const durationVal = document.getElementById('modalDuration').value;
 
       const cutiList = [];
       if (document.getElementById('chkCutiT1').checked) cutiList.push('Tingkatan 1');
       if (document.getElementById('chkCutiT2').checked) cutiList.push('Tingkatan 2');
       if (document.getElementById('chkCutiT3').checked) cutiList.push('Tingkatan 3');
       if (document.getElementById('chkCutiT4').checked) cutiList.push('Tingkatan 4');
-
       const adaList = ALL_FORMS.filter(f => !cutiList.includes(f));
 
-      activitiesMap[slotKey].masa = document.getElementById('modalSesi').value;
-      activitiesMap[slotKey].bidang = document.getElementById('modalBidang').value;
-      activitiesMap[slotKey].aktiviti = document.getElementById('modalAktiviti').value.trim();
-      activitiesMap[slotKey].deskripsi = document.getElementById('modalDeskripsi').value.trim();
-      activitiesMap[slotKey].guru = document.getElementById('modalGuru').value.trim();
-      activitiesMap[slotKey].lokasi = document.getElementById('modalLokasi').value.trim();
-      activitiesMap[slotKey].tingkatanCuti = cutiList;
-      activitiesMap[slotKey].tingkatanAda = adaList;
+      const updatedData = {
+        bidang: document.getElementById('modalBidang').value,
+        aktiviti: document.getElementById('modalAktiviti').value.trim(),
+        deskripsi: document.getElementById('modalDeskripsi').value.trim(),
+        guru: document.getElementById('modalGuru').value.trim(),
+        lokasi: document.getElementById('modalLokasi').value.trim(),
+        tingkatanCuti: cutiList,
+        tingkatanAda: adaList
+      };
+
+      // Tentukan berapa banyak slot yang perlu diisi
+      const targetTarikh = baseSlot.tarikh;
+      const startIdx = baseSlot.slotIndex;
+      let slotsToFill = 1;
+
+      if (durationVal === 'all_day') {
+        slotsToFill = TIME_SLOTS.length - startIdx;
+      } else {
+        slotsToFill = parseInt(durationVal, 10) || 1;
+      }
+
+      for (let i = 0; i < slotsToFill; i++) {
+        const curIdx = startIdx + i;
+        if (curIdx >= TIME_SLOTS.length) break;
+
+        const nextSlotId = TIME_SLOTS[curIdx].id;
+        const curKey = `${targetTarikh}_slot_${nextSlotId}`;
+
+        if (activitiesMap[curKey] && !activitiesMap[curKey].isCuti) {
+          activitiesMap[curKey].bidang = updatedData.bidang;
+          activitiesMap[curKey].aktiviti = updatedData.aktiviti;
+          activitiesMap[curKey].deskripsi = updatedData.deskripsi;
+          activitiesMap[curKey].guru = updatedData.guru;
+          activitiesMap[curKey].lokasi = updatedData.lokasi;
+          activitiesMap[curKey].tingkatanCuti = [...updatedData.tingkatanCuti];
+          activitiesMap[curKey].tingkatanAda = [...updatedData.tingkatanAda];
+        }
+      }
 
       saveToLocalStorage();
       closeModal();
-      renderCalendar();
-      showToast('Maklumat slot berjaya disimpan.');
+      renderTimetable();
+      showToast('Maklumat aktiviti berjaya disimpan.');
     }
 
     function clearModalSlot() {
@@ -951,12 +969,12 @@
 
         saveToLocalStorage();
         closeModal();
-        renderCalendar();
+        renderTimetable();
         showToast('Slot berjaya dikosongkan.');
       }
     }
 
-    // MODAL KONFIGURASI BIDANG BAGI 4 BLOK
+    // MODAL KONFIGURASI 4 BLOK
     function openBlockConfigModal() {
       document.getElementById('cfgBlock1').value = blockFieldConfig[1] || 'Belum Ditentukan';
       document.getElementById('cfgBlock2').value = blockFieldConfig[2] || 'Belum Ditentukan';
@@ -975,7 +993,6 @@
       blockFieldConfig[3] = document.getElementById('cfgBlock3').value;
       blockFieldConfig[4] = document.getElementById('cfgBlock4').value;
 
-      // Terapkan kepada semua slot mengikut blockNo
       Object.values(activitiesMap).forEach(slot => {
         if (!slot.isCuti && slot.blockNo >= 1 && slot.blockNo <= 4) {
           slot.bidang = blockFieldConfig[slot.blockNo];
@@ -984,11 +1001,11 @@
 
       saveToLocalStorage();
       closeBlockConfigModal();
-      renderCalendar();
-      showToast('Tetapan 4 Blok bidang berjaya dikemas kini!');
+      renderTimetable();
+      showToast('Tetapan 4 Blok berjaya dikemas kini!');
     }
 
-    // GOOGLE SHEET SYNC
+    // SIMPAN KE GOOGLE SHEET
     async function saveToGoogleSheet() {
       const btnSave = document.getElementById('btnSave');
       const saveIcon = document.getElementById('saveIcon');
@@ -1064,9 +1081,9 @@
             }
           });
           saveToLocalStorage();
-          renderCalendar();
+          renderTimetable();
           updateLastSyncTime();
-          showToast('Data terkini berjaya dimuat turun dari Google Sheet.');
+          showToast('Data terkini dimuat turun dari Google Sheet.');
         }
       } catch (err) {
         console.warn('Gagal memuat turun data:', err);
@@ -1087,7 +1104,7 @@
       if (!toast) {
         toast = document.createElement('div');
         toast.id = 'customToast';
-        toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl text-xs sm:text-sm font-medium flex items-center gap-2 border border-slate-700 transition-all duration-300 transform translate-y-10 opacity-0';
+        toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl text-xs font-medium flex items-center gap-2 border border-slate-700 transition-all duration-300 transform translate-y-10 opacity-0';
         document.body.appendChild(toast);
       }
       toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i><span>${msg}</span>`;
